@@ -40,7 +40,7 @@ function [params] = LoadParameters()
     %% Experiment parameters
     params.run.startTime                 = 0;                                                                                          % In seconds
     params.run.endTime                   = 0;                                                                                          % In seconds
-    params.run.exactDuration             = 300;                                                                                        % In seconds
+    params.run.exactDuration             = 840;                                                                                        % In seconds
     params.run.duration                  = 0;                                                                                          % In seconds
     params.run.isAborted                 = 0;                                                                                          % Flag to manually end the run
     params.run.isExperiment              = 1;                                                                                          % 0 = training
@@ -94,9 +94,11 @@ function [params] = LoadParameters()
         [params.display.expRectCenter(1), params.display.expRectCenter(2)]   = RectCenter(params.display.expWindowRect);               % Experimenter display screen rectangle center
         [params.display.monkRectCenter(1), params.display.monkRectCenter(2)] = RectCenter(params.display.monkWindowRect);              % Monkey display screen rectangle center
         
-        params.display.expRect  = CenterRectOnPoint([-1 -1 1 1]*params.display.resolution(2)/2, params.display.expRectCenter(1), params.display.expRectCenter(2));   % Experimenter display stimulus rectangle
-        params.display.monkRect = CenterRectOnPoint([-1 -1 1 1]*params.display.resolution(2)/2, params.display.monkRectCenter(1), params.display.monkRectCenter(2)); % Monkey display stimulus rectangle
-        
+        params.display.expRect  = CenterRectOnPoint([-1 -1 1 1]*params.display.resolution(2)/2, params.display.expRectCenter(1), params.display.expRectCenter(2));   % Experimenter display stimulus rectangle--for fix grid
+        params.display.monkRect = CenterRectOnPoint([-1 -1 1 1]*params.display.resolution(2)/2, params.display.monkRectCenter(1), params.display.monkRectCenter(2)); % Monkey display stimulus rectangle--for fix grid
+        params.display.expRectStim = CenterRectOnPoint([0 0 298 298], params.display.expRectCenter(1), params.display.expRectCenter(2)); % Experimenter display stimulus rectangle--for mTurk stimuli
+        params.display.monkRectStim = CenterRectOnPoint([0 0 298 298], params.display.monkRectCenter(1), params.display.monkRectCenter(2)); % Monkey display stimulus rectangle--for mTurk stimuli
+
     end % Function end
     
 end % Function end

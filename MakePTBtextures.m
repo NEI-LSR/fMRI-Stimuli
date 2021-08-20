@@ -18,14 +18,14 @@ function [fixGridTex, retinoTex, motionTex] = MakePTBtextures(params, window)
     load([params.directory.stimuli '/' 'chromBW.mat'], 'chromBW');
     load([params.directory.stimuli '/' 'colorcircles.mat'], 'colorcircles');
     load([params.directory.stimuli '/' 'fixGrid.mat'], 'fixGrid');
-    % fixGridTex = Screen('MakeTexture', window, fixGrid);
+    fixGridTex = Screen('MakeTexture', window, fixGrid);
     stimsize = size(chrom(:,:,1,1));
     gray = params.display.grayBackground;
     grayTex = cat(3,uint8(repmat(gray(1),stimsize(1))),uint8(repmat(gray(2),stimsize(1))),uint8(repmat(gray(3),stimsize(1))));
     
     % Creating the movie 4D array
     retinoTex = NaN(length(isStimOn), 1);
-    %waitbar(0.2, progressBar, sprintf('Loading Shape-Color stimulus textures...\n'));
+    waitbar(0.2, progressBar, sprintf('Loading Shape-Color stimulus textures...\n'));
     retinoMovie = repmat(grayTex,1,1,1,length(isStimOn));
     stimOrder = []
     for i = 1:length(params.run.blockorder)
@@ -55,14 +55,14 @@ function [fixGridTex, retinoTex, motionTex] = MakePTBtextures(params, window)
                 retinoMovie(:,:,:,frames) = colorcircles(:,:,:,order);
         end
     end
-    % waitbar(0.3, progressBar);
+    waitbar(0.3, progressBar);
     retinoMovie(1, 1, 4, :) = 0;
     
     % Applying aperture values to movie transparency layer (and creating the texture frames)
     waitbar(0.5, progressBar, sprintf('Creating retinotopy stimulus bar apertures...\n'));
     for idx = 1:length(isStimOn)
         if isStimOn(idx)
-            retinoMovie(:, :, 4, idx) = mask(:, :, idx);
+            % retinoMovie(:, :, 4, idx) = mask(:, :, idx);
             retinoTex(idx) = Screen('MakeTexture', window, retinoMovie(:, :, :, idx));
             waitbar(0.5 + (idx/length(isStimOn))/2, progressBar);
         end

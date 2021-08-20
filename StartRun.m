@@ -34,8 +34,8 @@ function [params] = StartRun(params, window, fixGridTex, movieTex)
         
         % Drawing stimulus on framebuffer
         if ~isnan(movieTex(frameIdx))
-            Screen('DrawTexture', window, movieTex(frameIdx), [], params.display.expRect, [], [], params.run.stimContrast);
-            Screen('DrawTexture', window, movieTex(frameIdx), [], params.display.monkRect, [], [], params.run.stimContrast);
+            Screen('DrawTexture', window, movieTex(frameIdx), [], params.display.expRectStim, [], [], params.run.stimContrast);
+            Screen('DrawTexture', window, movieTex(frameIdx), [], params.display.monkRectStim, [], [], params.run.stimContrast);
         end
         
         % Drawing fixation dot on framebuffer

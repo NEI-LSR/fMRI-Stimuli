@@ -25,7 +25,7 @@ background = cat(3,uint8(zeros(size(alphaCircle))+backgroundRGB(1)),uint8(zeros(
 for i = 1:imageNumbers
     chrom(:,:,:,i) = imoverlay(imgCH{i},maskCH{i},[cRED(i),cBLUE(i),cGREEN(i)]/255);
     chromBW(:,:,:,i) = imoverlay(imgCH{i},maskCH{i},backgroundRGB/255);
-    achrom(:,:,:,i) = imoverlay(imgCH{i},maskACH{i},backgroundRGB/255);
+    achrom(:,:,:,i) = imoverlay(imgACH{i},maskACH{i},backgroundRGB/255);
     circle = zeros(size(imgCircle));
     
     red = uint8(zeros(size(alphaCircle))+cRED(i));
