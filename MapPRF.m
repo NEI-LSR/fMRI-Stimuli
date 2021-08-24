@@ -5,7 +5,7 @@ function [params] = MapPRF()
     
     params   = InitializeKeyboard(params);
     
-    params   = StartDatapixxADC(params);
+    % params   = StartDatapixxADC(params);
     
     [window] = OpenPTBwindow(params);
     
@@ -65,7 +65,7 @@ function [params] = MapPRF()
         end
     end
     
-    Datapixx('Close');
+    %Datapixx('Close');
     fprintf('\n');
     sca;
     

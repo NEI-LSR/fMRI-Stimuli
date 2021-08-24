@@ -15,7 +15,7 @@ function [params] = StartRun(params, window, fixGridTex, movieTex)
     params.run.isAborted              = 0;
     
     Priority(9);
-    Wait4scannerTTL(params);
+    %Wait4scannerTTL(params);
     params.run.startTime = clock;
     startTime = tic;
     Screen('FillRect', window, params.display.grayBackground);
@@ -39,12 +39,12 @@ function [params] = StartRun(params, window, fixGridTex, movieTex)
         end
         
         % Drawing fixation dot on framebuffer
-        if params.run.fixation.isDotOn
-            Screen('DrawDots', window, [0 0], params.run.fixation.dotSize, params.run.fixation.dotColor, params.display.expRectCenter+params.run.fixation.dotOffset, 1);
-            Screen('DrawDots', window, [0 0], params.run.fixation.dotSize, params.run.fixation.dotColor, params.display.monkRectCenter+params.run.fixation.dotOffset, 1);
-        end
+        %if params.run.fixation.isDotOn
+        %    Screen('DrawDots', window, [0 0], params.run.fixation.dotSize, params.run.fixation.dotColor, params.display.expRectCenter+params.run.fixation.dotOffset, 1);
+        %    Screen('DrawDots', window, [0 0], params.run.fixation.dotSize, params.run.fixation.dotColor, params.display.monkRectCenter+params.run.fixation.dotOffset, 1);
+        %end
         
-        params = CheckFixation(params);
+        % params = CheckFixation(params);
         
         % Drawing experimenter overlay on framebuffer (statistics)
         if isnan(movieTex(frameIdx))
@@ -56,19 +56,19 @@ function [params] = StartRun(params, window, fixGridTex, movieTex)
         Screen('FrameOval', window, params.run.fixation.windowColor(params.run.fixation.isInWindow+1,:), OffsetRect(params.run.fixation.windowRect,-params.display.expWindowRect(3),0), 3);
         
         % Drawing experimenter overlay on framebuffer (monkey's gaze position)
-        if IsInRect(params.run.fixation.coordinates(end,1), params.run.fixation.coordinates(end,2), params.display.monkWindowRect)
-            gazeRect = round([params.run.fixation.coordinates(end,1) params.run.fixation.coordinates(end,2) params.run.fixation.coordinates(end,1) params.run.fixation.coordinates(end,2)]) + [-5 -5 5 5];
-            Screen('FillOval', window, params.run.fixation.windowColor(params.run.fixation.isInWindow+1,:), OffsetRect(gazeRect,-params.display.expWindowRect(3),0));
-        end
+        %if IsInRect(params.run.fixation.coordinates(end,1), params.run.fixation.coordinates(end,2), params.display.monkWindowRect)
+        %    gazeRect = round([params.run.fixation.coordinates(end,1) params.run.fixation.coordinates(end,2) params.run.fixation.coordinates(end,1) params.run.fixation.coordinates(end,2)]) + [-5 -5 5 5];
+        %    Screen('FillOval', window, params.run.fixation.windowColor(params.run.fixation.isInWindow+1,:), OffsetRect(gazeRect,-params.display.expWindowRect(3),0));
+        %end
         
         [~, params.run.log(frameIdx, 1)] = Screen('Flip', window, time2flip);
         
-        params = CheckReward(params);
+        % params = CheckReward(params);
         
         % Logging data
         params.run.log(frameIdx,2:end) = [params.run.reward.count params.run.reward.frequency params.run.fixation.windowSize params.run.fixation.breakTolerance params.run.fixation.isGridOn params.run.fixation.isDotOn params.run.fixation.isInWindow];
         
-        CheckKeyboard;
+        % CheckKeyboard;
         if params.run.isAborted
             text2draw = FormatText2draw;
             break;

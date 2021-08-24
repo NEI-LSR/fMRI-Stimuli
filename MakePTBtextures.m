@@ -24,6 +24,7 @@ function [fixGridTex, retinoTex, motionTex] = MakePTBtextures(params, window)
     grayTex = cat(3,uint8(repmat(gray(1),stimsize(1))),uint8(repmat(gray(2),stimsize(1))),uint8(repmat(gray(3),stimsize(1))));
     
     % Creating the movie 4D array
+    
     retinoTex = NaN(length(isStimOn), 1);
     waitbar(0.2, progressBar, sprintf('Loading Shape-Color stimulus textures...\n'));
     retinoMovie = repmat(grayTex,1,1,1,length(isStimOn));
@@ -56,8 +57,7 @@ function [fixGridTex, retinoTex, motionTex] = MakePTBtextures(params, window)
         end
     end
     waitbar(0.3, progressBar);
-    retinoMovie(1, 1, 4, :) = 0;
-    
+    % retinoMovie(1, 1, 4, :) = 0;
     % Applying aperture values to movie transparency layer (and creating the texture frames)
     waitbar(0.5, progressBar, sprintf('Creating retinotopy stimulus bar apertures...\n'));
     for idx = 1:length(isStimOn)
