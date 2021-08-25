@@ -9,7 +9,9 @@ function [params] = MapPRF()
     
     [window] = OpenPTBwindow(params);
     
-    [fixGridTex, retinoTex, motionTex] = MakePTBtextures(params, window);
+    [fixGridTex, retinoTex, motionTex, rawStim] = MakePTBtextures(params, window);
+    
+    params.display.stimuli = rawStim; % This saves the actual stimuli that are presented
 
     while true
         selection = ShowDialogBox('list');
@@ -22,8 +24,8 @@ function [params] = MapPRF()
             
         elseif selection == 2
             ShowDialogBox('question');
-            params.run.type = 'retino';
-            fprintf('\nRunning retinotopy pRF mapping...\n');
+            params.run.type = 'shapecolor';
+            fprintf('\nRunning Shape-Color Paradigm...\n');
             params = StartRun(params, window, fixGridTex, retinoTex);
             
         elseif selection == 3
@@ -82,7 +84,7 @@ function [params] = MapPRF()
                 answer = listdlg('ListSize', [200 150], 'SelectionMode', 'single', 'OkString', 'Select', 'CancelString', 'Quit', ...
                                  'Name', 'Main menu', ...
                                  'ListString', {'Deliver manual reward', ...
-                                                'Run retinotopy pRF mapping', ...
+                                                'Run Shape Color Paradigm', ...
                                                 'Run motion pRF mapping', ...
                                                 'Run fixation training', ...
                                                 'Replay a previous run', ...

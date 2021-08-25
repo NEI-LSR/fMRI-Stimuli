@@ -1,4 +1,4 @@
-function [fixGridTex, retinoTex, motionTex] = MakePTBtextures(params, window)
+function [fixGridTex, retinoTex, motionTex, rawStim] = MakePTBtextures(params, window)
     
     if ~ispc && ~ismac
         progressBar = waitbar(0, sprintf(' '));
@@ -20,8 +20,8 @@ function [fixGridTex, retinoTex, motionTex] = MakePTBtextures(params, window)
     load([params.directory.stimuli '/' 'fixGrid.mat'], 'fixGrid');
     fixGridTex = Screen('MakeTexture', window, fixGrid);
     stimsize = size(chrom(:,:,1,1));
-    gray = params.display.grayBackground;
-    grayTex = cat(3,uint8(repmat(gray(1),stimsize(1))),uint8(repmat(gray(2),stimsize(1))),uint8(repmat(gray(3),stimsize(1))));
+    gray = uint8(params.display.grayBackground*255); % Need to convert to uint8 to keep consistent with the rest of the stimuli
+    grayTex = cat(3,repmat(gray(1),stimsize(1)),repmat(gray(2),stimsize(1)),repmat(gray(3),stimsize(1)));
     
     % Creating the movie 4D array
     
@@ -74,5 +74,5 @@ function [fixGridTex, retinoTex, motionTex] = MakePTBtextures(params, window)
     waitbar(1, progressBar, sprintf('Loading complete.\n'));
     close(progressBar);
     motionTex = retinoTex;
-    
+    rawStim = retinoMovie;
 end

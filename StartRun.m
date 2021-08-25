@@ -34,6 +34,20 @@ function [params] = StartRun(params, window, fixGridTex, movieTex)
         
         % Drawing stimulus on framebuffer
         if ~isnan(movieTex(frameIdx))
+            if params.display.jitter == true && rem((frameIdx-1),params.display.fps*params.run.stimlength) == 0
+                jitterV = (rand()*2-1);
+                jitterH = (rand()*2-1);
+                lBorderExp = (jitterH*params.display.jitterPix(1)+params.display.expRectStimBase(1));
+                tBorderExp = (jitterV*params.display.jitterPix(2)+params.display.expRectStimBase(2));
+                rBorderExp = (jitterH*params.display.jitterPix(1)+params.display.expRectStimBase(3));
+                bBorderExp = (jitterV*params.display.jitterPix(2)+params.display.expRectStimBase(4));
+                params.display.expRectStim = [lBorderExp tBorderExp rBorderExp bBorderExp];
+                lBorderMonk = (jitterH*params.display.jitterPix(1)+params.display.monkRectStimBase(1));
+                tBorderMonk = (jitterV*params.display.jitterPix(2)+params.display.monkRectStimBase(2));
+                rBorderMonk = (jitterH*params.display.jitterPix(1)+params.display.monkRectStimBase(3));
+                bBorderMonk = (jitterV*params.display.jitterPix(2)+params.display.monkRectStimBase(4));
+                params.display.monkRectStim = [lBorderMonk tBorderMonk rBorderMonk bBorderMonk];
+            end
             Screen('DrawTexture', window, movieTex(frameIdx), [], params.display.expRectStim, [], [], params.run.stimContrast);
             Screen('DrawTexture', window, movieTex(frameIdx), [], params.display.monkRectStim, [], [], params.run.stimContrast);
         end
@@ -68,7 +82,7 @@ function [params] = StartRun(params, window, fixGridTex, movieTex)
         % Logging data
         params.run.log(frameIdx,2:end) = [params.run.reward.count params.run.reward.frequency params.run.fixation.windowSize params.run.fixation.breakTolerance params.run.fixation.isGridOn params.run.fixation.isDotOn params.run.fixation.isInWindow];
         
-        % CheckKeyboard;
+        CheckKeyboard;
         if params.run.isAborted
             text2draw = FormatText2draw;
             break;
@@ -152,7 +166,7 @@ function [params] = StartRun(params, window, fixGridTex, movieTex)
                 
             elseif keyCode(params.key.centerFix)
                 [~, volts] = GetFixationCoordinates(params);
-                params.datapixx.calibrationOffset = -volts;
+                %params.datapixx.calibrationOffset = -volts;
                 
             elseif keyCode(params.key.manualReward)
                 GiveReward(params);
@@ -162,20 +176,20 @@ function [params] = StartRun(params, window, fixGridTex, movieTex)
                 params.run.fixation.isGridOn = ~params.run.fixation.isGridOn;
                 
             elseif keyCode(params.key.increaseXgain)
-                params.datapixx.calibrationGain(1) = params.datapixx.calibrationGain(1) + 1;
+                %params.datapixx.calibrationGain(1) = params.datapixx.calibrationGain(1) + 1;
                 
             elseif keyCode(params.key.decreaseXgain)
-                if params.datapixx.calibrationGain(1) > 1
-                    params.datapixx.calibrationGain(1) = params.datapixx.calibrationGain(1) - 1;
-                end
+                %if params.datapixx.calibrationGain(1) > 1
+                %    params.datapixx.calibrationGain(1) = params.datapixx.calibrationGain(1) - 1;
+                %end
                 
             elseif keyCode(params.key.increaseYgain)
-                params.datapixx.calibrationGain(2) = params.datapixx.calibrationGain(2) + 1;
+                %params.datapixx.calibrationGain(2) = params.datapixx.calibrationGain(2) + 1;
                 
             elseif keyCode(params.key.decreaseYgain)
-                if params.datapixx.calibrationGain(2) > 1
-                    params.datapixx.calibrationGain(2) = params.datapixx.calibrationGain(2) - 1;
-                end
+                %if params.datapixx.calibrationGain(2) > 1
+                %    params.datapixx.calibrationGain(2) = params.datapixx.calibrationGain(2) - 1;
+                %end
             
             elseif keyCode(params.key.dot2right)
                 if params.run.fixation.dotOffset(1) == -params.display.resolution(2)/4
