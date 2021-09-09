@@ -5,7 +5,7 @@ function [params] = MapPRF()
     
     params   = InitializeKeyboard(params);
     
-    % params   = StartDatapixxADC(params);
+    params   = StartDatapixxADC(params);
     
     [window] = OpenPTBwindow(params);
     
@@ -21,7 +21,6 @@ function [params] = MapPRF()
             
         elseif selection == 1
             GiveReward(params);
-            
         elseif selection == 2
             ShowDialogBox('question');
             params.run.type = 'shapecolor';
@@ -67,7 +66,7 @@ function [params] = MapPRF()
         end
     end
     
-    %Datapixx('Close');
+    Datapixx('Close');
     fprintf('\n');
     sca;
     

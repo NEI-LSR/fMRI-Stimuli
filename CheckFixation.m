@@ -1,7 +1,8 @@
 function [params] = CheckFixation(params)
     
     %[params.run.fixation.coordinates(end+1,1), params.run.fixation.coordinates(end+1,2)] = GetMouse(window);
-    params.run.fixation.coordinates(end+1,:) = GetFixationCoordinates(params);
+    params.run.fixation.coordinates(end+1,:) = GetAveragedFixationCoordinates(params);
+    %params.run.fixation.coordinates(end+1,:) = GetFixationCoordinates(params);
     params.run.fixation.isInWindow = IsInCircle(params.run.fixation.coordinates(end,1), params.run.fixation.coordinates(end,2), params.run.fixation.windowRect);
     
     if params.run.fixation.isBroken && params.run.fixation.isInWindow

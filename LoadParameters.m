@@ -3,7 +3,7 @@ function [params] = LoadParameters()
     %% DataPixx parameters
     params.datapixx.analogInRate         = 1000;                                                                                       % In Hz
     params.datapixx.analogOutRate        = 1000;                                                                                       % In Hz
-    params.datapixx.adcChannels          = [1 2 3 4 5 6 7];                                                                            % ADC channels assigned to inputs (7 = scannerTTL)
+    params.datapixx.adcChannels          = [0 1 2 3 4 5 6 7];                                                                            % ADC channels assigned to inputs (7 = scannerTTL)
     params.datapixx.dacChannels          = 1;                                                                                          % DAC channels assigned to outputs
     params.datapixx.adcBufferAddress     = 4e6;                                                                                        % Set DataPixx internal ADC buffer address
     params.datapixx.dacBufferAddress     = 8e6;                                                                                        % Set DataPixx internal DAC buffer address
@@ -45,7 +45,7 @@ function [params] = LoadParameters()
     params.run.duration                  = 0;                                                                                          % In seconds
     params.run.isAborted                 = 0;                                                                                          % Flag to manually end the run
     params.run.isExperiment              = 1;                                                                                          % 0 = training
-    params.run.type                      = 'retino';                                                                                   % 'retino' or 'motion' or 'fixation'
+    params.run.type                      = 'shapecolor';                                                                                   % 'retino' or 'motion' or 'fixation'
     params.run.stimContrast              = 1;                                                                                          % 0 to 1
     params.run.frameIdx                  = 0;                                                                                          % Frame counter
     params.run.log                       = NaN(params.run.exactDuration*params.display.fps, 8); % Preallocating frame log
@@ -69,7 +69,7 @@ function [params] = LoadParameters()
     params.run.fixation.breakStartIdx    = 1;                                                                                          % Frame index of fixation break start
     params.run.fixation.breakTolerance   = 0.5;                                                                                        % In seconds (allowed fixation break duration)
     params.run.fixation.log              = 0;                                                                                          % Fixation durations log
-    
+    params.run.fixation.numSamples       = 50;
     
     %% Reward parameters
     params.run.reward.TTL                = 0.015;                                                                                      % In seconds
@@ -87,8 +87,8 @@ function [params] = LoadParameters()
     %% Defining screen rectangles of experimenter and monkey displays
     function DefineScreenRectangles
         
-        %params.display.windowRect        = [0, 0, 2*params.display.resolution(2)*16/9, params.display.resolution(2)];                  % Screen rectangle spanning 2 monitors (experimenter + monkey, each at 1920x1080) 
-        params.display.windowRect        = [0, 0, params.display.resolution(2)*16/9, params.display.resolution(2)]
+        params.display.windowRect        = [0, 0, 2*params.display.resolution(2)*16/9, params.display.resolution(2)];                  % Screen rectangle spanning 2 monitors (experimenter + monkey, each at 1920x1080) 
+        %params.display.windowRect       = [0, 0, params.display.resolution(2)*16/9, params.display.resolution(2)]
         params.display.expWindowRect     = params.display.windowRect;                                                                              
         params.display.expWindowRect(3)  = params.display.expWindowRect(3) / 2;                                                        % Screen rectangle of experimenter display
         params.display.monkWindowRect    = params.display.windowRect;                                                                              
@@ -97,7 +97,7 @@ function [params] = LoadParameters()
         [params.display.expRectCenter(1), params.display.expRectCenter(2)]   = RectCenter(params.display.expWindowRect);               % Experimenter display screen rectangle center
         [params.display.monkRectCenter(1), params.display.monkRectCenter(2)] = RectCenter(params.display.monkWindowRect);              % Monkey display screen rectangle center
         
-        params.display.stimsize = 299; % get stimulus size in pixels
+        params.display.stimsize = 600; % get stimulus size in pixels
         params.display.expRect  = CenterRectOnPoint([-1 -1 1 1]*params.display.resolution(2)/2, params.display.expRectCenter(1), params.display.expRectCenter(2));   % Experimenter display stimulus rectangle--for fix grid
         params.display.monkRect = CenterRectOnPoint([-1 -1 1 1]*params.display.resolution(2)/2, params.display.monkRectCenter(1), params.display.monkRectCenter(2)); % Monkey display stimulus rectangle--for fix grid
         params.display.expRectStimBase = CenterRectOnPoint([-0.25 -0.25 0.25 0.25]*params.display.stimsize, params.display.expRectCenter(1), params.display.expRectCenter(2)); % Initial experimenter display stimulus rectangle--for mTurk stimuli, before jitter

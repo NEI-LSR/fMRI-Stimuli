@@ -53,15 +53,15 @@ function [params] = StartRun(params, window, fixGridTex, movieTex)
         end
         
         % Drawing fixation dot on framebuffer
-        %if params.run.fixation.isDotOn
-        %    Screen('DrawDots', window, [0 0], params.run.fixation.dotSize, params.run.fixation.dotColor, params.display.expRectCenter+params.run.fixation.dotOffset, 1);
-        %    Screen('DrawDots', window, [0 0], params.run.fixation.dotSize, params.run.fixation.dotColor, params.display.monkRectCenter+params.run.fixation.dotOffset, 1);
-        %end
+        if params.run.fixation.isDotOn
+            Screen('DrawDots', window, [0 0], params.run.fixation.dotSize, params.run.fixation.dotColor, params.display.expRectCenter+params.run.fixation.dotOffset, 1);
+            Screen('DrawDots', window, [0 0], params.run.fixation.dotSize, params.run.fixation.dotColor, params.display.monkRectCenter+params.run.fixation.dotOffset, 1);
+        end
         
-        % params = CheckFixation(params);
+        params = CheckFixation(params);
         
         % Drawing experimenter overlay on framebuffer (statistics)
-        if isnan(movieTex(frameIdx))
+        if ~isnan(movieTex(frameIdx))
             [text2draw, margin, textSize] = FormatText2draw;
             DrawFormattedText(window, text2draw, margin, params.display.expWindowRect(4)-textSize-margin, 1, [], [], [], [], [], params.display.expWindowRect);
         end
@@ -70,14 +70,14 @@ function [params] = StartRun(params, window, fixGridTex, movieTex)
         Screen('FrameOval', window, params.run.fixation.windowColor(params.run.fixation.isInWindow+1,:), OffsetRect(params.run.fixation.windowRect,-params.display.expWindowRect(3),0), 3);
         
         % Drawing experimenter overlay on framebuffer (monkey's gaze position)
-        %if IsInRect(params.run.fixation.coordinates(end,1), params.run.fixation.coordinates(end,2), params.display.monkWindowRect)
-        %    gazeRect = round([params.run.fixation.coordinates(end,1) params.run.fixation.coordinates(end,2) params.run.fixation.coordinates(end,1) params.run.fixation.coordinates(end,2)]) + [-5 -5 5 5];
-        %    Screen('FillOval', window, params.run.fixation.windowColor(params.run.fixation.isInWindow+1,:), OffsetRect(gazeRect,-params.display.expWindowRect(3),0));
-        %end
+        if IsInRect(params.run.fixation.coordinates(end,1), params.run.fixation.coordinates(end,2), params.display.monkWindowRect)
+            gazeRect = round([params.run.fixation.coordinates(end,1) params.run.fixation.coordinates(end,2) params.run.fixation.coordinates(end,1) params.run.fixation.coordinates(end,2)]) + [-5 -5 5 5];
+            Screen('FillOval', window, params.run.fixation.windowColor(params.run.fixation.isInWindow+1,:), OffsetRect(gazeRect,-params.display.expWindowRect(3),0));
+        end
         
         [~, params.run.log(frameIdx, 1)] = Screen('Flip', window, time2flip);
         
-        % params = CheckReward(params);
+        params = CheckReward(params);
         
         % Logging data
         params.run.log(frameIdx,2:end) = [params.run.reward.count params.run.reward.frequency params.run.fixation.windowSize params.run.fixation.breakTolerance params.run.fixation.isGridOn params.run.fixation.isDotOn params.run.fixation.isInWindow];
@@ -165,8 +165,8 @@ function [params] = StartRun(params, window, fixGridTex, movieTex)
                 params.run.fixation.isDotOn = ~params.run.fixation.isDotOn;
                 
             elseif keyCode(params.key.centerFix)
-                [~, volts] = GetFixationCoordinates(params);
-                %params.datapixx.calibrationOffset = -volts;
+                [~, volts] = GetAveragedFixationCoordinates(params);
+                params.datapixx.calibrationOffset = -volts;
                 
             elseif keyCode(params.key.manualReward)
                 GiveReward(params);
@@ -176,20 +176,20 @@ function [params] = StartRun(params, window, fixGridTex, movieTex)
                 params.run.fixation.isGridOn = ~params.run.fixation.isGridOn;
                 
             elseif keyCode(params.key.increaseXgain)
-                %params.datapixx.calibrationGain(1) = params.datapixx.calibrationGain(1) + 1;
+                params.datapixx.calibrationGain(1) = params.datapixx.calibrationGain(1) + 1;
                 
             elseif keyCode(params.key.decreaseXgain)
-                %if params.datapixx.calibrationGain(1) > 1
-                %    params.datapixx.calibrationGain(1) = params.datapixx.calibrationGain(1) - 1;
-                %end
+                if params.datapixx.calibrationGain(1) > 1
+                    params.datapixx.calibrationGain(1) = params.datapixx.calibrationGain(1) - 1;
+                end
                 
             elseif keyCode(params.key.increaseYgain)
-                %params.datapixx.calibrationGain(2) = params.datapixx.calibrationGain(2) + 1;
+                params.datapixx.calibrationGain(2) = params.datapixx.calibrationGain(2) + 1;
                 
             elseif keyCode(params.key.decreaseYgain)
-                %if params.datapixx.calibrationGain(2) > 1
-                %    params.datapixx.calibrationGain(2) = params.datapixx.calibrationGain(2) - 1;
-                %end
+                if params.datapixx.calibrationGain(2) > 1
+                    params.datapixx.calibrationGain(2) = params.datapixx.calibrationGain(2) - 1;
+                end
             
             elseif keyCode(params.key.dot2right)
                 if params.run.fixation.dotOffset(1) == -params.display.resolution(2)/4

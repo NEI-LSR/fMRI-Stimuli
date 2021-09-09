@@ -7,9 +7,9 @@ function [coordinates, volts] = GetFixationCoordinates(params)
     Datapixx('RegWrRd');                                                                                                         % Updating registers
     
     if strcmpi(params.run.fixation.eye2track, 'left')
-        volts = volts(params.datapixx.adcChannels(1:2));                                                                         % Selecting ADC voltages for channels 1 & 2 (left eye XY)
+        volts = volts(params.datapixx.adcChannels(2:3));                                                                         % Selecting ADC voltages for channels 1 & 2 (left eye XY)
     elseif strcmpi(params.run.fixation.eye2track, 'right')
-        volts = volts(params.datapixx.adcChannels(4:5));                                                                         % Selecting ADC voltages for channels 4 & 5 (right eye XY)
+        volts = volts(params.datapixx.adcChannels(5:6));                                                                         % Selecting ADC voltages for channels 4 & 5 (right eye XY)
     end
     
     degrees = (volts + params.datapixx.calibrationOffset) .* params.datapixx.calibrationGain .* params.datapixx.calibrationSign; % Converting voltages into degrees of visual angle (from center)
