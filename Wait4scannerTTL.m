@@ -8,7 +8,7 @@ function [] = Wait4scannerTTL(params)
             Datapixx('RegWrRd');
             volts = Datapixx('GetAdcVoltages');
             Datapixx('RegWrRd');
-            if volts(params.datapixx.adcChannels(7)) > thresholdTTL
+            if volts(params.datapixx.adcChannels(8)) > thresholdTTL
                 break;
             end
         end

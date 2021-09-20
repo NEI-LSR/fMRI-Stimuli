@@ -15,7 +15,7 @@ function [params] = StartRun(params, window, fixGridTex, movieTex)
     params.run.isAborted              = 0;
     
     Priority(9);
-    %Wait4scannerTTL(params);
+    Wait4scannerTTL(params);
     params.run.startTime = clock;
     startTime = tic;
     Screen('FillRect', window, params.display.grayBackground);
