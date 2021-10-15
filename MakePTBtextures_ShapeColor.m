@@ -12,41 +12,48 @@ function [fixGridTex, retinoTex, motionTex, rawStim] = MakePTBtextures(params, w
     
     % Loading stimulus files
     load([params.directory.stimuli '/' 'isStimOn.mat'], 'isStimOn');
-    isStimOn = logical(ones(1,2304));
-    load([params.directory.stimuli '/' '1hdartboard.mat'], 'image');
-    horz1 = image;
-    load([params.directory.stimuli '/' '2hdartboard.mat'], 'image');
-    horz2 = image;
-    load([params.directory.stimuli '/' '1vdartboard.mat'], 'image');
-    vert1 = image;
-    load([params.directory.stimuli '/' '2vdartboard.mat'], 'image');
-    vert2 = image;
+    isStimOn = logical(ones(1,280));
+    load([params.directory.stimuli '/' 'achrom.mat'], 'achrom');
+    load([params.directory.stimuli '/' 'chrom.mat'], 'chrom');
+    load([params.directory.stimuli '/' 'chromBW.mat'], 'chromBW');
+    load([params.directory.stimuli '/' 'colorcircles.mat'], 'colorcircles');
     load([params.directory.stimuli '/' 'fixGrid.mat'], 'fixGrid');
     fixGridTex = Screen('MakeTexture', window, fixGrid);
-    stimsize = size(vert2(:,:,1));
+    stimsize = size(chrom(:,:,1,1));
     gray = uint8(params.display.grayBackground*255); % Need to convert to uint8 to keep consistent with the rest of the stimuli
     grayTex = cat(3,repmat(gray(1),stimsize(1)),repmat(gray(2),stimsize(1)),repmat(gray(3),stimsize(1)));
     
     % Creating the movie 4D array
     
     retinoTex = NaN(length(isStimOn), 1);
-    waitbar(0.2, progressBar, sprintf('Loading Meridian Mapper stimulus textures...\n'));
+    waitbar(0.2, progressBar, sprintf('Loading Shape-Color stimulus textures...\n'));
     retinoMovie = repmat(grayTex,1,1,1,length(isStimOn));
-    horz_both = cat(4,horz1, horz2);
-    horz_block = repmat(horz_both, [1,1,1,72]);
-    vert_both = cat(4,vert1, vert2);
-    vert_block = repmat(vert_both, [1,1,1,72]);
-    %stimOrder = []
+    stimOrder = []
     for i = 1:length(params.run.blockorder)
         switch params.run.blockorder(i)
             case 0 % gray
+                stimOrder = cat(2,stimOrder,zeros(1,14));
                 % Texture should already be gray
-            case 1 % Horizontal
-                frames = (1:144)+(i-1)*144
-                retinoMovie(:,:,:,frames) = horz_block;
-            case 2 % Vertical
-                frames = (1:144)+(i-1)*144
-                retinoMovie(:,:,:,frames) = vert_block;
+            case 1 % Chromatic Shapes Uncolored
+                order = randperm(params.run.blocklength);
+                stimOrder = cat(2,stimOrder,order);
+                frames = (1:14)+(i-1)*14;
+                retinoMovie(:,:,:,frames) = chromBW(:,:,:,order);
+            case 2 % Chromatic Shapes Colored
+                order = randperm(params.run.blocklength);
+                stimOrder = cat(2,stimOrder,order);
+                frames = (1:14)+(i-1)*14;
+                retinoMovie(:,:,:,frames) = chrom(:,:,:,order);
+            case 3 % Achromatic Shapes
+                order = randperm(params.run.blocklength);
+                stimOrder = cat(2,stimOrder,order);
+                frames = (1:14)+(i-1)*14;
+                retinoMovie(:,:,:,frames) = achrom(:,:,:,order);
+            case 4 % Colored Circles
+                order = randperm(params.run.blocklength);
+                stimOrder = cat(2,stimOrder,order);
+                frames = (1:14)+(i-1)*14;
+                retinoMovie(:,:,:,frames) = colorcircles(:,:,:,order);
         end
     end
     waitbar(0.3, progressBar);
