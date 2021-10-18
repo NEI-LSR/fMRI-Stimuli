@@ -1,7 +1,8 @@
-function [params] = MapPRF()
+function [params] = MeridianMapper()
+
     
-    params   = LoadParameters;
-    edit LoadParameters.m
+    params   = LoadParameters_MM;
+    edit LoadParameters_MM.m
     
     params   = InitializeKeyboard(params);
     
@@ -9,7 +10,7 @@ function [params] = MapPRF()
     
     [window] = OpenPTBwindow(params);
     
-    [fixGridTex, retinoTex, motionTex, rawStim] = MakePTBtextures(params, window);
+    [fixGridTex, retinoTex, motionTex, rawStim] = MakePTBtextures_meridian_mapper(params, window);
     
     params.display.stimuli = rawStim; % This saves the actual stimuli that are presented
 
@@ -23,23 +24,11 @@ function [params] = MapPRF()
             GiveReward(params);
         elseif selection == 2
             ShowDialogBox('question');
-            params.run.type = 'shapecolor';
-            fprintf('\nRunning Shape-Color Paradigm...\n');
+            params.run.type = 'Meridian Mapper';
+            fprintf('\nRunning Meridian Mapper...\n');
             params = StartRun(params, window, fixGridTex, retinoTex);
-            
+
         elseif selection == 3
-            ShowDialogBox('question');
-            params.run.type = 'motion';
-            fprintf('\nRunning motion pRF mapping...\n');
-            params = StartRun(params, window, fixGridTex, motionTex);
-            
-        elseif selection == 4
-            params.run.isExperiment = 0;
-            params.run.type = 'fixation';
-            fprintf('\nRunning fixation training...\n');
-            params = StartRun(params, window, fixGridTex, NaN(length(retinoTex),1));
-            
-        elseif selection == 5
             runFilename  = ShowDialogBox('file');
             if ~isempty(runFilename)
                 paramsReplay = load(runFilename, 'params');
@@ -54,14 +43,14 @@ function [params] = MapPRF()
                 end
             end
             
-        elseif selection == 6
+        elseif selection == 4
             [~, subjectID] = fileparts(params.directory.subject);
             [~, sessionDate] = ShowDialogBox('file');
             if ~isempty(sessionDate)
                 PlotPerformance(subjectID, sessionDate);
             end
             
-        elseif selection == 7
+        elseif selection == 5
             ShowDialogBox('input');
         end
     end
@@ -83,9 +72,7 @@ function [params] = MapPRF()
                 answer = listdlg('ListSize', [200 150], 'SelectionMode', 'single', 'OkString', 'Select', 'CancelString', 'Quit', ...
                                  'Name', 'Main menu', ...
                                  'ListString', {'Deliver manual reward', ...
-                                                'Run Shape Color Paradigm', ...
-                                                'Run motion pRF mapping', ...
-                                                'Run fixation training', ...
+                                                'Run Meridian Mapper', ...
                                                 'Replay a previous run', ...
                                                 'Plot performance', ...
                                                 'Modify run parameters'});

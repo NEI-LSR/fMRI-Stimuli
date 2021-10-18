@@ -14,18 +14,18 @@ function [fixGridTex, retinoTex, motionTex, rawStim] = MakePTBtextures(params, w
     load([params.directory.stimuli '/' 'isStimOn.mat'], 'isStimOn');
     isStimOn = logical(ones(1,2304));
     load([params.directory.stimuli '/' '1hdartboard.mat'], 'image');
-    horz1 = image;
+    horz1 = uint8(image*255);
     load([params.directory.stimuli '/' '2hdartboard.mat'], 'image');
-    horz2 = image;
+    horz2 = uint8(image*255);
     load([params.directory.stimuli '/' '1vdartboard.mat'], 'image');
-    vert1 = image;
+    vert1 = uint8(image*255);
     load([params.directory.stimuli '/' '2vdartboard.mat'], 'image');
-    vert2 = image;
+    vert2 = uint8(image*255);
     load([params.directory.stimuli '/' 'fixGrid.mat'], 'fixGrid');
     fixGridTex = Screen('MakeTexture', window, fixGrid);
     stimsize = size(vert2(:,:,1));
     gray = uint8(params.display.grayBackground*255); % Need to convert to uint8 to keep consistent with the rest of the stimuli
-    grayTex = cat(3,repmat(gray(1),stimsize(1)),repmat(gray(2),stimsize(1)),repmat(gray(3),stimsize(1)));
+    grayTex = cat(3,repmat(gray(1),stimsize(1),stimsize(2)),repmat(gray(2),stimsize(1),stimsize(2)),repmat(gray(3),stimsize(1),stimsize(2)));
     
     % Creating the movie 4D array
     
@@ -42,10 +42,10 @@ function [fixGridTex, retinoTex, motionTex, rawStim] = MakePTBtextures(params, w
             case 0 % gray
                 % Texture should already be gray
             case 1 % Horizontal
-                frames = (1:144)+(i-1)*144
+                frames = (1:144)+(i-1)*144;
                 retinoMovie(:,:,:,frames) = horz_block;
             case 2 % Vertical
-                frames = (1:144)+(i-1)*144
+                frames = (1:144)+(i-1)*144;
                 retinoMovie(:,:,:,frames) = vert_block;
         end
     end
@@ -67,5 +67,5 @@ function [fixGridTex, retinoTex, motionTex, rawStim] = MakePTBtextures(params, w
     waitbar(1, progressBar, sprintf('Loading complete.\n'));
     close(progressBar);
     motionTex = retinoTex;
-    rawStim = retinoMovie;
+    rawStim = 0 %retinoMovie;
 end
