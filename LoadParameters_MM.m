@@ -26,7 +26,7 @@ function [params] = LoadParameters_MM()
     params.display.viewingDistance       = 57.0;                                                                                       % In cm
     params.display.size                  = [46.3 26.7];                                                                                % In cm
     params.display.fps                   = 60;                                                                                         % In Hz
-    params.display.ifi                   = 1 / params.display.fps;                                                                     % Inter frame interval
+    params.display.ifi                   = 1 / (2*params.display.fps);% bugged?                                                                 % Inter frame interval
     params.display.resolution            = [1920 1080]; % In pixels
     params.display.scaleHD               = params.display.resolution(2) / 1080;                                                        % Scaling factor relative to HD (1080p)
     DefineScreenRectangles;
@@ -51,7 +51,7 @@ function [params] = LoadParameters_MM()
     params.run.log                       = NaN(params.run.exactDuration*params.display.fps, 8); % Preallocating frame log
     params.run.blockorder                = [1,0,2,0,1,0,2,0,1,0,2,0,1,0,2,0]%[0 1 3 2 4 0 3 1 4 2 0 2 3 4 1 0 4 3 2 1];
     params.run.blocklength               = 12;
-    params.run.stimlength                = params.run.exactDuration/((params.run.blocklength * length(params.run.blockorder)));
+    params.run.stimlength                = params.run.exactDuration/2304;
     
     %% Fixation parameters
     params.run.fixation.eye2track        = 'left';                                                                                     % 'left' OR 'right' (not both)

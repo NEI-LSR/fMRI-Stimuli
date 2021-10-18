@@ -1,8 +1,8 @@
 % TODO: vectorize me... anti-aliasing?
 clear all
 tic
-img_width = 1920;
-img_height = 1080;
+img_width = 850;
+img_height = 480;
 img_path = pwd;
 img_base_name = 'dartboard_thick';
 n_imgs = 2;

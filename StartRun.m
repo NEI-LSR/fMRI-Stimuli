@@ -69,7 +69,7 @@ function [params] = StartRun(params, window, fixGridTex, movieTex)
         % Drawing experimenter overlay on framebuffer (fixation window circle)
         Screen('FrameOval', window, params.run.fixation.windowColor(params.run.fixation.isInWindow+1,:), OffsetRect(params.run.fixation.windowRect,-params.display.expWindowRect(3),0), 3);
         
-        Drawing experimenter overlay on framebuffer (monkey's gaze position)
+        % Drawing experimenter overlay on framebuffer (monkey's gaze position)
         if IsInRect(params.run.fixation.coordinates(end,1), params.run.fixation.coordinates(end,2), params.display.monkWindowRect)
             gazeRect = round([params.run.fixation.coordinates(end,1) params.run.fixation.coordinates(end,2) params.run.fixation.coordinates(end,1) params.run.fixation.coordinates(end,2)]) + [-5 -5 5 5];
             Screen('FillOval', window, params.run.fixation.windowColor(params.run.fixation.isInWindow+1,:), OffsetRect(gazeRect,-params.display.expWindowRect(3),0));

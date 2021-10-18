@@ -10,10 +10,8 @@ function [params] = MeridianMapper()
     
     [window] = OpenPTBwindow(params);
     
-    [fixGridTex, retinoTex, motionTex, rawStim] = MakePTBtextures_meridian_mapper(params, window);
+    [fixGridTex, retinoTex] = MakePTBtextures_meridian_mapper(params, window);
     
-    params.display.stimuli = rawStim; % This saves the actual stimuli that are presented
-
     while true
         selection = ShowDialogBox('list');
         

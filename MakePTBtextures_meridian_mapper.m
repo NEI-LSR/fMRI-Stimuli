@@ -1,4 +1,4 @@
-function [fixGridTex, retinoTex, motionTex, rawStim] = MakePTBtextures(params, window)
+function [fixGridTex, retinoTex] = MakePTBtextures(params, window)
     
     if ~ispc && ~ismac
         progressBar = waitbar(0, sprintf(' '));
@@ -66,6 +66,5 @@ function [fixGridTex, retinoTex, motionTex, rawStim] = MakePTBtextures(params, w
     retinoTex    = repelem(retinoTex, params.display.fps/playbackFps);
     waitbar(1, progressBar, sprintf('Loading complete.\n'));
     close(progressBar);
-    motionTex = retinoTex;
-    rawStim = 0 %retinoMovie;
+  
 end
