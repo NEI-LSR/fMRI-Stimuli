@@ -8,6 +8,7 @@ function [varargout] = OpenPTBwindow(params)
     Screen('Preference', 'SuppressAllWarnings', 1);
     Screen('Preference', 'DefaultFontSize', round(12*params.display.scaleHD));
     Screen('Preference', 'DefaultFontName', 'Courier');
+    %PsychImaging('AddTask', 'General', 'UseRetinaResolution');
     PsychImaging('PrepareConfiguration');
     
     if params.system.screens == 1

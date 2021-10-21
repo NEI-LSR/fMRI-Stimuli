@@ -1,8 +1,7 @@
-pfunction [params] = LoadParameters()
+function [params] = LoadParameters()
     %% System
     params.system.screens                = 1;
     params.system.debug                  = true;
-
     %% DataPixx parameters
     params.datapixx.analogInRate         = 1000;                                                                                       % In Hz
     params.datapixx.analogOutRate        = 1000;                                                                                       % In Hz
@@ -51,7 +50,7 @@ pfunction [params] = LoadParameters()
     params.display.pixPerCm              = params.display.expWindowRect([3 4]) ./ params.display.size;                                 % Pixels/cm
     params.display.pixPerDeg             = 2 * (params.display.pixPerCm * params.display.viewingDistance * tand(0.5)); % Pixels/degree
     params.display.jitterPix             = params.display.jitterDegs * params.display.pixPerDeg
-    params.display.grayBackground        = [0.5,0.5,0.5]                                                                               % Gray color
+    params.display.grayBackground        = [68 54 74]/255;%[0.5,0.5,0.5]                                                                               % Gray color
     params.display.blackBackground       = [0 0 0];                                                                                    % Black color
     params.key.names                     = struct([]);                                                                                 % Preallocating key log
     params.display.stimuli               = [];
@@ -67,7 +66,7 @@ pfunction [params] = LoadParameters()
     params.run.stimContrast              = 1;                                                                                          % 0 to 1
     params.run.frameIdx                  = 0;                                                                                          % Frame counter
     params.run.log                       = NaN(params.run.exactDuration*params.display.fps, 8); % Preallocating frame log
-    params.run.blockorder                = [0 1 3 2 4 0 3 1 4 2 0 2 3 4 1 0 4 3 2 1]; % Add loading csv
+    params.run.blockorder                = [2 3 2 3]%[0 1 3 2 4 0 3 1 4 2 0 2 3 4 1 0 4 3 2 1]; % Add loading csv
     params.run.blocklength               = 14;
     params.run.stimlength                = params.run.exactDuration/((params.run.blocklength * length(params.run.blockorder)));
     
@@ -129,11 +128,13 @@ pfunction [params] = LoadParameters()
             [params.display.expRectCenter(1), params.display.expRectCenter(2)]   = RectCenter(params.display.expWindowRect);               % Experimenter display screen rectangle center
             [params.display.monkRectCenter(1), params.display.monkRectCenter(2)] = RectCenter(params.display.monkWindowRect); 
             params.display.stimsize = 600 % get stimulus size in pixels, this might cause problems
-            params.display.expRectStim = CenterRectOnPoint([-960 -540 960 540], params.display.expRectCenter(1), params.display.expRectCenter(2)); % Experimenter stimulus window
-            params.display.monkRectStim = CenterRectOnPoint([-960 -540 960 540], params.display.monkRectCenter(1), params.display.monkRectCenter(2)); % Monkey stimulus window
+            params.display.expRect  = CenterRectOnPoint([-1 -1 1 1]*params.display.resolution2(2)/2, params.display.expRectCenter(1), params.display.expRectCenter(2));   % Experimenter display stimulus rectangle--for fix grid
+            params.display.monkRect = CenterRectOnPoint([-1 -1 1 1]*params.display.resolution(2)/2, params.display.monkRectCenter(1), params.display.monkRectCenter(2)); % Monkey display stimulus rectangle--for fix grid
+            params.display.expRectStim = CenterRectOnPoint([-0.5 -0.5 0.5 0.5]*params.display.stimsize, params.display.expRectCenter(1), params.display.expRectCenter(2)); % Experimenter stimulus window
+            params.display.monkRectStim = CenterRectOnPoint([-0.5 -0.5 0.5 0.5]*params.display.stimsize, params.display.monkRectCenter(1), params.display.monkRectCenter(2)); % Monkey stimulus window
             params.display.jitter = true;%true; % Jitter stimulus around the screen
             params.display.jitterDegs = 2; % Jitter amount in degrees of visual angle
         end
     end % Function end
-    
-end % Function end
+
+end % Function end   

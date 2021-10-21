@@ -146,7 +146,7 @@ function [params] = StartRun(params, window, fixGridTex, movieTex, varargin)
 
             % Drawing stimulus on framebuffer
             if ~isnan(movieTex(frameIdx))
-                % Screen('DrawTexture', window2, movieTex(frameIdx), [], params.display.expRectStim, [], [], params.run.stimContrast);
+                Screen('DrawTexture', window2, movieTex(frameIdx), [], params.display.expRectStim, [], [], params.run.stimContrast);
                 Screen('DrawTexture', window, movieTex(frameIdx), [], params.display.monkRectStim, [], [], params.run.stimContrast);
             end
 
