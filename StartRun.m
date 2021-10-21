@@ -33,7 +33,7 @@ function [params] = StartRun(params, window, fixGridTex, movieTex, varargin)
         flips = 0:params.display.ifi:params.run.exactDuration + params.display.ifi
         flips = flips + time2flip
         
-        % Beginning runf
+        % Beginning run
         for frameIdx = 1:params.run.exactDuration * params.display.fps
             params.run.frameIdx = frameIdx;
             %time2flip = time2flip + params.display.ifi;
@@ -46,7 +46,7 @@ function [params] = StartRun(params, window, fixGridTex, movieTex, varargin)
 
             % Drawing stimulus on framebuffer
             if ~isnan(movieTex(frameIdx))
-                if params.display.jitter == true
+                if params.display.jitter == true && rem(frameIdx,params.display.fps) == 0
                     jitterV = (rand()*2-1);
                     jitterH = (rand()*2-1);
                     lBorderExp = (jitterH*params.display.jitterPix(1)+params.display.expRectStimBase(1));
@@ -92,7 +92,7 @@ function [params] = StartRun(params, window, fixGridTex, movieTex, varargin)
             end
 
             [~, params.run.log(frameIdx, 1)] = Screen('Flip', window, flips(frameIdx));
-            
+            disp(params.run.log(frameIdx, 1))
             if params.system.debug == false
                 params = CheckReward(params);
             end
