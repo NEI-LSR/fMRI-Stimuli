@@ -1,16 +1,18 @@
 function [params] = LoadParameters_MM()
-    
+    %% System
+    params.system.screens                = 1;
+    params.system.debug                  = true;
+
     %% DataPixx parameters
     params.datapixx.analogInRate         = 1000;                                                                                       % In Hz
     params.datapixx.analogOutRate        = 1000;                                                                                       % In Hz
-    params.datapixx.adcChannels          = [0 1 2 3 4 5 6 7];                                                                            % ADC channels assigned to inputs (7 = scannerTTL)
+    params.datapixx.adcChannels          = [0 1 2 3 4 5 6 7];                                                                          % ADC channels assigned to inputs (7 = scannerTTL)
     params.datapixx.dacChannels          = 1;                                                                                          % DAC channels assigned to outputs
     params.datapixx.adcBufferAddress     = 4e6;                                                                                        % Set DataPixx internal ADC buffer address
     params.datapixx.dacBufferAddress     = 8e6;                                                                                        % Set DataPixx internal DAC buffer address
     params.datapixx.calibrationOffset    = [0.00 0.00];                                                                                % Eye tracker calibration voltage offset    ([X Y] axes)
     params.datapixx.calibrationGain      = [10 10];                                                                                    % Eye tracker calibration voltage gain      ([X Y] axes)
-    params.datapixx.calibrationSign      = [-1 1];                                                                                     % Eye tracker calibration voltage inversion ([X Y] axes)
-    
+    params.datapixx.calibrationSign      = [-1 1];                                                                                     % Eye tracker calibration voltage inversion ([X Y] axes)ppq pppq
     
     %% Directories
     subjectID                            = 'Wooster';                                                                                 % Monkey's name
@@ -22,18 +24,33 @@ function [params] = LoadParameters_MM()
     
     
     %% Display parameters
-    params.display.num                   = max(Screen('Screens'));                                                                     % 0 = internal display
+    if params.system.screens == 1
+        params.display.num                   = max(Screen('Screens'));                                                                 % 0 = internal display
+    elseif params.system.screens == 2
+        params.display.num1                   = max(Screen('Screens'));
+        params.display.num2                   = max(Screen('Screens'))-1; 
+    end
+    
     params.display.viewingDistance       = 57.0;                                                                                       % In cm
     params.display.size                  = [46.3 26.7];                                                                                % In cm
-    params.display.fps                   = 60;                                                                                         % In Hz
-    params.display.ifi                   = 1 / (2*params.display.fps);% bugged?                                                                 % Inter frame interval
-    params.display.resolution            = [1920 1080]; % In pixels
+    params.display.fps                   = 4;                                                                                         % In Hz
+    params.display.ifi                   = 1 / params.display.fps;                                                                 % Inter frame interval
+    params.display.resolution            = [1920 1080];                                                                                % In pixels
+    
+    if params.system.screens == 2
+        params.display.resolution2       = [1920 1200]; 
+    end
     params.display.scaleHD               = params.display.resolution(2) / 1080;                                                        % Scaling factor relative to HD (1080p)
+    
+    if params.system.screens == 2
+        params.display.scaleHD2          = params.display.resolution2(2) / 1080;
+    end
+    
     DefineScreenRectangles;
     params.display.pixPerCm              = params.display.expWindowRect([3 4]) ./ params.display.size;                                 % Pixels/cm
-    params.display.pixPerDeg             = 2 * (params.display.pixPerCm * params.display.viewingDistance * tand(0.5)); % Pixels/degree
+    params.display.pixPerDeg             = 2 * (params.display.pixPerCm * params.display.viewingDistance * tand(0.5));                 % Pixels/degree
     params.display.jitterPix             = params.display.jitterDegs * params.display.pixPerDeg
-    params.display.grayBackground        = [0.5,0.5,0.5]% [152, 132, 151]/255;                                                                              % Gray color
+    params.display.grayBackground        = [0.5,0.5,0.5];                                                                              % Gray color
     params.display.blackBackground       = [0 0 0];                                                                                    % Black color
     params.key.names                     = struct([]);                                                                                 % Preallocating key log
     params.display.stimuli               = [];
@@ -45,11 +62,19 @@ function [params] = LoadParameters_MM()
     params.run.duration                  = 0;                                                                                          % In seconds
     params.run.isAborted                 = 0;                                                                                          % Flag to manually end the run
     params.run.isExperiment              = 1;                                                                                          % 0 = training
-    params.run.type                      = 'meridianmapper'%'shapecolor';                                                              % 'meridianmapper' or 'shapecolor'
-    params.run.stimContrast              = 1;                                                                                          % 0 to 1
+    params.run.type                      = 'meridianmapper';                                                                           % 'meridianmapper' or 'shapecolor'
+    params.run.stimContrast              = 1;                                                                                          sca
+    sca
+    % 0 to 1
     params.run.frameIdx                  = 0;                                                                                          % Frame counter
-    params.run.log                       = NaN(params.run.exactDuration*params.display.fps, 8); % Preallocating frame log
-    params.run.blockorder                = [1,0,2,0,1,0,2,0,1,0,2,0,1,0,2,0]%[0 1 3 2 4 0 3 1 4 2 0 2 3 4 1 0 4 3 2 1];
+    
+    if params.system.screens == 1
+        params.run.log = NaN(params.run.exactDuration*params.display.fps, 8); % Preallocating frame log
+    elseif params.system.screens == 2
+        params.run.log = NaN(params.run.exactDuration*params.display.fps, 9); % Preallocating frame log
+    end
+    
+    params.run.blockorder                = [1,0,2,0,1,0,2,0,1,0,2,0,1,0,2,0];
     params.run.blocklength               = 12;
     params.run.stimlength                = params.run.exactDuration/2304;
     
@@ -86,28 +111,38 @@ function [params] = LoadParameters_MM()
     
     %% Defining screen rectangles of experimenter and monkey displays
     function DefineScreenRectangles
-        
-        params.display.windowRect        = [0, 0, 2*params.display.resolution(2)*16/9, params.display.resolution(2)];                  % Screen rectangle spanning 2 monitors (experimenter + monkey, each at 1920x1080) 
-        %params.display.windowRect       = [0, 0, params.display.resolution(2)*16/9, params.display.resolution(2)]
-        params.display.expWindowRect     = params.display.windowRect;                                                                              
-        params.display.expWindowRect(3)  = params.display.expWindowRect(3) / 2;                                                        % Screen rectangle of experimenter display
-        params.display.monkWindowRect    = params.display.windowRect;                                                                              
-        params.display.monkWindowRect(1) = params.display.expWindowRect(3);                                                            % Screen rectangle of monkey display
-        
-        [params.display.expRectCenter(1), params.display.expRectCenter(2)]   = RectCenter(params.display.expWindowRect);               % Experimenter display screen rectangle center
-        [params.display.monkRectCenter(1), params.display.monkRectCenter(2)] = RectCenter(params.display.monkWindowRect);              % Monkey display screen rectangle center
-        
-        params.display.stimsize = 1920;%600 % get stimulus size in pixels, this might cause problems
-        params.display.expRect  = CenterRectOnPoint([-1 -1 1 1]*params.display.resolution(2)/2, params.display.expRectCenter(1), params.display.expRectCenter(2));   % Experimenter display stimulus rectangle--for fix grid
-        params.display.monkRect = CenterRectOnPoint([-1 -1 1 1]*params.display.resolution(2)/2, params.display.monkRectCenter(1), params.display.monkRectCenter(2)); % Monkey display stimulus rectangle--for fix grid
-        params.display.expRectStim = CenterRectOnPoint([-960 -540 960 540], params.display.expRectCenter(1), params.display.expRectCenter(2)); % Experimenter stimulus window, could be modified by jitter in StartRun
-        params.display.monkRectStim = CenterRectOnPoint([-960 -540 960 540], params.display.monkRectCenter(1), params.display.monkRectCenter(2)); % Monkey stimulus window, could be modified by jitter in StartRun
-        params.display.jitter = false;%true; % Jitter stimulus around the screen
+        params.display.jitter = flase
         params.display.jitterDegs = 2; % Jitter amount in degrees of visual angle
-        
-        %params.display.expRectStim = CenterRectOnPoint([-0.25 -0.25 0.25 0.25]*params.display.stimsize, params.display.expRectCenter(1)+0.25*params.display.stimsize, params.display.expRectCenter(2)-0.25*params.display.stimsize); % Experimenter display stimulus rectangle--for mTurk stimuli
-        %params.display.monkRectStim = CenterRectOnPoint([-0.25 -0.25 0.25 0.25]*params.display.stimsize, params.display.monkRectCenter(1)+0.25*params.display.stimsize, params.display.monkRectCenter(2)-0.25*params.display.stimsize); % Monkey display stimulus rectangle--for mTurk stimuli
 
+        if params.system.screens == 1
+            params.display.windowRect        = [0, 0, 2*params.display.resolution(2)*16/9, params.display.resolution(2)];                  % Screen rectangle spanning 2 monitors (experimenter + monkey, each at 1920x1080) 
+            %params.display.windowRect       = [0, 0, params.display.resolution(2)*16/9, params.display.resolution(2)]
+            params.display.expWindowRect     = params.display.windowRect;                                                                              
+            params.display.expWindowRect(3)  = params.display.expWindowRect(3) / 2;                                                        % Screen rectangle of experimenter display
+            params.display.monkWindowRect    = params.display.windowRect;                                                                              
+            params.display.monkWindowRect(1) = params.display.expWindowRect(3);                                                            % Screen rectangle of monkey display
+        
+            [params.display.expRectCenter(1), params.display.expRectCenter(2)]   = RectCenter(params.display.expWindowRect);               % Experimenter display screen rectangle center
+            [params.display.monkRectCenter(1), params.display.monkRectCenter(2)] = RectCenter(params.display.monkWindowRect);              % Monkey display screen rectangle center
+        
+            params.display.stimsize = 1920;                                                                                                % get stimulus size in pixels
+            params.display.expRect  = CenterRectOnPoint([-1 -1 1 1]*params.display.resolution(2)/2, params.display.expRectCenter(1), params.display.expRectCenter(2));   % Experimenter display stimulus rectangle--for fix grid
+            params.display.monkRect = CenterRectOnPoint([-1 -1 1 1]*params.display.resolution(2)/2, params.display.monkRectCenter(1), params.display.monkRectCenter(2)); % Monkey display stimulus rectangle--for fix grid
+            params.display.expRectStim = CenterRectOnPoint([-960 -540 960 540], params.display.expRectCenter(1), params.display.expRectCenter(2)); % Experimenter stimulus window
+            params.display.monkRectStim = CenterRectOnPoint([-960 -540 960 540], params.display.monkRectCenter(1), params.display.monkRectCenter(2)); % Monkey stimulus window
+
+        elseif params.system.screens == 2
+            params.display.expWindowRect = [0, 0, params.display.resolution2(1), params.display.resolution2(2)]
+            params.display.monkWindowRect = [0, 0, params.display.resolution(1), params.display.resolution(2)]
+            [params.display.expRectCenter(1), params.display.expRectCenter(2)]   = RectCenter(params.display.expWindowRect);               % Experimenter display screen rectangle center
+            [params.display.monkRectCenter(1), params.display.monkRectCenter(2)] = RectCenter(params.display.monkWindowRect);  
+            params.display.stimsize = 1920;% get stimulus size in pixels
+            params.display.expRect  = CenterRectOnPoint([-1 -1 1 1]*params.display.resolution2(2)/2, params.display.expRectCenter(1), params.display.expRectCenter(2));   % Experimenter display stimulus rectangle--for fix grid
+            params.display.monkRect = CenterRectOnPoint([-1 -1 1 1]*params.display.resolution(2)/2, params.display.monkRectCenter(1), params.display.monkRectCenter(2)); % Monkey display stimulus rectangle--for fix grid
+            params.display.expRectStim = CenterRectOnPoint([-960 -540 960 540], params.display.expRectCenter(1), params.display.expRectCenter(2)); % Experimenter stimulus window
+            params.display.monkRectStim = CenterRectOnPoint([-960 -540 960 540], params.display.monkRectCenter(1), params.display.monkRectCenter(2)); % Monkey stimulus window
+        end
+            
     end % Function end
     
 end % Function end

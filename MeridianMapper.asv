@@ -60,11 +60,7 @@ function [params] = MeridianMapper()
                 params.run.isExperiment = 0;
                 params.run.type = 'fixation';
                 fprintf('\nRunning fixation training...\n');
-                if params.system.screens == 1
-                    params = StartRun(params, window, fixGridTex, NaN(length(retinoTex),1));
-                elseif params.system.screens == 2
-                    params = StartRun(params, window, fixGridTex, NaN(length(retinoTex),1), window2);
-                end
+                params = StartRun(params, window, fixGridTex, NaN(length(retinoTex),1));
             
 
             elseif selection == 4 % Need to code this to be functional
@@ -105,15 +101,7 @@ function [params] = MeridianMapper()
                     elseif params.system.screens == 2
                         params = StartRun(params, window, fixGridTex, retinoTex, window2);
                     end
-                elseif keys(9)
-                    params.run.isExperiment = 0;
-                    params.run.type = 'fixation';
-                    fprintf('\nRunning fixation training...\n');
-                    if params.system.screens == 1
-                        params = StartRun(params, window, fixGridTex, NaN(length(retinoTex),1));
-                    elseif params.system.screens == 2
-                        params = StartRun(params, window, fixGridTex, NaN(length(retinoTex),1), window2);
-                end
+                e
                 elseif keys(20)
                     sca;
                 end

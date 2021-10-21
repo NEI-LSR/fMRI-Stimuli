@@ -1,72 +1,130 @@
 function [params] = MapPRF()
     
-    params   = LoadParameters;
-    edit LoadParameters.m
+    params   = LoadParameters_SC;
+    edit LoadParameters_SC.m
     
     params   = InitializeKeyboard(params);
     
-    % params   = StartDatapixxADC(params);
-    
-    [window] = OpenPTBwindow(params);
-    
-    [fixGridTex, retinoTex, motionTex, rawStim] = MakePTBtextures(params, window);
-    
-    params.display.stimuli = rawStim; % This saves the actual stimuli that are presented
-
-    while true
-        selection = ShowDialogBox('list');
-        
-        if isempty(selection)
-            break;
-            
-        elseif selection == 1
-            GiveReward(params);
-        elseif selection == 2
-            ShowDialogBox('question');
-            params.run.type = 'shapecolor';
-            fprintf('\nRunning Shape-Color Paradigm...\n');
-            params = StartRun(params, window, fixGridTex, retinoTex);
-            
-        elseif selection == 3
-            ShowDialogBox('question');
-            params.run.type = 'motion';
-            fprintf('\nRunning motion pRF mapping...\n');
-            params = StartRun(params, window, fixGridTex, motionTex);
-            
-        elseif selection == 4
-            params.run.isExperiment = 0;
-            params.run.type = 'fixation';
-            fprintf('\nRunning fixation training...\n');
-            params = StartRun(params, window, fixGridTex, NaN(length(retinoTex),1));
-            
-        elseif selection == 5
-            runFilename  = ShowDialogBox('file');
-            if ~isempty(runFilename)
-                paramsReplay = load(runFilename, 'params');
-                paramsReplay = paramsReplay.params;
-                switch paramsReplay.run.type
-                    case 'retino'
-                        ReplayRun(paramsReplay, window, fixGridTex, retinoTex);
-                    case 'motion'
-                        ReplayRun(paramsReplay, window, fixGridTex, motionTex);
-                    case 'fixation'
-                        ReplayRun(paramsReplay, window, fixGridTex, NaN(length(retinoTex),1));
-                end
-            end
-            
-        elseif selection == 6
-            [~, subjectID] = fileparts(params.directory.subject);
-            [~, sessionDate] = ShowDialogBox('file');
-            if ~isempty(sessionDate)
-                PlotPerformance(subjectID, sessionDate);
-            end
-            
-        elseif selection == 7
-            ShowDialogBox('input');
-        end
+    if params.system.debug == false % If debugging, don't initialize Datapixx
+        params   = StartDatapixxADC(params);
     end
     
-    Datapixx('Close');
+    try
+        if params.system.screens == 1
+            [window] = OpenPTBwindow(params);
+        elseif params.system.screens == 2
+            [window,window2] = OpenPTBwindow(params);
+        end
+    catch problems
+        disp(problems)
+    end
+    
+    [fixGridTex, retinoTex] = MakePTBtextures_ShapeColor(params, window);
+    
+    
+    if params.system.screens == 2
+        Screen('FillRect', window, [1,0,0]);
+        Screen('Flip', window);
+        Screen('FillRect', window2, [1,0,0]);
+        Screen('Flip', window2);
+    end
+    
+    while true
+        
+        if params.system.debug == false
+            selection = ShowDialogBox('list');
+
+
+            if isempty(selection)
+                break;
+
+            elseif selection == 1
+                if params.system.debug == false
+                    GiveReward(params);
+                elseif params.system.debug == true
+                    disp('Cannot give reward in debug mode')
+                end
+            elseif selection == 2
+                
+                ShowDialogBox('question');
+                params.run.type = 'Shape Color';
+                fprintf('\nRunning Shape Color...\n');
+                if params.system.screens == 1
+                    params = StartRun(params, window, fixGridTex, retinoTex);
+                elseif params.system.screens == 2
+                    params = StartRun(params, window, fixGridTex, retinoTex, window2);
+                end
+                
+            elseif selection == 3
+                params.run.isExperiment = 0;
+                params.run.type = 'fixation';
+                fprintf('\nRunning fixation training...\n');
+                if params.system.screens == 1
+                    params = StartRun(params, window, fixGridTex, NaN(length(retinoTex),1));
+                elseif params.system.screens == 2
+                    params = StartRun(params, window, fixGridTex, NaN(length(retinoTex),1), window2);
+                end
+            
+
+            elseif selection == 4 % Need to code this to be functional
+                runFilename  = ShowDialogBox('file');
+                if ~isempty(runFilename)
+                    paramsReplay = load(runFilename, 'params');
+                    paramsReplay = paramsReplay.params;
+                    switch paramsReplay.run.type
+                        case 'retino'
+                            ReplayRun(paramsReplay, window, fixGridTex, retinoTex);
+                        case 'motion'
+                            ReplayRun(paramsReplay, window, fixGridTex, motionTex);
+                        case 'fixation'
+                            ReplayRun(paramsReplay, window, fixGridTex, NaN(length(retinoTex),1));
+                    end
+                end
+
+            elseif selection == 5
+                [~, subjectID] = fileparts(params.directory.subject);
+                [~, sessionDate] = ShowDialogBox('file');
+                if ~isempty(sessionDate)
+                    PlotPerformance(subjectID, sessionDate);
+                end
+
+            elseif selection == 6
+                ShowDialogBox('input');
+            end
+            
+        elseif params.system.debug == true
+            params.run.isExperiment = 0;
+            while true
+                [~,~,keys] = KbCheck([]);
+                if keys(19) | keys(40)
+                    params.run.type = 'Shape Color';
+                    fprintf('\nRunning Shape Color...\n');
+                    if params.system.screens == 1
+                        params = StartRun(params, window, fixGridTex, retinoTex);
+                    elseif params.system.screens == 2
+                        params = StartRun(params, window, fixGridTex, retinoTex, window2);
+                    end
+                elseif keys(9)
+                    params.run.isExperiment = 0;
+                    params.run.type = 'fixation';
+                    fprintf('\nRunning fixation training...\n');
+                    if params.system.screens == 1
+                        params = StartRun(params, window, fixGridTex, NaN(length(retinoTex),1));
+                    elseif params.system.screens == 2
+                        params = StartRun(params, window, fixGridTex, NaN(length(retinoTex),1), window2);
+                end
+                elseif keys(20)
+                    sca;
+                end
+            end
+        end
+             
+            
+    end
+    
+    if params.system.debug == false
+        Datapixx('Close');
+    end
     fprintf('\n');
     sca;
     
@@ -83,15 +141,14 @@ function [params] = MapPRF()
                 answer = listdlg('ListSize', [200 150], 'SelectionMode', 'single', 'OkString', 'Select', 'CancelString', 'Quit', ...
                                  'Name', 'Main menu', ...
                                  'ListString', {'Deliver manual reward', ...
-                                                'Run Shape Color Paradigm', ...
-                                                'Run motion pRF mapping', ...
-                                                'Run fixation training', ...
+                                                'Run Shape Color', ...
                                                 'Replay a previous run', ...
                                                 'Plot performance', ...
                                                 'Modify run parameters'});
             
             case 'question'
                 answer = questdlg('Is this a training or an experiment (i.e. collecting MRI data)?', '', 'Experiment', 'Training', 'Experiment');
+                
                 if strcmp(answer, 'Experiment')
                     params.run.isExperiment = 1;
                 else

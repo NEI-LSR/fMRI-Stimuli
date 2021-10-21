@@ -36,11 +36,14 @@ function [fixGridTex, retinoTex] = MakePTBtextures(params, window)
     horz_block = repmat(horz_both, [1,1,1,72]);
     vert_both = cat(4,vert1, vert2);
     vert_block = repmat(vert_both, [1,1,1,72]);
+    gray_block = repmat(grayTex, [1,1,1,144]);
+    
     %stimOrder = []
     for i = 1:length(params.run.blockorder)
         switch params.run.blockorder(i)
             case 0 % gray
-                % Texture should already be gray
+                frames = (1:144)+(i-1)*144;
+                retinoMovie(:,:,:,frames) = gray_block;
             case 1 % Horizontal
                 frames = (1:144)+(i-1)*144;
                 retinoMovie(:,:,:,frames) = horz_block;
@@ -62,8 +65,8 @@ function [fixGridTex, retinoTex] = MakePTBtextures(params, window)
     end
     
     % Adjusting the number of frames to the desired playback speed (60Hz -> 15Hz)
-    playbackFps = size(retinoMovie,ndims(retinoMovie)) / params.run.exactDuration;
-    retinoTex    = repelem(retinoTex, params.display.fps/playbackFps);
+    playbackFps = size(retinoMovie,ndims(retinoMovie)) / (params.run.exactDuration);
+    retinoTex    = repelem(retinoTex, params.display.fps/playbackFps); 
     waitbar(1, progressBar, sprintf('Loading complete.\n'));
     close(progressBar);
   
