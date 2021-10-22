@@ -1,4 +1,4 @@
-function [params] = LoadParameters_MM()
+pfunction [params] = LoadParameters_MM()
     %% System
     params.system.screens                = 1;
     params.system.debug                  = true;
@@ -33,7 +33,7 @@ function [params] = LoadParameters_MM()
     
     params.display.viewingDistance       = 57.0;                                                                                       % In cm
     params.display.size                  = [46.3 26.7];                                                                                % In cm
-    params.display.fps                   = 4;                                                                                         % In Hz
+    params.display.fps                   = 60;                                                                                         % In Hz
     params.display.ifi                   = 1 / params.display.fps;                                                                 % Inter frame interval
     params.display.resolution            = [1920 1080];                                                                                % In pixels
     
@@ -58,13 +58,12 @@ function [params] = LoadParameters_MM()
     %% Experiment parameters
     params.run.startTime                 = 0;                                                                                          % In seconds
     params.run.endTime                   = 0;                                                                                          % In seconds
-    params.run.exactDuration             = 576;%840;                                                                                   % In seconds
+    params.run.exactDuration             = 576;                                                                                  % In seconds
     params.run.duration                  = 0;                                                                                          % In seconds
     params.run.isAborted                 = 0;                                                                                          % Flag to manually end the run
     params.run.isExperiment              = 1;                                                                                          % 0 = training
     params.run.type                      = 'meridianmapper';                                                                           % 'meridianmapper' or 'shapecolor'
     params.run.stimContrast              = 1;                                                                                          sca
-    sca
     % 0 to 1
     params.run.frameIdx                  = 0;                                                                                          % Frame counter
     
@@ -76,7 +75,7 @@ function [params] = LoadParameters_MM()
     
     params.run.blockorder                = [1,0,2,0,1,0,2,0,1,0,2,0,1,0,2,0];
     params.run.blocklength               = 12;
-    params.run.stimlength                = params.run.exactDuration/2304;
+    params.run.TR                        = 3;
     
     %% Fixation parameters
     params.run.fixation.eye2track        = 'left';                                                                                     % 'left' OR 'right' (not both)
@@ -111,7 +110,7 @@ function [params] = LoadParameters_MM()
     
     %% Defining screen rectangles of experimenter and monkey displays
     function DefineScreenRectangles
-        params.display.jitter = flase
+        params.display.jitter = false
         params.display.jitterDegs = 2; % Jitter amount in degrees of visual angle
 
         if params.system.screens == 1

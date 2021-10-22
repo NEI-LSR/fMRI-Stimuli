@@ -1,7 +1,8 @@
 function [params] = LoadParameters()
     %% System
     params.system.screens                = 1;
-    params.system.debug                  = false;
+    params.system.debug                  = true;
+    
     %% DataPixx parameters
     params.datapixx.analogInRate         = 1000;                                                                                       % In Hz
     params.datapixx.analogOutRate        = 1000;                                                                                       % In Hz
@@ -33,7 +34,7 @@ function [params] = LoadParameters()
     
     params.display.viewingDistance       = 57.0;                                                                                       % In cm
     params.display.size                  = [46.3 26.7];                                                                                % In cm
-    params.display.fps                   = 30;                                                                                         % In Hz
+    params.display.fps                   = 60;                                                                                         % In Hz
     params.display.ifi                   = 1 / params.display.fps;                                                                 % Inter frame interval
     params.display.resolution            = [1920 1080];                                                                                % In pixels
     
@@ -66,10 +67,10 @@ function [params] = LoadParameters()
     params.run.stimContrast              = 1;                                                                                          % 0 to 1
     params.run.frameIdx                  = 0;                                                                                          % Frame counter
     params.run.log                       = NaN(params.run.exactDuration*params.display.fps, 8); % Preallocating frame log
-    params.run.blockorder                = [0 1 3 2 4 0 3 1 4 2 0 2 3 4 1 0 4 3 2 1]; % Add loading csv
+    params.run.blockorder                = [3,2,4]%[0 1 3 2 4 0 3 1 4 2 0 2 3 4 1 0 4 3 2 1]; % Add loading csv
     params.run.blocklength               = 14;
     params.run.stimlength                = params.run.exactDuration/((params.run.blocklength * length(params.run.blockorder)))
-    
+    params.run.TR                        = 3;
     %% Fixation parameters
     params.run.fixation.eye2track        = 'left';                                                                                     % 'left' OR 'right' (not both)
     params.run.fixation.windowSize       = 2;                                                                                          % In degrees

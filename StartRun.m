@@ -30,7 +30,7 @@ function [params] = StartRun(params, window, fixGridTex, movieTex, varargin)
         Screen('FillRect', window, params.display.grayBackground);
         [~, time2flip] = Screen('Flip', window);
         
-        flips = 0:params.display.ifi:params.run.exactDuration + params.display.ifi
+        flips = params.display.ifi:params.display.ifi:params.run.exactDuration
         flips = flips + time2flip
         
         % Beginning run

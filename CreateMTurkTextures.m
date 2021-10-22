@@ -27,10 +27,7 @@ backgroundRGB = file_colors(1,:)
 % cBLUE = [175, 97, 95, 52, 129, 71, 218, 120, 255, 153, 255, 142, 198, 109];
 % backgroundRGB = [152, 132, 151];
 
-%% Replace gray
-for i = 1:imageNumbers
-    for i=1:3 % number of channels
-        
+
 %% Create Colored Images
 background = cat(3,uint8(zeros(size(alphaCircle))+backgroundRGB(1)),uint8(zeros(size(alphaCircle))+backgroundRGB(2)),uint8(zeros(size(alphaCircle))+backgroundRGB(3)));
 
