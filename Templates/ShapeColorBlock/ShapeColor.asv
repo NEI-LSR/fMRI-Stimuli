@@ -171,14 +171,12 @@ function ShapeColor(subject, counterbalance_indx, run)
             jitterY = sin(jitterAngle)*jitterDist; % Y
             
             % Create rectangles for stim draw
-            viewStimRect = CenterRectOnPointd(baseRect, round(xCenter+jitterX), round(yCenter+jitterY));
-            expStimRect = CenterRectOnPointd(baseRect, round(xCenterExp+jitterX), round(yCenterExp+jitterY));
+            viewStimRect = CenterRectOnPointd(baseRect, round(xCenter+jitterX), round(yCenter*jitterY));
+            expStimRect = CenterRectOnPointd(baseRect, round(xCenterExp+jitterX), round(yCenterExp*jitterY));
             
             % Draw Stimulus on Framebuffer
-            %Screen('DrawTexture', viewWindow, texture(frameIdx),[],viewStimRect); % Needs to be sized and have jitter
-            %Screen('DrawTexture', expWindow, texture(frameIdx),[],expStimRect); % Needs to be sized and have jitter
-            Screen('DrawTexture', viewWindow, texture(frameIdx)); % Needs to be sized and have jitter
-            Screen('DrawTexture', expWindow, texture(frameIdx)); % Needs to be sized and have jitter
+            Screen('DrawTexture', viewStimRect, texture(frameIdx)); % Needs to be sized and have jitter
+            Screen('DrawTexture', expStimRect, texture(frameIdx)); % Needs to be sized and have jitter
             
             % Draw fixation point on framebuffer
             
