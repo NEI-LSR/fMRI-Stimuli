@@ -4,7 +4,15 @@ function ShapeColor(subject, counterbalance_indx, run)
     % Displays the stimuli from the Monkey Turk experiments in blocks.
     % Blocks include gray, colored chromatic shapes, black and white chromatic
     % shapes, achromatic shapes, and colored blobs.
+    
 
+    % Initialize DAQ
+    DAQ('Init');
+    xGain = -400;
+    yGain = 400;
+    xChannel = 2;
+    yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
+    
     % Initialize parameters
     KbName('UnifyKeyNames');
     % Initialize save paths for eyetracking, other data:
@@ -18,7 +26,7 @@ function ShapeColor(subject, counterbalance_indx, run)
 
     runExpTime = datestr(now); % Get the time the run occured at.
 
-    dataSaveFile = ['Data/' subject '_' run '_Data.mat'] % File to save both run data and eye data
+    dataSaveFile = ['Data/' subject '_' str2num(run) '_Data.mat'] % File to save both run data and eye data
 
     % Manually set screennumbers for experimenter and viewer displays:
     expscreen = 1; 
@@ -142,7 +150,8 @@ function ShapeColor(subject, counterbalance_indx, run)
         end
     end
     
-    Priority(9) % Might need to change for windows
+    Priority(2)
+    %Priority(9) % Might need to change for windows
     
     % Begin actual stimulus presentation
     try
@@ -210,6 +219,10 @@ function ShapeColor(subject, counterbalance_indx, run)
         
         
         
+end
+
+function eyeTrack(xGain,yGain)
+    coords = DAQ('GetAnalog',[1 2])
 end
     
     
