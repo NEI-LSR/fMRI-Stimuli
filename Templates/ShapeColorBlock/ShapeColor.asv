@@ -6,7 +6,7 @@ function ShapeColor(subject, counterbalance_indx, run)
     % shapes, achromatic shapes, and colored blobs.
 
     % Initialize parameters
-    KbName('UnifyKeyNames');
+
     % Initialize save paths for eyetracking, other data:
     curdir = pwd; % Current Directory
     
@@ -21,11 +21,11 @@ function ShapeColor(subject, counterbalance_indx, run)
     dataSaveFile = ['Data/' subject '_' run '_Data.mat'] % File to save both run data and eye data
 
     % Manually set screennumbers for experimenter and viewer displays:
-    expscreen = 1; 
-    viewscreen = 2;
+    expscreen = 0; 
+    viewscreen = 1;
 
     % Refresh rate of monitors:
-    fps = 30;
+    fps = 60;
     ifi = 1/fps;
     
     % Other Timing Data:
@@ -120,25 +120,25 @@ function ShapeColor(subject, counterbalance_indx, run)
                 order = randperm(blocklength);
                 chromBWTex = baseTex(2:15)
                 texture(frames) = repelem(chromBWTex(order),framesPerStim);
-                stimulus_order = [stimulus_order chromBWTex(order)];
+                stimulus_order = [stimulus_order order];
             case 2 % Chromatic Shapes Colored
                 frames = (1:framesPerBlock)+(i-1)*framesPerBlock;
                 order = randperm(blocklength);
                 chromTex = baseTex(16:29)
                 texture(frames) = repelem(chromTex(order),framesPerStim);
-                stimulus_order = [stimulus_order chromTex(order)];
+                stimulus_order = [stimulus_order order];
             case 3 % Achromatic Shapes
                 frames = (1:framesPerBlock)+(i-1)*framesPerBlock;
                 order = randperm(blocklength);
                 AchromTex = baseTex(30:43)
                 texture(frames) = repelem(AchromTex(order),framesPerStim);
-                stimulus_order = [stimulus_order AchromTex(order)];
+                stimulus_order = [stimulus_order order];
             case 4 % Colored Circles
                 frames = (1:framesPerBlock)+(i-1)*framesPerBlock;
                 order = randperm(blocklength);
                 circTex = baseTex(44:57)
                 texture(frames) = repelem(circTex(order),framesPerStim);
-                stimulus_order = [stimulus_order circTex(order)];
+                stimulus_order = [stimulus_order order];
         end
     end
     
@@ -152,12 +152,6 @@ function ShapeColor(subject, counterbalance_indx, run)
         Screen('Flip', viewWindow);
         
         % Wait for TTL
-        while true
-            [keyIsDown,secs, keyCode] = KbCheck;
-            if keyCode(KbName('space'))
-                break;
-            end
-        end
         % Function for Wait for TTL
         
         flips = ifi:ifi:exactDur;
@@ -167,35 +161,31 @@ function ShapeColor(subject, counterbalance_indx, run)
             % Check keys
             [keyIsDown,secs, keyCode] = KbCheck;
             
-            if rem(frameIdx,fps) == 1
-                % Calculate jitter
-                jitterDist = round(rand*jitterPix); % Random number between 0 and maximum number of pixels
-                jitterAngle = rand*2*pi; % Gives us a random radian
-                jitterX = cos(jitterAngle)*jitterDist; % X
-                jitterY = sin(jitterAngle)*jitterDist; % Y
-            
-                % Create rectangles for stim draw
-                viewStimRect = CenterRectOnPointd(baseRect, round(xCenter+jitterX), round(yCenter+jitterY));
-                expStimRect = CenterRectOnPointd(baseRect, round(xCenterExp+jitterX), round(yCenterExp+jitterY));
-                disp('60 flips')
-            end
-            
-            % Draw Stimulus on Framebuffer
-            Screen('DrawTexture', viewWindow, texture(frameIdx),[],viewStimRect); % Needs to be sized and have jitter
-            Screen('DrawTexture', expWindow, texture(frameIdx),[],expStimRect); % Needs to be sized and have jitter
-            %Screen('DrawTexture', viewWindow, texture(frameIdx)); % Needs to be sized and have jitter
-            %Screen('DrawTexture', expWindow, texture(frameIdx)); % Needs to be sized and have jitter
-            
             % Draw Fixation Cross on Framebuffer
             Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
+            
+            % Calculate jitter
+            jitterDist = round(rand*jitterPix); % Random number between 0 and maximum number of pixels
+            jitterAngle = rand*2*pi; % Gives us a random radian
+            jitterX = cos(jitterAngle)*jitterDist; % X
+            jitterY = sin(jitterAngle)*jitterDist; % Y
+            
+            % Create rectangles for stim draw
+            viewStimRect = CenterRectOnPointd(baseRect, round(xCenter+jitterX), round(yCenter*jitterY));
+            expStimRect = CenterRectOnPointd(baseRect, round(xCenterExp+jitterX), round(yCenterExp*jitterY));
+            
+            % Draw Stimulus on Framebuffer
+            Screen('DrawTexture', viewStimRect, texture(frameIdx)); % Needs to be sized and have jitter
+            Screen('DrawTexture', expStimRect, texture(frameIdx)); % Needs to be sized and have jitter
+            
+            % Draw fixation point on framebuffer
             
             % Draw fixation window on framebuffer
             
             
             % Flip
-            [timestamp] = Screen('Flip', viewWindow, flips(frameIdx));
-            [timestamp2] = Screen('Flip', expWindow, flips(frameIdx));
-            disp(frameIdx)
+            Screen('Flip', viewWindow, flips(frameIdx));
+            Screen('Flip', expWindow, flips(frameIdx));
         end
         
         
@@ -204,7 +194,6 @@ function ShapeColor(subject, counterbalance_indx, run)
     end % End of stim presentation
     
     save(dataSaveFile, 'stimulus_order');
-    sca;
     
         
         
