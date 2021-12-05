@@ -10,8 +10,15 @@ function ShapeColor(subject, counterbalance_indx, run)
     DAQ('Init');
     xGain = -400;
     yGain = 400;
+    xOffset = 0;
+    yOffset = 0;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
+    ttlChannel = 8;
+    rewardDur = 0.04; % seconds
+    rewardWait = 5; % seconds
+    
+    
     
     % Initialize parameters
     KbName('UnifyKeyNames');
@@ -58,41 +65,50 @@ function ShapeColor(subject, counterbalance_indx, run)
     
 
     % Load Textures:
-    load([stimDir '/' 'achrom.mat'], 'achrom');
-    load([stimDir '/' 'chrom.mat'], 'chrom');
-    load([stimDir '/' 'chromBW.mat'], 'chromBW');
-    load([stimDir '/' 'colorcircles.mat'], 'colorcircles');
-    stimsize = size(chrom(:,:,1,1));
-    grayTex = cat(3,repmat(gray(1),stimsize(1)),repmat(gray(2),stimsize(1)),repmat(gray(3),stimsize(1)));
+    load([stimDir '/' 'achrom.mat'], 'achrom'); % Achromatic Shapes
+    load([stimDir '/' 'chrom.mat'], 'chrom'); % Chromatic Shapes
+    load([stimDir '/' 'chromBW.mat'], 'chromBW'); % Chromatic Shapes Black and White
+    load([stimDir '/' 'colorcircles.mat'], 'colorcircles'); % Colored Circles
+    stimsize = size(chrom(:,:,1,1)); % What size is the simulus? In pixels
+    grayTex = cat(3,repmat(gray(1),stimsize(1)),repmat(gray(2),stimsize(1)),repmat(gray(3),stimsize(1))); % Greates a gray texture the size of the stimulus. 
+    % I do this because the way the code works right now is that it
+    % requires a texture to be displayed at any given frame. Not great, but
+    % allows the code to be easily modifiable, and the gray texture only
+    % takes up one texture in memory.
     
     % Initialize Screens
-    Screen('Preference', 'SkipSyncTests', 1);
+    Screen('Preference', 'SkipSyncTests', 1); 
     Screen('Preference', 'VisualDebugLevel', 0);
     Screen('Preference', 'Verbosity', 0);
     Screen('Preference', 'SuppressAllWarnings', 1);
     
     
-    [expWindow, expRect] = Screen('OpenWindow', expscreen, gray);
-    [viewWindow, viewRect] = Screen('OpenWindow', viewscreen, gray);
-    Screen('BlendFunction', viewWindow, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA');
-    Screen('BlendFunction', expWindow, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA');
+    [expWindow, expRect] = Screen('OpenWindow', expscreen, gray); % Open experimenter window
+    [viewWindow, viewRect] = Screen('OpenWindow', viewscreen, gray); % Open viewing window (for subject)
+    Screen('BlendFunction', viewWindow, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA'); % Blend function
+    Screen('BlendFunction', expWindow, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA'); % Blend function
     
     [xCenter, yCenter] = RectCenter(viewRect); % Get center of the view screen
     [xCenterExp, yCenterExp] = RectCenter(expRect); % Get center of the experimentor's screen
     
     pixPerAngle = 100; % Number of pixels per degree of visual angle
-    stimPix = 6*pixPerAngle;
-    jitterPix = 2*pixPerAngle;
+    stimPix = 6*pixPerAngle; % How large the stimulus rectangle will be
+    jitterPix = 2*pixPerAngle; % How large the jitter will be
+    fixPix = 2*pixPerAngle; % How large the fixation will be
     
     
     fixCrossDimPix = 40; % Fixation cross arm length
     lineWidthPix = 4; % Fixation cross arm thickness
-    xCoords = [-fixCrossDimPix fixCrossDimPix 0 0];
+    xCoords = [-fixCrossDimPix fixCrossDimPix 0 0]; 
     yCoords = [0 0 -fixCrossDimPix fixCrossDimPix];
     allCoords = [xCoords; yCoords];
     
     % Make base rectangle and centered rectangle for stimulus presentation
     baseRect = [0 0 stimPix stimPix]; % Size of the texture rect
+    
+    % Make base rectangle for fixation circle
+    baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
+    fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
     
     % Load Fixation Grid and Create Texture:
     load([stimDir '/' 'fixGrid.mat'], 'fixGrid'); % Loads the .mat file with the fixation grid texture
@@ -113,7 +129,7 @@ function ShapeColor(subject, counterbalance_indx, run)
     
     texture = NaN(fps*exactDur, 1); % Initialize vector of indices
     
-    stimulus_order = [];
+    stimulus_order = []; % This will be saved out later so we actually know what stimulus was presented when.
     
     framesPerBlock = blocklength*TR*fps*stimPerTR; % Frames per block
     framesPerStim = TR*fps*stimPerTR; % Frames per stim
@@ -149,8 +165,9 @@ function ShapeColor(subject, counterbalance_indx, run)
                 stimulus_order = [stimulus_order circTex(order)];
         end
     end
-    
-    Priority(2)
+    eyePosition = NaN(fps*exactDur,2); % Column 1 xposition, column 2 yposition
+    fixation = NaN(fps*exactdur,1); % Fixation tracker
+    Priority(2) % topPriorityLevel?
     %Priority(9) % Might need to change for windows
     
     % Begin actual stimulus presentation
@@ -161,13 +178,16 @@ function ShapeColor(subject, counterbalance_indx, run)
         Screen('Flip', viewWindow);
         
         % Wait for TTL
+        baselineVoltage = DAQ('GetAnalog',ttlChannel);
         while true
             [keyIsDown,secs, keyCode] = KbCheck;
+            ttlVolt = DAQ('GetAnalog',ttlChannel);
             if keyCode(KbName('space'))
+                break;
+            elseif abs(ttlVolt - baselineVoltage) > 0.4
                 break;
             end
         end
-        % Function for Wait for TTL
         
         flips = ifi:ifi:exactDur;
         flips = flips + GetSecs;
@@ -175,6 +195,10 @@ function ShapeColor(subject, counterbalance_indx, run)
         for frameIdx = 1:fps*exactDur
             % Check keys
             [keyIsDown,secs, keyCode] = KbCheck;
+            
+            % Collect eye position
+            eyePosition(frameIdx,:) = eyeTrack(xChannel, yChannel, xGain, yGain, xOffset, yOffset);
+            fixation(frameIdx,1) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2)
             
             if rem(frameIdx,fps) == 1
                 % Calculate jitter
@@ -190,8 +214,8 @@ function ShapeColor(subject, counterbalance_indx, run)
             end
             
             % Draw Stimulus on Framebuffer
-            Screen('DrawTexture', viewWindow, texture(frameIdx),[],viewStimRect); % Needs to be sized and have jitter
-            Screen('DrawTexture', expWindow, texture(frameIdx),[],expStimRect); % Needs to be sized and have jitter
+            Screen('DrawTexture', viewWindow, texture(frameIdx),[],viewStimRect);
+            Screen('DrawTexture', expWindow, texture(frameIdx),[],expStimRect);  
             %Screen('DrawTexture', viewWindow, texture(frameIdx)); % Needs to be sized and have jitter
             %Screen('DrawTexture', expWindow, texture(frameIdx)); % Needs to be sized and have jitter
             
@@ -199,7 +223,7 @@ function ShapeColor(subject, counterbalance_indx, run)
             Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
             
             % Draw fixation window on framebuffer
-            
+            Screen('FrameOval', expWindow, [255 255 255], fixRect);
             
             % Flip
             [timestamp] = Screen('Flip', viewWindow, flips(frameIdx));
@@ -221,9 +245,23 @@ function ShapeColor(subject, counterbalance_indx, run)
         
 end
 
-function eyeTrack(xGain,yGain)
-    coords = DAQ('GetAnalog',[1 2])
+function [xPos, yPos] = eyeTrack(xChannel, yChannel, xGain, yGain, xOffset, yOffset)
+    coords = DAQ('GetAnalog',[xChannel yChannel]);
+    xPos = (coords(1)*xGain)-xOffset;
+    yPos = (coords(2)*yGain)-yOffset;
 end
+
+function inCircle = isInCircle(xPos, yPos, circle) % circle is a PTB rectangle
+    radius = (circle(3) - circle(1)) / 2;
+    [xCircleCenter yCircleCenter] = RectCenter(circle);
+    xDiff = xPos-xCircleCenter;
+    yDiff = ypos-yCircleCenter;
+    dist = hypot(xDiff,yDiff);
+    inCircle = radius>dist;
+end
+
+
+    
     
     
     
