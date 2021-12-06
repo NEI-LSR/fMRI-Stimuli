@@ -42,8 +42,8 @@ function [gain,output,eyeRecord,Vcent,Vcent2] = five_dot_task()
     dotSize = 12;
     frameSizeDiv = 15; %determine this based on degrees of vision
     backgroundRGB = [255 255 255];
-    whichScreen = 1;
-    whichScreen2 = 2;
+    whichScreen = 2;
+    whichScreen2 = 1;
     [window, screenRect] = Screen('OpenWindow', whichScreen, backgroundRGB, [], 32);
     [screenXpixels, screenYpixels] = Screen('WindowSize', window);
     W2 = 1200;
@@ -265,7 +265,7 @@ function [gain,output,eyeRecord,Vcent,Vcent2] = five_dot_task()
     sca;
     fnDAQNI('SetBit',port,0);
     close all; 
-    save([curdir '/EyeData/EyeData']);
+    save([curdir '/EyeData']);
     %print(Vraw(1), '_', Vraw(2));
 end
 

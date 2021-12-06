@@ -33,7 +33,7 @@ function ShapeColor(subject, counterbalance_indx, run)
 
     runExpTime = datestr(now); % Get the time the run occured at.
 
-    dataSaveFile = ['Data/' subject '_' str2num(run) '_Data.mat'] % File to save both run data and eye data
+    dataSaveFile = ['Data/' subject '_' num2str(run) '_Data.mat'] % File to save both run data and eye data
 
     % Manually set screennumbers for experimenter and viewer displays:
     expscreen = 1; 
@@ -166,7 +166,7 @@ function ShapeColor(subject, counterbalance_indx, run)
         end
     end
     eyePosition = NaN(fps*exactDur,2); % Column 1 xposition, column 2 yposition
-    fixation = NaN(fps*exactdur,1); % Fixation tracker
+    fixation = NaN(fps*exactDur,1); % Fixation tracker
     Priority(2) % topPriorityLevel?
     %Priority(9) % Might need to change for windows
     
@@ -198,7 +198,7 @@ function ShapeColor(subject, counterbalance_indx, run)
             
             % Collect eye position
             eyePosition(frameIdx,:) = eyeTrack(xChannel, yChannel, xGain, yGain, xOffset, yOffset);
-            fixation(frameIdx,1) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2)
+            fixation(frameIdx,1) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2));
             
             if rem(frameIdx,fps) == 1
                 % Calculate jitter
