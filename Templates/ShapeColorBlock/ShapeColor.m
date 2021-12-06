@@ -224,6 +224,9 @@ function ShapeColor(subject, counterbalance_indx, run)
             
             % Draw fixation window on framebuffer
             Screen('FrameOval', expWindow, [255 255 255], fixRect);
+
+            % Draw eyetrace on framebuffer
+            Screen('DrawDots',expWindow, eyePosition(frameIdx,:)');
             
             % Flip
             [timestamp] = Screen('Flip', viewWindow, flips(frameIdx));
