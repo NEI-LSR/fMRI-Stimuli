@@ -198,7 +198,7 @@ function ShapeColor(subject, counterbalance_indx, run)
             
             % Collect eye position
             eyePosition(frameIdx,:) = eyeTrack(xChannel, yChannel, xGain, yGain, xOffset, yOffset);
-            fixation(frameIdx,1) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2));
+            fixation(frameIdx,1) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2),fixRect);
             
             if rem(frameIdx,fps) == 1
                 % Calculate jitter
@@ -255,7 +255,7 @@ function inCircle = isInCircle(xPos, yPos, circle) % circle is a PTB rectangle
     radius = (circle(3) - circle(1)) / 2;
     [xCircleCenter yCircleCenter] = RectCenter(circle);
     xDiff = xPos-xCircleCenter;
-    yDiff = ypos-yCircleCenter;
+    yDiff = yPos-yCircleCenter;
     dist = hypot(xDiff,yDiff);
     inCircle = radius>dist;
 end
