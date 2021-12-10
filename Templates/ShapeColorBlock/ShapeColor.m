@@ -8,14 +8,14 @@ function ShapeColor(subject, counterbalance_indx, run)
 
     % Initialize DAQ
     DAQ('Init');
-    xGain = -400;
+    xGain = 400;
     yGain = 400;
     xOffset = 0;
     yOffset = 0;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
-    rewardDur = 0.04; % seconds
+    rewardDur = 0.4; % seconds
     rewardWait = 5; % seconds
     rewardPerf = .90; % 90% fixation to get reward
     
@@ -172,6 +172,8 @@ function ShapeColor(subject, counterbalance_indx, run)
     %Priority(9) % Might need to change for windows
     juiceOn = false; % Logical for juice giving
     juiceDistTime = 0; % When was the last time juice was distributed
+    quitNow = false;
+    timeSinceLastJuice = 0;
     
     % Begin actual stimulus presentation
     try
@@ -200,23 +202,25 @@ function ShapeColor(subject, counterbalance_indx, run)
                 
             
             % Collect eye position
-            eyePosition(frameIdx,:) = eyeTrack(xChannel, yChannel, xGain, yGain, xOffset, yOffset);
+            [eyePosition(frameIdx,1), eyePosition(frameIdx,2)] = eyeTrack(xChannel, yChannel, xGain, yGain, xOffset, yOffset);
             fixation(frameIdx,1) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2),fixRect);
-            
+
             % Process Keys
             if keyCode(KbName('r')) % Recenter
                 xOffset = eyePosition(frameIdx,1)-xCenterExp;
                 yOffset = eyePosition(frameIdx,2)-yCenterExp;
-            elif keyCode(KbName('j')) % Juice
+            elseif keyCode(KbName('j')) % Juice
                 juiceOn = true;
-            elif keyCode(KbName('w')) && fixPix > pixPerAngle/2 % Increase fixation circle
+            elseif keyCode(KbName('w')) && fixPix > pixPerAngle/2 % Increase fixation circle
                 fixPix = fixPix - pixPerAngle/2; % Shrink fixPix by half a degree of visual angle
                 baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
-            elif keyCode(KbName('s')) && fixPix < pixPerAngle*10
+            elseif keyCode(KbName('s')) && fixPix < pixPerAngle*10
                 fixPix = fixPix + pixPerAngle/2; % Increase fixPix by half a degree of visual angle
                 baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
+            elseif keyCode(KbName('p'))
+                quitNow = true;
             end
             
             if rem(frameIdx,fps) == 1
@@ -250,13 +254,15 @@ function ShapeColor(subject, counterbalance_indx, run)
             % Flip
             [timestamp] = Screen('Flip', viewWindow, flips(frameIdx));
             [timestamp2] = Screen('Flip', expWindow, flips(frameIdx));
-            disp(frameIdx)
             
             % Juice Reward
             if frameIdx > fps*rewardWait
-                juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,rewardPerf)
+                juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime,rewardPerf,rewardDur)
             end
-
+            if quitNow == true
+                sca;
+                break;
+            end
             
         end
         
@@ -270,42 +276,45 @@ function ShapeColor(subject, counterbalance_indx, run)
     
         
         
+    function [juiceOn, juiceDistTime] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime, rewardPerf,rewardDur)
+        juiceOn = juiceOn; % might be unnecessary 
+        juiceDistTime = juiceDistTime; % might be unnecessary 
         
-        
-end
-
-function [juiceOn, juiceDistTime] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime, rewardPerf)
-    juiceOn = juiceOn; % might be unnecessary 
-    juiceDistTime = juiceDistTime; % might be unnecessary 
-    timeSinceLastJuice = GetSecs-juiceDistTime;
-    if juiceOn == false && timeSinceLastJuice > rewardWait && sum(fixation(frameIdx-fps*rewardWait+1:frameIdx)) > rewardPerf*fps*rewardWait
-        juiceOn = true;
-    end
-    if juiceOn == true 
-        juiceOn = false;
-        DAQ('SetBit',1);
-        juiceDistTime = GetSecs;
-    end
-    if juiceDistTime > rewardDur
-        DAQ('SetBit',0);
-    end
+        if juiceOn == false && timeSinceLastJuice > rewardWait && sum(fixation(frameIdx-fps*rewardWait+1:frameIdx),"all") > rewardPerf*fps*rewardWait
+            juiceOn = true;
+        end
+        if juiceOn == true 
+            juiceOn = false;
+            DAQ('SetBit',[1 1 1 1]);
+            disp('juice')
+            juiceDistTime = GetSecs;
+            timeSinceLastJuice = GetSecs-juiceDistTime;
+        end
+        if timeSinceLastJuice > rewardDur
+            DAQ('SetBit',[0 0 0 0]);
+            disp('juiceoff')
+        end
 end
         
                 
 
-function [xPos, yPos] = eyeTrack(xChannel, yChannel, xGain, yGain, xOffset, yOffset)
-    coords = DAQ('GetAnalog',[xChannel yChannel]);
-    xPos = (coords(1)*xGain)-xOffset;
-    yPos = (coords(2)*yGain)-yOffset;
-end
+    function [xPos, yPos] = eyeTrack(xChannel, yChannel, xGain, yGain, xOffset, yOffset)
+        coords = DAQ('GetAnalog',[xChannel yChannel]);
+        xPos = (coords(1)*xGain)-xOffset;
+        yPos = (coords(2)*yGain)-yOffset;
+    end
 
-function inCircle = isInCircle(xPos, yPos, circle) % circle is a PTB rectangle
-    radius = (circle(3) - circle(1)) / 2;
-    [xCircleCenter, yCircleCenter] = RectCenter(circle);
-    xDiff = xPos-xCircleCenter;
-    yDiff = yPos-yCircleCenter;
-    dist = hypot(xDiff,yDiff);
-    inCircle = radius>dist;
+    function inCircle = isInCircle(xPos, yPos, circle) % circle is a PTB rectangle
+        radius = (circle(3) - circle(1)) / 2;
+        [xCircleCenter, yCircleCenter] = RectCenter(circle);
+        xDiff = xPos-xCircleCenter;
+        yDiff = yPos-yCircleCenter;
+        dist = hypot(xDiff,yDiff);
+        inCircle = radius>dist;
+    end
+
+
+        
 end
 
 
