@@ -17,7 +17,6 @@ function ShapeColor(subject, counterbalance_indx, run)
     ttlChannel = 8;
     rewardDur = 0.04; % seconds
     rewardWait = 5; % seconds
-    rewardPerf = .90; % 90% fixation to get reward
     
     
     
@@ -254,7 +253,7 @@ function ShapeColor(subject, counterbalance_indx, run)
             
             % Juice Reward
             if frameIdx > fps*rewardWait
-                juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,rewardPerf)
+                juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation)
             end
 
             
@@ -274,11 +273,11 @@ function ShapeColor(subject, counterbalance_indx, run)
         
 end
 
-function [juiceOn, juiceDistTime] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime, rewardPerf)
+function [juiceOn, juiceDistTime] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime)
     juiceOn = juiceOn; % might be unnecessary 
     juiceDistTime = juiceDistTime; % might be unnecessary 
     timeSinceLastJuice = GetSecs-juiceDistTime;
-    if juiceOn == false && timeSinceLastJuice > rewardWait && sum(fixation(frameIdx-fps*rewardWait+1:frameIdx)) > rewardPerf*fps*rewardWait
+    if juiceOn == false && timeSinceLastJuice > rewardWait && sum(fixation(frameIdx-fps*rewardWait+1:frameIdx)) > .90*fps*rewardWait
         juiceOn = true;
     end
     if juiceOn == true 
