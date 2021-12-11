@@ -173,7 +173,7 @@ function ShapeColor(subject, counterbalance_indx, run)
     juiceOn = false; % Logical for juice giving
     juiceDistTime = 0; % When was the last time juice was distributed
     quitNow = false;
-    timeSinceLastJuice = 0;
+    timeSinceLastJuice = GetSecs-juiceDistTime;
     
     % Begin actual stimulus presentation
     try
@@ -257,7 +257,7 @@ function ShapeColor(subject, counterbalance_indx, run)
             
             % Juice Reward
             if frameIdx > fps*rewardWait
-                juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime,rewardPerf,rewardDur)
+                [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime,rewardPerf,rewardDur,timeSinceLastJuice);
             end
             if quitNow == true
                 sca;
@@ -276,10 +276,10 @@ function ShapeColor(subject, counterbalance_indx, run)
     
         
         
-    function [juiceOn, juiceDistTime] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime, rewardPerf,rewardDur)
-        juiceOn = juiceOn; % might be unnecessary 
-        juiceDistTime = juiceDistTime; % might be unnecessary 
-        
+    function [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime, rewardPerf,rewardDur,timeSinceLastJuice)
+
+        timeSinceLastJuice = GetSecs-juiceDistTime;
+
         if juiceOn == false && timeSinceLastJuice > rewardWait && sum(fixation(frameIdx-fps*rewardWait+1:frameIdx),"all") > rewardPerf*fps*rewardWait
             juiceOn = true;
         end
@@ -288,12 +288,12 @@ function ShapeColor(subject, counterbalance_indx, run)
             DAQ('SetBit',[1 1 1 1]);
             disp('juice')
             juiceDistTime = GetSecs;
-            timeSinceLastJuice = GetSecs-juiceDistTime;
         end
-        if timeSinceLastJuice > rewardDur
+        if timeSinceLastJuice > rewardDur % This won't have the best timing since its linked to the fliprate
             DAQ('SetBit',[0 0 0 0]);
             disp('juiceoff')
         end
+        
 end
         
                 
