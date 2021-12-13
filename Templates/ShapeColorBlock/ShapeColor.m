@@ -204,11 +204,10 @@ function ShapeColor(subject, counterbalance_indx, run)
             % Collect eye position
             [eyePosition(frameIdx,1), eyePosition(frameIdx,2)] = eyeTrack(xChannel, yChannel, xGain, yGain, xOffset, yOffset);
             fixation(frameIdx,1) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2),fixRect);
-
             % Process Keys
             if keyCode(KbName('r')) % Recenter
-                xOffset = eyePosition(frameIdx,1)-xCenterExp;
-                yOffset = eyePosition(frameIdx,2)-yCenterExp;
+                xOffset = xOffset + eyePosition(frameIdx,1)-xCenterExp;
+                yOffset = yOffset + eyePosition(frameIdx,2)-yCenterExp;
             elseif keyCode(KbName('j')) % Juice
                 juiceOn = true;
             elseif keyCode(KbName('w')) && fixPix > pixPerAngle/2 % Increase fixation circle
@@ -233,7 +232,6 @@ function ShapeColor(subject, counterbalance_indx, run)
                 % Create rectangles for stim draw
                 viewStimRect = CenterRectOnPointd(baseRect, round(xCenter+jitterX), round(yCenter+jitterY));
                 expStimRect = CenterRectOnPointd(baseRect, round(xCenterExp+jitterX), round(yCenterExp+jitterY));
-                disp('60 flips')
             end
             
             % Draw Stimulus on Framebuffer
@@ -256,6 +254,7 @@ function ShapeColor(subject, counterbalance_indx, run)
             [timestamp2] = Screen('Flip', expWindow, flips(frameIdx));
             
             % Juice Reward
+            
             if frameIdx > fps*rewardWait
                 [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime,rewardPerf,rewardDur,timeSinceLastJuice);
             end
@@ -279,19 +278,18 @@ function ShapeColor(subject, counterbalance_indx, run)
     function [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime, rewardPerf,rewardDur,timeSinceLastJuice)
 
         timeSinceLastJuice = GetSecs-juiceDistTime;
-
+        
         if juiceOn == false && timeSinceLastJuice > rewardWait && sum(fixation(frameIdx-fps*rewardWait+1:frameIdx),"all") > rewardPerf*fps*rewardWait
             juiceOn = true;
         end
         if juiceOn == true 
             juiceOn = false;
             DAQ('SetBit',[1 1 1 1]);
-            disp('juice')
             juiceDistTime = GetSecs;
+            timeSinceLastJuice = GetSecs-juiceDistTime;
         end
         if timeSinceLastJuice > rewardDur % This won't have the best timing since its linked to the fliprate
             DAQ('SetBit',[0 0 0 0]);
-            disp('juiceoff')
         end
         
 end
