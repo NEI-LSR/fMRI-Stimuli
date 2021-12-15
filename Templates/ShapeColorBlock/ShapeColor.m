@@ -41,7 +41,8 @@ function ShapeColor(subject, counterbalance_indx, run)
     viewscreen = 2;
 
     % Refresh rate of monitors:
-    fps = 30;
+    fps = 60;
+    jitterFrames = fps/2;
     ifi = 1/fps;
     
     % Other Timing Data:
@@ -222,7 +223,7 @@ function ShapeColor(subject, counterbalance_indx, run)
                 quitNow = true;
             end
             
-            if rem(frameIdx,fps) == 1
+            if rem(frameIdx,jitterFrames) == 1
                 % Calculate jitter
                 jitterDist = round(rand*jitterPix); % Random number between 0 and maximum number of pixels
                 jitterAngle = rand*2*pi; % Gives us a random radian
@@ -270,7 +271,7 @@ function ShapeColor(subject, counterbalance_indx, run)
         rethrow(error)
     end % End of stim presentation
     
-    save(dataSaveFile, 'stimulus_order');
+    save(dataSaveFile, 'stimulus_order','circTex','AchromTex','chromTex','chromBWTex','blockorder','eyePosition');
     sca;
     
         
