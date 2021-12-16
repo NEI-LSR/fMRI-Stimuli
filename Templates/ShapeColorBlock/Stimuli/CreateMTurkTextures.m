@@ -1,8 +1,8 @@
 %% Set Up Directory Structure
 curDir = pwd; %also circle directory
 CIRCdir = fullfile(curDir,'circle')
-ACHdir = fullfile(curDir,'achromatic','old');
-CHdir = fullfile(curDir,'chromatic','old');
+ACHdir = fullfile(curDir,'achromatic');
+CHdir = fullfile(curDir,'chromatic');
 
 %% Prepare images
 imageNumbers = 14;
@@ -16,16 +16,16 @@ end
 [imgCircle,~,alphaCircle] = imread(fullfile(CIRCdir, 'colorCircle.png'));
 alphaCircle = 255-alphaCircle;
 %% Color Params
-file_colors= round(csvread('/Users/duffieldsj/Documents/GitHub/Personal-Scripts/woosterNIFRGB.csv'))
-file_colors(file_colors>255) = 255;
+% file_colors= round(csvread('/Users/duffieldsj/Documents/GitHub/Personal-Scripts/woosterNIFRGB.csv'))
+% file_colors(file_colors>255) = 255;
 % cRED = file_colors(2:15,1)'
 % cGREEN = file_colors(2:15,2)'
 % cBLUE = file_colors(2:15,3)'
 % backgroundRGB = file_colors(1,:)
-cRED = [246, 142, 209, 121, 142, 81, 83, 48, 162, 93, 236, 136, 191, 110];
-cGREEN = [134, 77, 165, 96, 187, 108, 190, 109, 163, 94, 125, 73, 165, 94];
-cBLUE = [175, 97, 95, 52, 129, 71, 218, 120, 255, 153, 255, 142, 198, 109];
-backgroundRGB = [152, 132, 151];
+cRED = [94, 27, 72, 21, 31, 15, 13, 7, 29, 14, 78, 24, 53, 19];
+cGREEN = [33, 12, 51, 16, 64, 22, 64, 22, 49, 18, 32, 14, 48, 17];
+cBLUE = [56, 17, 14, 5, 26, 9, 95, 27, 165, 45, 143, 39, 76, 23];
+backgroundRGB = [31 29 47];
 
 
 %% Create Colored Images
