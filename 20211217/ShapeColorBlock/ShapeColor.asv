@@ -15,7 +15,7 @@ function ShapeColor(subject, counterbalance_indx, run)
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
-    rewardDur = 0.1; % seconds
+    rewardDur = 0.4; % seconds
     rewardWait = 5; % seconds
     rewardPerf = .90; % 90% fixation to get reward
     
@@ -41,7 +41,7 @@ function ShapeColor(subject, counterbalance_indx, run)
     viewscreen = 2;
 
     % Refresh rate of monitors:
-    fps = 30;
+    fps = 60;
     jitterFrames = fps/2;
     ifi = 1/fps;
     
@@ -96,11 +96,11 @@ function ShapeColor(subject, counterbalance_indx, run)
     pixPerAngle = 100; % Number of pixels per degree of visual angle
     stimPix = 6*pixPerAngle; % How large the stimulus rectangle will be
     jitterPix = 1*pixPerAngle; % How large the jitter will be
-    fixPix = 1*pixPerAngle; % How large the fixation will be
+    fixPix = 2*pixPerAngle; % How large the fixation will be
     
     
-    fixCrossDimPix = 10; % Fixation cross arm length
-    lineWidthPix = 2; % Fixation cross arm thickness
+    fixCrossDimPix = 40; % Fixation cross arm length
+    lineWidthPix = 4; % Fixation cross arm thickness
     xCoords = [-fixCrossDimPix fixCrossDimPix 0 0]; 
     yCoords = [0 0 -fixCrossDimPix fixCrossDimPix];
     allCoords = [xCoords; yCoords];
