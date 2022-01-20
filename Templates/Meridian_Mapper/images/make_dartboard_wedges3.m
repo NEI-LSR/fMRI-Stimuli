@@ -20,7 +20,7 @@ uni_color = [0.5 0.5 0.5];
 checker_type = 'checker50';	% checker100 (use calculated color for every sector) or checker50 (only color every other sector)
 
 % parameters for mask
-mask_type = 'wedge';	% wedge or ring or none, wegdes are mirror symmetric orthogonal to axis
+mask_type = 'ring';	% wedge or ring or none, wegdes are mirror symmetric orthogonal to axis
 mask_color = bg_grey; % 0.0
 mask_wedge = 60;
 mask_axis = 90;	% 0 is vertical
