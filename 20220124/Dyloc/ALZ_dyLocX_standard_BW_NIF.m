@@ -25,11 +25,11 @@ Vcent(2) = 0.6828;
 global manualJuiceStart
 manualJuiceStart = 0;
 
-juiceInterval = 1.5; %seconds before juice reward
-juiceTime = 0.06;
+juiceInterval = 3.5; %seconds before juice reward
+juiceTime = 0.060;
 
 disp(['Juice Interval is: ' num2str(juiceInterval)])
-
+keyboard
 
 dataDir = ([pwd filesep subj_id filesep])
 thisExpDir = [dataDir date filesep]
