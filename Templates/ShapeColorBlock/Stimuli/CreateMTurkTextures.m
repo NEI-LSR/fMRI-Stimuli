@@ -14,7 +14,7 @@ for i = 1:imageNumbers
 end
 
 [imgCircle,~,alphaCircle] = imread(fullfile(CIRCdir, 'colorCircle.png'));
-alphaCircle = 255-alphaCircle;
+maskCircle = 255-alphaCircle;
 %% Color Params
 cRED = [94, 27, 72, 21, 31, 15, 13, 7, 29, 14, 78, 24, 53, 19];
 cGREEN = [33, 12, 51, 16, 64, 22, 64, 22, 49, 18, 32, 14, 48, 17];
@@ -28,24 +28,10 @@ background = cat(3,uint8(zeros(size(alphaCircle))+backgroundRGB(1)),uint8(zeros(
 for i = 1:imageNumbers
     
 
-    chrom(:,:,:,i) = cat(3,imoverlay(imgCH{i},maskCH{i}(:,:,1),[cRED(i),cGREEN(i),cBLUE(i)]/255),alphaCH{i});
+    chrom(:,:,:,i) = cat(3,imoverlay(imgCH{i},maskCH{i}(:,:,1),[cRED(i),cGREEN(i),cBLUE(i)]/255),(alphaCH{i}+maskCH{i}(:,:,1)));
     chromBW(:,:,:,i) = cat(3,imoverlay(imgCH{i},maskCH{i}(:,:,1),backgroundRGB/255),alphaCH{i});
     achrom(:,:,:,i) = cat(3,imoverlay(imgACH{i},maskACH{i}(:,:,1),backgroundRGB/255),alphaACH{i});
-    circle = zeros(size(imgCircle));
-    
-    red = uint8(zeros(size(alphaCircle))+cRED(i));
-    green = uint8(zeros(size(alphaCircle))+cGREEN(i));
-    blue = uint8(zeros(size(alphaCircle))+cBLUE(i));
-    bgd = imshow(background)
-    hold on
-    color = cat(3,uint8(red),uint8(green),uint8(blue));
-    c = imshow(color)
-    set(c,'AlphaData',alphaCircle)
-    set(gca,'LooseInset',get(gca,'TightInset'));
-    exportgraphics(gca, [num2str(i) 'circle.png'], 'BackgroundColor','none')
-    circle_import = imread([num2str(i) 'circle.png']);
-    final = circle_import(9:end-8,9:end-8,:);
-    colorcircles(:,:,:,i) = final;
+    colorcircles(:,:,:,i) = cat(3,imoverlay(imgCircle,maskCircle,[cRED(i),cGREEN(i),cBLUE(i)]/255),maskCircle);
 end
 
 
