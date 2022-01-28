@@ -1,7 +1,7 @@
 % Changes Screen Color
 % Stuart J Duffield 2021-12-14
 global PRport
-PRport = 'COM4';
+PRport = 'COM3';
 StepSize = 1;
 ScreenSize = [];
 KbName('UnifyKeyNames');
@@ -24,6 +24,7 @@ while true
         Screen('FillRect',Window,color);
         Screen('DrawText', Window, num2str(color),0,0,textcolor);
         Screen('Flip',Window);
+        disp(color)
         pause(0.1)
     elseif keyCode(KbName('a')) && color(1) > 0
         color(1) = max(color(1)-StepSize,0);
@@ -31,6 +32,7 @@ while true
         Screen('FillRect',Window,color);
         Screen('DrawText', Window, num2str(color),0,0,textcolor);
         Screen('Flip',Window);
+        disp(color)
         pause(0.1)
     elseif keyCode(KbName('w')) && color(2) < 255
         color(2) = min(color(2)+StepSize,255);
@@ -38,6 +40,7 @@ while true
         Screen('FillRect',Window,color);
         Screen('DrawText', Window, num2str(color),0,0,textcolor);
         Screen('Flip',Window);  
+        disp(color)
         pause(0.1)
     elseif keyCode(KbName('s')) && color(2) > 0
         color(2) = max(color(2)-StepSize,0);
@@ -45,6 +48,7 @@ while true
         Screen('FillRect',Window,color);
         Screen('DrawText', Window, num2str(color),0,0,textcolor);
         Screen('Flip',Window);  
+        disp(color)
         pause(0.1)
     elseif keyCode(KbName('e')) && color(3) < 255
         color(3) = min(color(3)+StepSize,255);
@@ -52,6 +56,7 @@ while true
         Screen('FillRect',Window,color);
         Screen('DrawText', Window, num2str(color),0,0,textcolor);
         Screen('Flip',Window);  
+        disp(color)
         pause(0.1)
     elseif keyCode(KbName('d')) && color(3) > 0
         color(3) = max(color(3)-StepSize,0);
@@ -59,6 +64,7 @@ while true
         Screen('FillRect',Window,color);
         Screen('DrawText', Window, num2str(color),0,0,textcolor);
         Screen('Flip',Window);
+        disp(color)
         pause(0.1)
     elseif keyCode(KbName('r')) && StepSize < 64
         StepSize = StepSize*2;
@@ -66,11 +72,11 @@ while true
         StepSize = StepSize/2;
     elseif keyCode(KbName('return'))
         [xyYcie, XYZcie, xyYJudd, XYZjudd, LMS, spec] = getPR655;
-        disp(xyYcie)
-        disp(XYZcie)
-        disp(xyYJudd)
-        disp(XYZjudd)
-        disp(LMS)
+        disp(['xyY1931 Values are: ' num2str(xyYcie)])
+        disp(['XYZ1931 Values are: ' num2str(XYZcie)])
+        disp(['xyY Judd Values are: ' num2str(xyYJudd)])
+        disp(['XYZJudd Values are: ' num2str(XYZjudd)])
+        disp(['LMS Values are: ' num2str(LMS)])
         pause(0.5)
     elseif keyCode(KbName('v'))
         disp(color)
