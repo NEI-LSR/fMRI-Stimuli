@@ -7,6 +7,7 @@ function ShapeColor_NewTest(subject, counterbalance_indx, run)
     
 
     % Initialize DAQ
+    DAQ('Debug',true);
     DAQ('Init');
     xGain = -400;
     yGain = 400;
@@ -187,7 +188,7 @@ function ShapeColor_NewTest(subject, counterbalance_indx, run)
     
     % Begin actual stimulus presentation
     try
-        movie = Screen('CreateMovie', expWindow, movSaveFile); % Initialize Movie
+        movie = Screen('CreateMovie', expWindow, movSaveFile, [],[], 10); % Initialize Movie
         Screen('DrawTexture', expWindow, fixGridTex);
         Screen('Flip', expWindow);
         Screen('Flip', viewWindow);
@@ -257,7 +258,9 @@ function ShapeColor_NewTest(subject, counterbalance_indx, run)
             Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
             
             % Add this frame to the movie
-            Screen('AddFrameToMovie',expWindow,[],[],movie);
+            if rem(frameIdx,3)==1
+                Screen('AddFrameToMovie',expWindow,[],[],movie);
+            end
 
             % Flip
             [timestamp] = Screen('Flip', viewWindow, flips(frameIdx));
