@@ -1,4 +1,4 @@
-function PlotOVerlays_ShapeColor(subject, run)
+function PlotOverlays_ShapeColor(subject, run)
     % Shape Color Paradigm 2.2
     % Stuart J. Duffield November 2021
     % Displays the stimuli from the Monkey Turk experiments in blocks.
@@ -21,7 +21,7 @@ function PlotOVerlays_ShapeColor(subject, run)
     screenShots = ['Data/' subject '_' num2str(run) '_Images.mat'];
 
     % Manually set screennumbers for experimenter and viewer displays:
-    expscreen = 0; 
+    expscreen = 2; 
 
     % Refresh rate of monitors:
     fps = 30;
@@ -173,7 +173,6 @@ function PlotOVerlays_ShapeColor(subject, run)
         for i = 1:length(circInds)
             expStimRect = CenterRectOnPointd(baseRect, round(xCenterExp+jitterX(circInds(i))), round(yCenterExp+jitterY(circInds(i))));
             Screen('DrawTexture', expWindow, texture(circInds(i)),[],expStimRect);  
-            
         end
         Screen('Flip', expWindow, 300);
         circImage = Screen('GetImage',expWindow);
@@ -186,6 +185,10 @@ function PlotOVerlays_ShapeColor(subject, run)
     sca;
 
     save(screenShots,"chromBWImage","circImage","achromImage","chromImage");
+    imwrite(chromBWImage, ['Data/' subject '_' num2str(run) '_chromBWplot.png']);
+    imwrite(circImage, ['Data/' subject '_' num2str(run) '_circplot.png']);
+    imwrite(achromImage, ['Data/' subject '_' num2str(run) '_achromplot.png']);
+    imwrite(chromImage, ['Data/' subject '_' num2str(run) '_chromplot.png']);
 
 end
         

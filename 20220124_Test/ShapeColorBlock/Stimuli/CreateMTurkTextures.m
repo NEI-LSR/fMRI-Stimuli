@@ -1,4 +1,5 @@
 %% Set Up Directory Structure
+clear;
 curDir = pwd; %also circle directory
 CIRCdir = fullfile(curDir,'circle')
 ACHdir = fullfile(curDir,'achromatic');
@@ -9,8 +10,8 @@ imageNumbers = 14;
 for i = 1:imageNumbers
     [imgCH{i},~,alphaCH{i}] = imread(fullfile(CHdir, [num2str(i) '.png']));
     [imgACH{i},~,alphaACH{i}] = imread(fullfile(ACHdir, [num2str(i) '.png']));
-    maskCH{i} = imread(fullfile(CHdir, [num2str(i) '_mask.png']));
-    maskACH{i} = imread(fullfile(ACHdir, [num2str(i) '_mask.png']));
+    [~,~,maskCH{i}] = imread(fullfile(CHdir, [num2str(i) '_mask.png']));
+    [~,~,maskACH{i}] = imread(fullfile(ACHdir, [num2str(i) '_mask.png']));
 end
 
 [imgCircle,~,alphaCircle] = imread(fullfile(CIRCdir, 'colorCircle.png'));
@@ -28,9 +29,9 @@ background = cat(3,uint8(zeros(size(alphaCircle))+backgroundRGB(1)),uint8(zeros(
 for i = 1:imageNumbers
     
 
-    chrom(:,:,:,i) = cat(3,imoverlay(imgCH{i},maskCH{i}(:,:,1),[cRED(i),cGREEN(i),cBLUE(i)]/255),alphaCH{i});
-    chromBW(:,:,:,i) = cat(3,imoverlay(imgCH{i},maskCH{i}(:,:,1),backgroundRGB/255),alphaCH{i});
-    achrom(:,:,:,i) = cat(3,imoverlay(imgACH{i},maskACH{i}(:,:,1),backgroundRGB/255),alphaACH{i});
+    chrom(:,:,:,i) = cat(3,imoverlay(imgCH{i},maskCH{i},[cRED(i),cGREEN(i),cBLUE(i)]/255),(alphaCH{i}+maskCH{i}));
+    chromBW(:,:,:,i) = cat(3,imoverlay(imgCH{i},maskCH{i},backgroundRGB/255),alphaCH{i});
+    achrom(:,:,:,i) = cat(3,imoverlay(imgACH{i},maskACH{i},backgroundRGB/255),alphaACH{i});
     circle = zeros(size(imgCircle));
     
     red = uint8(zeros(size(alphaCircle))+cRED(i));
@@ -44,7 +45,14 @@ for i = 1:imageNumbers
     set(gca,'LooseInset',get(gca,'TightInset'));
     exportgraphics(gca, [num2str(i) 'circle.png'], 'BackgroundColor','none')
     circle_import = imread([num2str(i) 'circle.png']);
-    final = circle_import(9:end-8,9:end-8,:);
+    row_extra = size(circle_import,1) - 300;
+    column_extra = size(circle_import,2) - 300;
+    row_cut_start = round(row_extra/2);
+    row_cut_end = fix(row_extra/2);
+    column_cut_start = round(column_extra/2);
+    column_cut_end = fix(column_extra/2);
+    final = circle_import((1+row_cut_start):end-row_cut_end,(column_cut_start+1):end-column_cut_end,:);
+    final(:,:,4) = alphaCircle;
     colorcircles(:,:,:,i) = final;
 end
 

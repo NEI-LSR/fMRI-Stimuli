@@ -15,6 +15,10 @@ screen = max(Screen('Screens'));
 [Window, Rect] = Screen('OpenWindow', screen, color, ScreenSize);
 Screen('DrawText', Window, num2str(color),[],[],textcolor);
 Screen('Flip',Window);
+mNum = 1; % Measure Number
+measurements = struct('xyY',{},'XYZ',{},'xyYJudd',{},'XYZJudd',{},'LMS',{},'spectra',{});
+date_time=strrep(strrep(datestr(datetime),' ','_'),':','_')
+saveFile = ['manualMeasurements\' date_time];
 
 while true
     [keyIsDown,secs, keyCode] = KbCheck;
@@ -68,15 +72,24 @@ while true
         pause(0.1)
     elseif keyCode(KbName('r')) && StepSize < 64
         StepSize = StepSize*2;
+        pause(0.5)
     elseif keyCode(KbName('f')) && StepSize > 1
         StepSize = StepSize/2;
+        pause(0.5)
     elseif keyCode(KbName('return'))
-        [xyYcie, XYZcie, xyYJudd, XYZjudd, LMS, spec] = getPR655;
+        [xyYcie, XYZcie, xyYJudd, XYZJudd, LMS, spec] = getPR655;
         disp(['xyY1931 Values are: ' num2str(xyYcie)])
         disp(['XYZ1931 Values are: ' num2str(XYZcie)])
         disp(['xyY Judd Values are: ' num2str(xyYJudd)])
-        disp(['XYZJudd Values are: ' num2str(XYZjudd)])
+        disp(['XYZJudd Values are: ' num2str(XYZJudd)])
         disp(['LMS Values are: ' num2str(LMS)])
+        measurements(mNum).xyY = xyYcie;
+        measurements(mNum).XYZ = XYZcie;
+        measurements(mNum).xyYJudd = xyYJudd;
+        measurements(mNum).XYZJudd = XYZJudd;
+        measurements(mNum).LMS = LMS;
+        measurements(mNum).spectra = spec;
+        mNum = mNum + 1;
         pause(0.5)
     elseif keyCode(KbName('v'))
         disp(color)
@@ -84,6 +97,7 @@ while true
         pause(0.1)
     elseif keyCode(KbName('p'))
         sca;
+        save(saveFile, 'measurements');
         break
     end
 end
