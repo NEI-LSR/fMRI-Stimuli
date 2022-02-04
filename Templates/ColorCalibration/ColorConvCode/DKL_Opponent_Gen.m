@@ -2,10 +2,10 @@
 
 clear 
 close all
-LMSgray = [0.5366 0.4436 0.2650] % insert the LMS value of the gray you measured
+LMSgray = [0.55461 0.45616 0.27202] % insert the LMS value of the gray you measured
 graypointRGB = [128 128 128]; % What is the value of the isoluminant RGB that you want? This isn't really necessary\
 whiteJumps = 0.2*256;
-scalingF = 0.9;
+scalingF = 0.5;
 graypoint = graypointRGB/256; 
 bgLMS = LMSgray';
 
