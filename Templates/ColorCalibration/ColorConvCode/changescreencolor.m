@@ -16,7 +16,7 @@ screen = max(Screen('Screens'));
 Screen('DrawText', Window, num2str(color),[],[],textcolor);
 Screen('Flip',Window);
 mNum = 1; % Measure Number
-measurements = struct('xyY',{},'XYZ',{},'xyYJudd',{},'XYZJudd',{},'LMS',{},'spectra',{});
+measurements = struct('gunVals',{},'xyY',{},'XYZ',{},'xyYJudd',{},'XYZJudd',{},'LMS',{},'spectra',{});
 date_time=strrep(strrep(datestr(datetime),' ','_'),':','_')
 saveFile = ['manualMeasurements\' date_time];
 
@@ -83,12 +83,14 @@ while true
         disp(['xyY Judd Values are: ' num2str(xyYJudd)])
         disp(['XYZJudd Values are: ' num2str(XYZJudd)])
         disp(['LMS Values are: ' num2str(LMS)])
+        measurements(mNum).gunVals = color;
         measurements(mNum).xyY = xyYcie;
         measurements(mNum).XYZ = XYZcie;
         measurements(mNum).xyYJudd = xyYJudd;
         measurements(mNum).XYZJudd = XYZJudd;
         measurements(mNum).LMS = LMS;
         measurements(mNum).spectra = spec;
+        disp(mNum)
         mNum = mNum + 1;
         pause(0.5)
     elseif keyCode(KbName('v'))
