@@ -1,4 +1,4 @@
-function ShapeColor(subject, counterbalance_indx, run)
+function ShapeColor_NewTest(subject, counterbalance_indx, run)
     % Shape Color Paradigm 2.2
     % Stuart J. Duffield November 2021
     % Displays the stimuli from the Monkey Turk experiments in blocks.
@@ -7,8 +7,9 @@ function ShapeColor(subject, counterbalance_indx, run)
     
 
     % Initialize DAQ
+    DAQ('Debug',false);
     DAQ('Init');
-    xGain = 400;
+    xGain = -400;
     yGain = 400;
     xOffset = 0;
     yOffset = 0;
@@ -35,6 +36,7 @@ function ShapeColor(subject, counterbalance_indx, run)
     runExpTime = datestr(now); % Get the time the run occured at.
 
     dataSaveFile = ['Data/' subject '_' num2str(run) '_Data.mat']; % File to save both run data and eye data
+    movSaveFile = ['Data/' subject '_' num2str(run) '_Movie.mov']; % Create Movie Filename
 
     % Manually set screennumbers for experimenter and viewer displays:
     expscreen = 1; 
@@ -72,7 +74,7 @@ function ShapeColor(subject, counterbalance_indx, run)
     load([stimDir '/' 'chromBW.mat'], 'chromBW'); % Chromatic Shapes Black and White
     load([stimDir '/' 'colorcircles.mat'], 'colorcircles'); % Colored Circles
     stimsize = size(chrom(:,:,1,1)); % What size is the simulus? In pixels
-    grayTex = cat(3,repmat(gray(1),stimsize(1)),repmat(gray(2),stimsize(1)),repmat(gray(3),stimsize(1))); % Greates a gray texture the size of the stimulus. 
+    grayTex = cat(3,repmat(gray(1),stimsize(1)),repmat(gray(2),stimsize(1)),repmat(gray(3),stimsize(1)),repmat(255,stimsize(1))); % Greates a gray texture the size of the stimulus. 
     % I do this because the way the code works right now is that it
     % requires a texture to be displayed at any given frame. Not great, but
     % allows the code to be easily modifiable, and the gray texture only
@@ -93,7 +95,7 @@ function ShapeColor(subject, counterbalance_indx, run)
     [xCenter, yCenter] = RectCenter(viewRect); % Get center of the view screen
     [xCenterExp, yCenterExp] = RectCenter(expRect); % Get center of the experimentor's screen
     
-    pixPerAngle = 100; % Number of pixels per degree of visual angle
+    pixPerAngle = 40; % Number of pixels per degree of visual angle
     stimPix = 6*pixPerAngle; % How large the stimulus rectangle will be
     jitterPix = 1*pixPerAngle; % How large the jitter will be
     fixPix = 1*pixPerAngle; % How large the fixation will be
@@ -169,6 +171,14 @@ function ShapeColor(subject, counterbalance_indx, run)
     end
     eyePosition = NaN(fps*exactDur,2); % Column 1 xposition, column 2 yposition
     fixation = NaN(fps*exactDur,1); % Fixation tracker
+    % Initialize randoms
+    randDists = rand([exactDur*fps,1]);
+    randAngles = rand([exactDur*fps,1]);
+    % Calculate jitter
+    jitterDist = round(randDists*jitterPix); % Random number between 0 and maximum number of pixels
+    jitterAngle = randAngles*2*pi; % Gives us a random radian
+    jitterX = cos(jitterAngle).*jitterDist; % X
+    jitterY = sin(jitterAngle).*jitterDist; % Y
     Priority(2) % topPriorityLevel?
     %Priority(9) % Might need to change for windows
     juiceOn = false; % Logical for juice giving
@@ -178,6 +188,7 @@ function ShapeColor(subject, counterbalance_indx, run)
     
     % Begin actual stimulus presentation
     try
+        movie = Screen('CreateMovie', expWindow, movSaveFile, [],[], 10); % Initialize Movie
         Screen('DrawTexture', expWindow, fixGridTex);
         Screen('Flip', expWindow);
         Screen('Flip', viewWindow);
@@ -224,15 +235,11 @@ function ShapeColor(subject, counterbalance_indx, run)
             end
             
             if rem(frameIdx,jitterFrames) == 1
-                % Calculate jitter
-                jitterDist = round(rand*jitterPix); % Random number between 0 and maximum number of pixels
-                jitterAngle = rand*2*pi; % Gives us a random radian
-                jitterX = cos(jitterAngle)*jitterDist; % X
-                jitterY = sin(jitterAngle)*jitterDist; % Y
+
             
                 % Create rectangles for stim draw
-                viewStimRect = CenterRectOnPointd(baseRect, round(xCenter+jitterX), round(yCenter+jitterY));
-                expStimRect = CenterRectOnPointd(baseRect, round(xCenterExp+jitterX), round(yCenterExp+jitterY));
+                viewStimRect = CenterRectOnPointd(baseRect, round(xCenter+jitterX(frameIdx)), round(yCenter+jitterY(frameIdx)));
+                expStimRect = CenterRectOnPointd(baseRect, round(xCenterExp+jitterX(frameIdx)), round(yCenterExp+jitterY(frameIdx)));
             end
             
             % Draw Stimulus on Framebuffer
@@ -250,6 +257,11 @@ function ShapeColor(subject, counterbalance_indx, run)
             % Draw eyetrace on framebuffer
             Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
             
+            % Add this frame to the movie
+            if rem(frameIdx,3)==1
+                Screen('AddFrameToMovie',expWindow,[],[],movie);
+            end
+
             % Flip
             [timestamp] = Screen('Flip', viewWindow, flips(frameIdx));
             [timestamp2] = Screen('Flip', expWindow, flips(frameIdx));
@@ -260,7 +272,8 @@ function ShapeColor(subject, counterbalance_indx, run)
                 [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime,rewardPerf,rewardDur,timeSinceLastJuice);
             end
             if quitNow == true
-                sca;
+                Screen('FinalizeMovie', movie);
+                sca
                 break;
             end
             
@@ -271,9 +284,13 @@ function ShapeColor(subject, counterbalance_indx, run)
         rethrow(error)
     end % End of stim presentation
     
-    save(dataSaveFile, 'stimulus_order','circTex','AchromTex','chromTex','chromBWTex','blockorder','eyePosition');
+    if quitNow == false
+        Screen('FinalizeMovie', movie);
+    end
+    save(dataSaveFile, 'stimulus_order','circTex','AchromTex','chromTex','chromBWTex','blockorder','eyePosition','jitterX','jitterY');
     sca;
-    
+    disp(sum(fixation)/sum(fps*exactDur)) %Display fixation percentage
+
         
         
     function [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime, rewardPerf,rewardDur,timeSinceLastJuice)
