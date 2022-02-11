@@ -17,8 +17,8 @@ function [gain,output,eyeRecord,Vcent,Vcent2] = five_dot_task()
     fnDAQNI('Init',0)
     global Vcent Vcent2 Quit doRunTrial doDisplayEyePos dotNum gain channels port frameRects1 start manualJuiceStart
     global dotSize rects
-    gain{1} = -400;    
-    gain{2} = 400;
+    gain{1} = 400;    
+    gain{2} = -400;
     %gain{1} = 200; 
     %gain{2} = 400;
     channels = [1 2];
@@ -34,7 +34,7 @@ function [gain,output,eyeRecord,Vcent,Vcent2] = five_dot_task()
     Vcent(2) = -0.7671;
     Vcent2 = Vcent;
     dotTime = 1.5;
-    juiceTime = 0.02;
+    juiceTime = 0.04;
     juiceInterval = 0.5;
 
 
