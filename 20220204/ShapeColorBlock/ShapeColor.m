@@ -9,15 +9,15 @@ function ShapeColor(subject, counterbalance_indx, run)
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = -400;
-    yGain = 400;
+    xGain = -300;
+    yGain = 300;
     xOffset = 0;
     yOffset = 0;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
     rewardDur = 0.07; % seconds
-    rewardWait = 3; % seconds
+    rewardWait = 2; % seconds
     rewardPerf = .90; % 90% fixation to get reward
     
     
