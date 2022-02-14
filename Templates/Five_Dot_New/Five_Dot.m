@@ -9,7 +9,7 @@ function FiveDot
     % Initialize DAQ
     DAQ('Init');
     xGain = 400;
-    yGain = 400;
+    yGain = -400;
     xOffset = 0;
     yOffset = 0;
     xChannel = 2;
@@ -27,14 +27,14 @@ function FiveDot
     KbName('UnifyKeyNames');
     % Initialize save paths for eyetracking, other data:
     curdir = pwd; % Current Directory
-    
+    stimDir = [curdir '/Stimuli']; % Stimulus directory
     if ~isfolder('Data') % Switch this to isfolder if matlab 2017 or later
         mkdir('Data');
     end
 
     runExpTime = datestr(now); % Get the time the run occured at.
 
-    dataSaveFile = ['Data/' run ExpTime '_Data.mat']; % File to save eye data
+    dataSaveFile = ['Data/'  'EyeData_Data.mat']; % File to save eye data
 
     % Manually set screennumbers for experimenter and viewer displays:
     expscreen = 1; 
@@ -64,7 +64,7 @@ function FiveDot
     
     pixPerAngle = 100; % Number of pixels per degree of visual angle
     fixPix = 1*pixPerAngle; % How large the fixation will be
-    
+    stimPix = 200;
     
     fixCrossDimPix = 10; % Fixation cross arm length
     lineWidthPix = 2; % Fixation cross arm thickness
@@ -155,22 +155,11 @@ function FiveDot
             elseif keyCode(KbName('p'))
                 quitNow = true;
             end
-            
-            if rem(frameIdx,jitterFrames) == 1
-                % Calculate jitter
-                jitterDist = round(rand*jitterPix); % Random number between 0 and maximum number of pixels
-                jitterAngle = rand*2*pi; % Gives us a random radian
-                jitterX = cos(jitterAngle)*jitterDist; % X
-                jitterY = sin(jitterAngle)*jitterDist; % Y
-            
-                % Create rectangles for stim draw
-                viewStimRect = CenterRectOnPointd(baseRect, round(xCenter+jitterX), round(yCenter+jitterY));
-                expStimRect = CenterRectOnPointd(baseRect, round(xCenterExp+jitterX), round(yCenterExp+jitterY));
-            end
+
             
             % Draw Stimulus on Framebuffer
-            Screen('DrawTexture', viewWindow, texture(frameIdx),[],viewStimRect);
-            Screen('DrawTexture', expWindow, texture(frameIdx),[],expStimRect);  
+            %Screen('DrawTexture', viewWindow, texture(frameIdx),[],viewStimRect);
+            %Screen('DrawTexture', expWindow, texture(frameIdx),[],expStimRect);  
             %Screen('DrawTexture', viewWindow, texture(frameIdx)); % Needs to be sized and have jitter
             %Screen('DrawTexture', expWindow, texture(frameIdx)); % Needs to be sized and have jitter
             
@@ -204,7 +193,7 @@ function FiveDot
         rethrow(error)
     end % End of stim presentation
     
-    save(dataSaveFile, 'stimulus_order','circTex','AchromTex','chromTex','chromBWTex','blockorder','eyePosition');
+    save(dataSaveFile, 'eyePosition');
     sca;
     
         
