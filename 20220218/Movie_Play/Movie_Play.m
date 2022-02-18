@@ -8,8 +8,8 @@ function Movie_Play(subject, run)
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = 400;
-    yGain = 400;
+    xGain = 550;
+    yGain = -600;
     xOffset = 0;
     yOffset = 0;
     xChannel = 2;
@@ -160,11 +160,11 @@ function Movie_Play(subject, run)
             end
 
 
-            Screen('FillRect',viewWindow,black);
+            Screen('FillRect',viewWindow,gray);
             Screen('DrawText', expWindow,['Time Elapsed: ' num2str(toc)],0,100);
          
             % Draw Fixation Cross on Framebuffer
-            %Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
+            Screen('DrawLines', viewWindow, allCoords, lineWidthPix,black, [xCenter yCenter], 2);
             
             % Draw fixation window on framebuffer
             Screen('FrameRect', expWindow, [255 255 255], fixRect);
@@ -234,7 +234,7 @@ function Movie_Play(subject, run)
 
             end
 
-            Screen('FillRect',viewWindow,black);
+            Screen('FillRect',viewWindow,gray);
             Screen('DrawTexture', viewWindow,tex,[],viewStimRect);
             Screen('DrawText', expWindow,['Time Elapsed: ' num2str(toc)],0,100);
          
@@ -305,7 +305,7 @@ function Movie_Play(subject, run)
             % Get movie image
             
 
-            Screen('FillRect',viewWindow,black);
+            Screen('FillRect',viewWindow,gray);
             Screen('DrawTexture', viewWindow,tex,[],viewStimRect);
             Screen('DrawText', expWindow,['Time Elapsed: ' num2str(toc)],0,100);
          

@@ -1,14 +1,15 @@
-function Movie_Play(subject, run)
-    % Play Movie 1.0
-    % Stuart J. Duffield January 2022
-    % Plays a movie over and over
+function FiveDot
+    % Shape Color Paradigm 2.2
+    % Stuart J. Duffield November 2021
+    % Displays the stimuli from the Monkey Turk experiments in blocks.
+    % Blocks include gray, colored chromatic shapes, black and white chromatic
+    % shapes, achromatic shapes, and colored blobs.
     
-    movieName = 'Growth_noSound_clipped.mp4';
 
     % Initialize DAQ
-    DAQ('Debug',true);
-    xGain = 400;
-    yGain = 400;
+    DAQ('Init');
+    xGain = 550;
+    yGain = -600;
     xOffset = 0;
     yOffset = 0;
     xChannel = 2;
@@ -18,40 +19,33 @@ function Movie_Play(subject, run)
     rewardWait = 5; % seconds
     rewardPerf = .90; % 90% fixation to get reward
     
+    % How long will this last
+    exactDur = 2000;
     
     
     % Initialize parameters
     KbName('UnifyKeyNames');
     % Initialize save paths for eyetracking, other data:
     curdir = pwd; % Current Directory
-    
-    stimDir = [curdir]; % Change this if you move the location of the stimuli:
-    movieFile = [stimDir '\' movieName]
-    if ~isfile(movieFile)
-        error('No movie file')
-    end
-    
+    stimDir = [curdir '/Stimuli']; % Stimulus directory
     if ~isfolder('Data') % Switch this to isfolder if matlab 2017 or later
         mkdir('Data');
     end
 
     runExpTime = datestr(now); % Get the time the run occured at.
 
-    dataSaveFile = ['Data/' subject '_' num2str(run) '_Data.mat']; % File to save both run data and eye data
+    dataSaveFile = ['Data/'  'EyeData_Data.mat']; % File to save eye data
 
     % Manually set screennumbers for experimenter and viewer displays:
     expscreen = 1; 
     viewscreen = 2;
 
-
-    
-    % Other Timing Data:
-    TR = 2.5; % TR length
+    % Refresh rate of monitors:
+    fps = 30;
+    ifi = 1/fps;
     
     % Gray of the background:
-    gray = [128 128 128]; 
-    black = [0 0 0];
-
+    gray = [31 29 47]; 
     
     % Initialize Screens
     Screen('Preference', 'SkipSyncTests', 1); 
@@ -68,11 +62,10 @@ function Movie_Play(subject, run)
     [xCenter, yCenter] = RectCenter(viewRect); % Get center of the view screen
     [xCenterExp, yCenterExp] = RectCenter(expRect); % Get center of the experimentor's screen
     
-    pixPerAngle = 40; % Number of pixels per degree of visual angle
-    stimPix = 10*pixPerAngle; % How large the stimulus rectangle will be
-    fixPix = 10*pixPerAngle; % How large the fixation will be
-
-
+    pixPerAngle = 100; % Number of pixels per degree of visual angle
+    fixPix = 1*pixPerAngle; % How large the fixation will be
+    stimPix = 200;
+    
     fixCrossDimPix = 10; % Fixation cross arm length
     lineWidthPix = 2; % Fixation cross arm thickness
     xCoords = [-fixCrossDimPix fixCrossDimPix 0 0]; 
@@ -80,19 +73,17 @@ function Movie_Play(subject, run)
     allCoords = [xCoords; yCoords];
     
     % Make base rectangle and centered rectangle for stimulus presentation
-    baseRect = [0 0 1.5*stimPix stimPix]; % Size of the texture rect
+    baseRect = [0 0 stimPix stimPix]; % Size of the texture rect
     
     % Make base rectangle for fixation circle
-    baseFixRect = [0 0 1.5*fixPix fixPix]; % Size of the fixation circle
+    baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
     fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
-      viewStimRect = CenterRectOnPointd(baseRect, xCenter, yCenter);
-    expStimRect = CenterRectOnPointd(baseRect, xCenterExp, yCenterExp);
-
-    % Load Movie
-    [movie duration fps] = Screen('OpenMovie', viewWindow, movieFile)
-    ifi = 1/fps;
-    exactDur = duration+20;
-
+    
+    % Load Fixation Grid and Create Texture:
+    load([stimDir '/' 'fixGrid.mat'], 'fixGrid'); % Loads the .mat file with the fixation grid texture
+    fixGridTex = Screen('MakeTexture', viewWindow, fixGrid); % Creates the fixation grid as a texture
+    
+        
     eyePosition = NaN(fps*exactDur,2); % Column 1 xposition, column 2 yposition
     fixation = NaN(fps*exactDur,1); % Fixation tracker
     Priority(2) % topPriorityLevel?
@@ -104,10 +95,7 @@ function Movie_Play(subject, run)
     
     % Begin actual stimulus presentation
     try
-        Screen('PlayMovie',movie,1)
-        Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
-        %tex = Screen('GetMovieImage', viewWindow, movie);
-        %Screen('DrawTexture', viewWindow,tex);
+        Screen('DrawTexture', expWindow, fixGridTex);
         Screen('Flip', expWindow);
         Screen('Flip', viewWindow);
         
@@ -123,158 +111,89 @@ function Movie_Play(subject, run)
             end
         end
         
-
-        frameIdx = 1;
-        tic; % start stopwatch
-        tex = Screen('GetMovieImage', viewWindow, movie);
+        flips = ifi:ifi:exactDur;
+        flips = flips + GetSecs;
         
-        while true
-            Screen('PlayMovie',movie,1);
-            if toc < 10
-                Screen('PlayMovie',movie,0);
-                Screen('DrawText',expWindow,'True',0,200);
-                frameLastBeforeVideo=frameIdx;
-            end
+        for frameIdx = 1:fps*exactDur
             % Check keys
             [keyIsDown,secs, keyCode] = KbCheck;
                 
             
             % Collect eye position
             [eyePosition(frameIdx,1), eyePosition(frameIdx,2)] = eyeTrack(xChannel, yChannel, xGain, yGain, xOffset, yOffset);
-            fixation(frameIdx,1) = IsInRect(eyePosition(frameIdx,1),eyePosition(frameIdx,2),fixRect);
-            fixationPerc = mean(fixation(1:frameIdx,1))*100;
-            fixationText = ['Fixation:' num2str(fixationPerc)];
-            Screen('DrawText',expWindow,fixationText,0,0);
+            fixation(frameIdx,1) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2),fixRect);
             % Process Keys
             if keyCode(KbName('r')) % Recenter
                 xOffset = xOffset + eyePosition(frameIdx,1)-xCenterExp;
                 yOffset = yOffset + eyePosition(frameIdx,2)-yCenterExp;
             elseif keyCode(KbName('j')) % Juice
                 juiceOn = true;
-            elseif keyCode(KbName('w')) && fixPix > pixPerAngle/2 % Increase fixation circle
+            elseif keyCode(KbName('1')) && fixPix > pixPerAngle/2 % Increase fixation circle
                 fixPix = fixPix - pixPerAngle/2; % Shrink fixPix by half a degree of visual angle
                 baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
-            elseif keyCode(KbName('s')) && fixPix < pixPerAngle*10
+            elseif keyCode(KbName('2')) && fixPix < pixPerAngle*10
                 fixPix = fixPix + pixPerAngle/2; % Increase fixPix by half a degree of visual angle
                 baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
-            elseif keyCode(KbName('p'))
-                quitNow = true;
-            end
-            timeElapsed = toc;
-
-            % Get movie image
-            tex = Screen('GetMovieImage', viewWindow, movie);
-            if tex<=0
-                break;
-            end
-
-            Screen('FillRect',viewWindow,black);
-            Screen('DrawTexture', viewWindow,tex,[],viewStimRect);
-            Screen('DrawText', expWindow,['Time Elapsed: ' num2str(toc)],0,100);
-         
-            % Draw Fixation Cross on Framebuffer
-            %Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
-            
-            % Draw fixation window on framebuffer
-            Screen('FrameRect', expWindow, [255 255 255], fixRect);
-
-            % Draw eyetrace on framebuffer
-            Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
-            
-            % Flip
-            [timestamp] = Screen('Flip', viewWindow);
-            [timestamp2] = Screen('Flip', expWindow);
-            
-            
-            Screen('Close',tex) % Close the movie frame
-            
-
-            % Juice Reward
-            
-            if frameIdx > fps*rewardWait
-                [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime,rewardPerf,rewardDur,timeSinceLastJuice);
-            end
-            frameIdx = frameIdx + 1; % Add one to frameIdx
-            if quitNow == true
-                
-                break;
-            end
-            
-        
-        
-        end
-        Screen('CloseMovie')
-        end_indx = frameIdx
-        flips = timestamp:ifi:(timestamp+11);
-        flip_indx = 1;
-        tic;
-        while toc < 10 && quitNow == false
-            % Check keys
-            [keyIsDown,secs, keyCode] = KbCheck;
-        
-            % Collect eye position
-            [eyePosition(frameIdx,1), eyePosition(frameIdx,2)] = eyeTrack(xChannel, yChannel, xGain, yGain, xOffset, yOffset);
-            fixation(frameIdx,1) = IsInRect(eyePosition(frameIdx,1),eyePosition(frameIdx,2),fixRect);
-            fixationPerc = mean(fixation(1:frameIdx,1))*100;
-            fixationText = ['Fixation:' num2str(fixationPerc)];
-            Screen('DrawText',expWindow,fixationText,0,0);
-            % Process Keys
-            if keyCode(KbName('r')) % Recenter
-                xOffset = xOffset + eyePosition(frameIdx,1)-xCenterExp;
-                yOffset = yOffset + eyePosition(frameIdx,2)-yCenterExp;
-            elseif keyCode(KbName('j')) % Juice
-                juiceOn = true;
-            elseif keyCode(KbName('w')) && fixPix > pixPerAngle/2 % Increase fixation circle
-                fixPix = fixPix - pixPerAngle/2; % Shrink fixPix by half a degree of visual angle
-                baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
+            elseif keyCode(KbName('w')) && yCenter < 1050 % Move fixation up
+                yCenterExp = yCenterExp + pixPerAngle;
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
-            elseif keyCode(KbName('s')) && fixPix < pixPerAngle*10
-                fixPix = fixPix + pixPerAngle/2; % Increase fixPix by half a degree of visual angle
-                baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
+                yCenter = yCenter + pixPerAngle;
+            elseif keyCode(KbName('s')) && yCenter > 0 % Move fixation down
+                yCenterExp = yCenterExp - pixPerAngle;
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
+                yCenter = yCenter - pixPerAngle;
+            elseif keyCode(KbName('d')) && xCenter < 1900 % move fixation right
+                xCenterExp = xCenterExp + pixPerAngle;
+                fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
+                xCenter = xCenter + pixPerAngle;
+            elseif keyCode(KbName('a')) && xCenter > 0 % Move fixation left
+                xCenterExp = xCenterExp - pixPerAngle;
+                fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
+                xCenter = xCenter - pixPerAngle;
             elseif keyCode(KbName('p'))
                 quitNow = true;
             end
 
-
-            Screen('FillRect',viewWindow,gray);
-            Screen('DrawText', expWindow,['Time Elapsed: ' num2str(toc)],0,100);
-         
+            
+            % Draw Stimulus on Framebuffer
+            %Screen('DrawTexture', viewWindow, texture(frameIdx),[],viewStimRect);
+            %Screen('DrawTexture', expWindow, texture(frameIdx),[],expStimRect);  
+            %Screen('DrawTexture', viewWindow, texture(frameIdx)); % Needs to be sized and have jitter
+            %Screen('DrawTexture', expWindow, texture(frameIdx)); % Needs to be sized and have jitter
+            
             % Draw Fixation Cross on Framebuffer
             Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
             
             % Draw fixation window on framebuffer
-            Screen('FrameRect', expWindow, [255 255 255], fixRect);
+            Screen('FrameOval', expWindow, [255 255 255], fixRect);
 
             % Draw eyetrace on framebuffer
             Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
             
             % Flip
-            [timestamp] = Screen('Flip', viewWindow,flips(flip_indx));
-            [timestamp2] = Screen('Flip', expWindow,flips(flip_indx));
-            flip_indx = flip_indx+1;   
-                            
-    
+            [timestamp] = Screen('Flip', viewWindow, flips(frameIdx));
+            [timestamp2] = Screen('Flip', expWindow, flips(frameIdx));
+            
             % Juice Reward
-                
+            
             if frameIdx > fps*rewardWait
                 [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime,rewardPerf,rewardDur,timeSinceLastJuice);
             end
-
-            frameIdx = frameIdx + 1; % Add one to frameIdx
-
-
-        end
+            if quitNow == true
+                sca;
+                break;
+            end
             
-
+        end
+        
         
     catch error
         rethrow(error)
     end % End of stim presentation
-
-    save(dataSaveFile,'eyePosition','frameLastBeforeVideo');
+    
+    save(dataSaveFile, 'eyePosition');
     sca;
     
         
@@ -296,7 +215,7 @@ function Movie_Play(subject, run)
             DAQ('SetBit',[0 0 0 0]);
         end
         
-    end
+end
         
                 
 
@@ -314,6 +233,7 @@ function Movie_Play(subject, run)
         dist = hypot(xDiff,yDiff);
         inCircle = radius>dist;
     end
+
 
         
 end

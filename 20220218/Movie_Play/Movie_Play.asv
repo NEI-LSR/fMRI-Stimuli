@@ -1,7 +1,7 @@
 function Movie_Play(subject, run)
     % Play Movie 1.0
     % Stuart J. Duffield January 2022
-
+    % Plays a movie over and over
     
     movieName = 'sherlock_seg1.mp4';
 
@@ -95,8 +95,8 @@ function Movie_Play(subject, run)
     ifi = 1/fps;
     exactDur = round(duration+(20*TR));
 
-    eyePosition = NaN(round(fps*exactDur)+3000,2); % Column 1 xposition, column 2 yposition
-    fixation = NaN(round(fps*exactDur)+3000,1); % Fixation tracker
+    eyePosition = NaN(round(fps*exactDur),2); % Column 1 xposition, column 2 yposition
+    fixation = NaN(round(fps*exactDur),1); % Fixation tracker
     Priority(2) % topPriorityLevel?
     %Priority(9) % Might need to change for windows
     juiceOn = false; % Logical for juice giving
@@ -191,7 +191,7 @@ function Movie_Play(subject, run)
         frameLastBeforeVideo=frameIdx;
         tex = Screen('GetMovieImage', viewWindow, movie);
         
-        while toc < ((10*TR)+duration-(2*ifi)) && quitNow == false
+        while toc < ((10*TR)+duration) && quitNow == false
 %             Screen('PlayMovie',movie,1);
 %             if toc < (10*TR)
 %                 Screen('PlayMovie',movie,0);
@@ -225,6 +225,7 @@ function Movie_Play(subject, run)
             elseif keyCode(KbName('p'))
                 quitNow = true;
             end
+            timeElapsed = toc;
 
             % Get movie image
             tex = Screen('GetMovieImage', viewWindow, movie);
@@ -269,7 +270,6 @@ function Movie_Play(subject, run)
        
         
         end
-        tex = Screen('GetMovieImage', viewWindow, movie);
         Screen('PlayMovie',movie,0)
         end_indx = frameIdx;
         flips = timestamp:ifi:(timestamp+(11*TR));
@@ -302,11 +302,8 @@ function Movie_Play(subject, run)
                 quitNow = true;
             end
 
-            % Get movie image
-            
 
-            Screen('FillRect',viewWindow,black);
-            Screen('DrawTexture', viewWindow,tex,[],viewStimRect);
+            Screen('FillRect',viewWindow,gray);
             Screen('DrawText', expWindow,['Time Elapsed: ' num2str(toc)],0,100);
          
             % Draw Fixation Cross on Framebuffer
