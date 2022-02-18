@@ -91,7 +91,7 @@ function Movie_Play(subject, run)
     % Load Movie
     [movie duration fps] = Screen('OpenMovie', viewWindow, movieFile)
     ifi = 1/fps;
-    exactDur = duration+10;
+    exactDur = duration+20;
 
     eyePosition = NaN(fps*exactDur,2); % Column 1 xposition, column 2 yposition
     fixation = NaN(fps*exactDur,1); % Fixation tracker
@@ -201,16 +201,79 @@ function Movie_Play(subject, run)
                 
                 break;
             end
+            
         
         
         end
-    Screen('CloseMovie')
+        Screen('CloseMovie')
+        end_indx = frameIdx;
+        flips = timestamp:ifi:(timestamp+11);
+        flip_indx = 1;
+        while toc < 550 && quitNow == false
+            % Check keys
+            [keyIsDown,secs, keyCode] = KbCheck;
+        
+            % Collect eye position
+            [eyePosition(frameIdx,1), eyePosition(frameIdx,2)] = eyeTrack(xChannel, yChannel, xGain, yGain, xOffset, yOffset);
+            fixation(frameIdx,1) = IsInRect(eyePosition(frameIdx,1),eyePosition(frameIdx,2),fixRect);
+            fixationPerc = mean(fixation(1:frameIdx,1))*100;
+            fixationText = ['Fixation:' num2str(fixationPerc)];
+            Screen('DrawText',expWindow,fixationText,0,0);
+            % Process Keys
+            if keyCode(KbName('r')) % Recenter
+                xOffset = xOffset + eyePosition(frameIdx,1)-xCenterExp;
+                yOffset = yOffset + eyePosition(frameIdx,2)-yCenterExp;
+            elseif keyCode(KbName('j')) % Juice
+                juiceOn = true;
+            elseif keyCode(KbName('w')) && fixPix > pixPerAngle/2 % Increase fixation circle
+                fixPix = fixPix - pixPerAngle/2; % Shrink fixPix by half a degree of visual angle
+                baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
+                fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
+            elseif keyCode(KbName('s')) && fixPix < pixPerAngle*10
+                fixPix = fixPix + pixPerAngle/2; % Increase fixPix by half a degree of visual angle
+                baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
+                fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
+            elseif keyCode(KbName('p'))
+                quitNow = true;
+            end
+
+
+            Screen('FillRect',viewWindow,gray);
+            Screen('DrawText', expWindow,['Time Elapsed: ' num2str(toc)],0,100);
+         
+            % Draw Fixation Cross on Framebuffer
+            Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
+            
+            % Draw fixation window on framebuffer
+            Screen('FrameRect', expWindow, [255 255 255], fixRect);
+
+            % Draw eyetrace on framebuffer
+            Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
+            
+            % Flip
+            [timestamp] = Screen('Flip', viewWindow,flips(flip_indx));
+            [timestamp2] = Screen('Flip', expWindow,flips(flip_indx));
+            flip_indx = flip_indx+1;   
+                            
+    
+            % Juice Reward
+                
+            if frameIdx > fps*rewardWait
+                [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime,rewardPerf,rewardDur,timeSinceLastJuice);
+            end
+
+            frameIdx = frameIdx + 1; % Add one to frameIdx
+
+
+        end
+            
+
         
     catch error
         rethrow(error)
     end % End of stim presentation
-    
-    save(dataSaveFile,'eyePosition','frameLastBeforeVideo');
+
+    save(dataSaveFile,'eyePosition','frameLastBeforeVideo','end_indx');
     sca;
     
         
@@ -232,7 +295,7 @@ function Movie_Play(subject, run)
             DAQ('SetBit',[0 0 0 0]);
         end
         
-end
+    end
         
                 
 
@@ -250,15 +313,6 @@ end
         dist = hypot(xDiff,yDiff);
         inCircle = radius>dist;
     end
-    
-    function inRect = isInRect(xPos,yPos,rect)
-        if (xPos >= rect(1)) && (xPos < rect(3)) && (yPos > rect(4)) && (yPos < rect(2))
-            inRect = 1;
-        else
-            inRect = 0;
-        end
-    end
-
 
         
 end
