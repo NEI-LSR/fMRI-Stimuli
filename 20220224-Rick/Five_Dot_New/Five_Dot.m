@@ -9,7 +9,7 @@ function FiveDot
     % Initialize DAQ
     DAQ('Init');
     xGain = 550;
-    yGain = -600;
+    yGain = -700;
     xOffset = 0;
     yOffset = 0;
     xChannel = 2;
@@ -45,7 +45,7 @@ function FiveDot
     ifi = 1/fps;
     
     % Gray of the background:
-    gray = [31 29 47]; 
+    gray = [150 150 150]; 
     
     % Initialize Screens
     Screen('Preference', 'SkipSyncTests', 1); 
@@ -66,8 +66,8 @@ function FiveDot
     fixPix = 1*pixPerAngle; % How large the fixation will be
     stimPix = 200;
     
-    fixCrossDimPix = 10; % Fixation cross arm length
-    lineWidthPix = 2; % Fixation cross arm thickness
+    fixCrossDimPix = 30; % Fixation cross arm length
+    lineWidthPix = 4; % Fixation cross arm thickness
     xCoords = [-fixCrossDimPix fixCrossDimPix 0 0]; 
     yCoords = [0 0 -fixCrossDimPix fixCrossDimPix];
     allCoords = [xCoords; yCoords];
