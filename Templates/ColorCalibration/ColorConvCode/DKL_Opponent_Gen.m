@@ -126,8 +126,6 @@ lums = sort([bgLum rgPlusLum rgMinusLum sPlusLum sMinusLum]);
 fprintf('Luminance range in isoluminant plane is %0.2f to %0.2f\n',...
 	lums(1), lums(end));
 
-LMS2DKL = [[1 1 0]; [1 -1 0]; [-1 -1 1]];
-DKL2LMS = inv(LMS2DKL);
 
 
 

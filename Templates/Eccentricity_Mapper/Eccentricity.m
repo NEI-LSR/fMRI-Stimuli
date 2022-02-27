@@ -5,6 +5,7 @@ function Eccentricity(subject, counterbalance_indx, run)
     
 
     % Initialize DAQ
+    DAQ('Debug',true);
     DAQ('Init');
     xGain = 400;
     yGain = 400;
@@ -67,7 +68,7 @@ function Eccentricity(subject, counterbalance_indx, run)
     % Load Textures:
     % This should generally read as Gray, BW_Foveal, BW_Middle, BW_Peripheral,
     % LM_..., SLM_...
-    color_conds = {'BW','LM','SLM'};
+    color_conds = {'BW','LM','S'};
     ecc_conds = {'Foveal','Middle','Peripheral'};
     for i = 1:length(color_conds)
         for j = 1:length(ecc_conds)
@@ -145,6 +146,7 @@ function Eccentricity(subject, counterbalance_indx, run)
     framesPerBlock = blocklength*TR*fps; % Frames per block
     framesPerStim = stimLength*fps;
     stimPer=2;
+    
     for i = 1:length(blockorder)
         switch blockorder(i)
             case 1 % gray
@@ -196,7 +198,7 @@ function Eccentricity(subject, counterbalance_indx, run)
     
     % Begin actual stimulus presentation
     try
-        Screen('DrawTexture', expWindow, fixGridTex);
+        Screen('DrawText', expWindow, 'Ready');
         Screen('Flip', expWindow);
         Screen('Flip', viewWindow);
         
@@ -214,7 +216,8 @@ function Eccentricity(subject, counterbalance_indx, run)
         
         flips = ifi:ifi:exactDur;
         flips = flips + GetSecs;
-        
+        tic;
+
         for frameIdx = 1:fps*exactDur
             % Check keys
             [keyIsDown,secs, keyCode] = KbCheck;
@@ -261,6 +264,10 @@ function Eccentricity(subject, counterbalance_indx, run)
             % Draw eyetrace on framebuffer
             Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
             
+            % Draw Time Elapsed on framebuffer
+            Screen('DrawText',expWindow, ['Time:' num2str(toc) '/' num2str(exactDur)])
+            Screen('DrawText',expWindow, ['Fixation' num2str])
+
             % Flip
             [timestamp] = Screen('Flip', viewWindow, flips(frameIdx));
             [timestamp2] = Screen('Flip', expWindow, flips(frameIdx));
