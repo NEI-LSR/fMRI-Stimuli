@@ -9,15 +9,15 @@ function Movie_Play(subject, run)
     DAQ('Debug',false);
     DAQ('Init');
     xGain = 550;
-    yGain = -600;
+    yGain = -700;
     xOffset = 0;
     yOffset = 0;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
-    rewardDur = 0.1; % seconds
-    rewardWait = 5; % seconds
-    rewardPerf = .90; % 90% fixation to get reward
+    rewardDur = 0.08; % seconds
+    rewardWait = 2.5; % seconds
+    rewardPerf = .80; % 80% fixation to get reward
     
     
     
@@ -107,7 +107,7 @@ function Movie_Play(subject, run)
     % Begin actual stimulus presentation
     try
         Screen('PlayMovie',movie,1)
-        Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
+        %Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
         Screen('DrawText',expWindow,'Ready',960,540)
         %tex = Screen('GetMovieImage', viewWindow, movie);
         %Screen('DrawTexture', viewWindow,tex);
@@ -126,7 +126,7 @@ function Movie_Play(subject, run)
             end
         end
         
-
+        drawLines = true;
         frameIdx = 1;
         tic; % start stopwatch    
         flips = toc:ifi:(20*TR);
@@ -157,6 +157,13 @@ function Movie_Play(subject, run)
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
             elseif keyCode(KbName('p'))
                 quitNow = true;
+            elseif keyCode(KbName('z'))
+                if drawLines == true
+                    drawLines = false;
+                elseif drawLines == false
+                    drawLines = true;
+                end
+
             end
 
 
@@ -164,8 +171,10 @@ function Movie_Play(subject, run)
             Screen('DrawText', expWindow,['Time Elapsed: ' num2str(toc)],0,100);
          
             % Draw Fixation Cross on Framebuffer
-            Screen('DrawLines', viewWindow, allCoords, lineWidthPix,black, [xCenter yCenter], 2);
-            
+            if drawLines == true
+                Screen('DrawLines', viewWindow, allCoords, lineWidthPix,black, [xCenter yCenter], 2);
+            end
+
             % Draw fixation window on framebuffer
             Screen('FrameRect', expWindow, [255 255 255], fixRect);
 
