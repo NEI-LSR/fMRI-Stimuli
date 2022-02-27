@@ -264,9 +264,11 @@ function Eccentricity(subject, counterbalance_indx, run)
             % Draw eyetrace on framebuffer
             Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
             
-            % Draw Time Elapsed on framebuffer
+            % Draw Time Elapsed and Fixation Percent on framebuffer
             Screen('DrawText',expWindow, ['Time:' num2str(toc) '/' num2str(exactDur)])
-            Screen('DrawText',expWindow, ['Fixation' num2str])
+            fixationPerc = mean(fixation(1:frameIdx,1))*100;
+            fixationText = ['Fixation:' num2str(fixationPerc)];
+            Screen('DrawText',expWindow,fixationText,0,100);
 
             % Flip
             [timestamp] = Screen('Flip', viewWindow, flips(frameIdx));
@@ -291,6 +293,7 @@ function Eccentricity(subject, counterbalance_indx, run)
     
     save(dataSaveFile,'blockorder','eyePosition');
     sca;
+    disp(fixationPerc);
     
         
         
