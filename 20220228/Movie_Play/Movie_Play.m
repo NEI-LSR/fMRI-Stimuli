@@ -16,8 +16,8 @@ function Movie_Play(subject, run)
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
     rewardDur = 0.08; % seconds
-    rewardWait = 2.5; % seconds
-    rewardPerf = .80; % 80% fixation to get reward
+    rewardWait = 3.5; % seconds
+    rewardPerf = .90; % 80% fixation to get reward
     
     
     
@@ -353,7 +353,7 @@ function Movie_Play(subject, run)
 
     save(dataSaveFile,'eyePosition','frameLastBeforeVideo','end_indx');
     sca;
-    
+    disp(fixationText);
         
         
     function [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime, rewardPerf,rewardDur,timeSinceLastJuice)
