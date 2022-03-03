@@ -1,10 +1,18 @@
 % TODO: vectorize me... anti-aliasing?
 clear all
+img_base_name = 'Foveal_S';
+color_type = 'color-alt'; %'color-alt', bw-alt, rand_col, uniform
+%alt_col_1 = [234 79 133]/255; %LM
+%alt_col_2 = [24 176 124]/255; %LM
+alt_col_1 = [134 120 234]/255; %S
+alt_col_2 = [125 137 21]/255; %S
+mask_inner_radius_deg = 0;
+mask_outer_radius_deg = 1;
+
 tic
-img_width = 1080;
+img_width = 1920;
 img_height = 1080;
 img_path = pwd;
-img_base_name = 'Peripheral_BW';
 n_imgs = 2;
 % parameters for parent dartboard image
 x_center = img_width / 2;
@@ -13,11 +21,7 @@ NumRings = 15;  %formula for radius given by 240 = exp^(6*a) -1 => a = 0.9141
 NumWedges = 36;
 theta_offset = 0;	% phase angle of the sectors...
 bg_grey = 0.502;	% background grey level of the wedges
-color_type = 'bw-alt'; %'color-alt', bw-alt, rand_col, uniform
-%alt_col_1 = [234 79 133]/255; %LM
-%alt_col_2 = [24 176 124]/255; %LM
-alt_col_1 = [134 120 234]/255; %S
-alt_col_2 = [125 137 21]/255; %S
+
 alt_cols = {alt_col_1,alt_col_2};
 uni_color = [0 0 1];
 %uni_color = [1 1 1];
@@ -32,8 +36,7 @@ mask_axis = 90;	% 0 is vertical
 %	center: circle radius 0.9deg
 %	mid: 1.25 deg inner radius, 2.5 deg outer radius
 %	periphery: 5 deg inner radius, 10 deg outer radius
-mask_inner_radius_deg = 3;
-mask_outer_radius_deg = 13;
+
 hb_deg_per_pixel = (atan(28 / 57.0) * 180 / pi)/ 1080;
 mask_inner_radius = mask_inner_radius_deg / hb_deg_per_pixel;
 mask_outer_radius = mask_outer_radius_deg / hb_deg_per_pixel;
@@ -193,7 +196,9 @@ for im =  1:n_imgs
 		case 'none'
 			filename = sprintf('%s/%s_%s_%s_%d.tif', img_path, img_base_name, color_type, checker_type, im);
 		case 'ring'
-			filename = sprintf('%s/%s_%s_%s_ir%04.2f_or%04.2f_%d.tif', img_path, img_base_name, color_type, checker_type, mask_inner_radius_deg, mask_outer_radius_deg, im);
+			%filename = sprintf('%s/%s_%s_%s_ir%04.2f_or%04.2f_%d.tif', img_path, img_base_name, color_type, checker_type, mask_inner_radius_deg, mask_outer_radius_deg, im);
+            filename = sprintf('%s/%s_%d.tif', img_path, img_base_name, im);
+
 	end
  	imwrite(image, filename, 'tif');
 end

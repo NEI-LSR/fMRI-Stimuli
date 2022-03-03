@@ -76,8 +76,8 @@ function Eccentricity(subject, counterbalance_indx, run)
                 if i == 1 && k == 1 && j == 1
                     img = Tiff([stimDir '/' ecc_conds{j} '_'  color_conds{i} '_' num2str(k) '.tif'], 'r');
                     stimuli_1 = read(img);
-                    stimsize = size(stimuli_1(:,:,1)); % What size is the simulus? In pixels
-                    stimuli = cat(3,repmat(gray(1),stimsize(1)),repmat(gray(2),stimsize(1)),repmat(gray(3),stimsize(1))); % Greates a gray texture the size of the stimulus. 
+                    stimsize = size(stimuli_1); % What size is the simulus? In pixels
+                    stimuli = cat(3,repmat(gray(1),stimsize(1),stimsize(2)),repmat(gray(2),stimsize(1),stimsize(2)),repmat(gray(3),stimsize(1),stimsize(2))); % Greates a gray texture the size of the stimulus. 
                     stimuli = cat(4,stimuli,stimuli_1);
                 else
                     img = Tiff([stimDir '/' ecc_conds{j} '_'  color_conds{i} '_' num2str(k) '.tif'], 'r');
@@ -112,8 +112,9 @@ function Eccentricity(subject, counterbalance_indx, run)
     [xCenter, yCenter] = RectCenter(viewRect); % Get center of the view screen
     [xCenterExp, yCenterExp] = RectCenter(expRect); % Get center of the experimentor's screen
     
-    pixPerAngle = 100; % Number of pixels per degree of visual angle
-    stimPix = 10.8*pixPerAngle; % How large the stimulus rectangle will be
+    pixPerAngle = 1080/(atan(28/57)*180/pi); % Number of pixels per degree of visual angle
+    stimPix_Width = 1920; % How large the stimulus rectangle will be
+    stimPix_Height = 1080;
     fixPix = 1*pixPerAngle; % How large the fixation will be
 
 
@@ -124,7 +125,7 @@ function Eccentricity(subject, counterbalance_indx, run)
     allCoords = [xCoords; yCoords];
     
     % Make base rectangle and centered rectangle for stimulus presentation
-    baseRect = [0 0 stimPix stimPix]; % Size of the texture rect
+    baseRect = [0 0 stimPix_Width stimPix_Height]; % Size of the texture rect
     
     % Make base rectangle for fixation circle
     baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
