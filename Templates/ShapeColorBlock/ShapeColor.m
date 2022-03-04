@@ -1,4 +1,4 @@
-function ShapeColor_NewTest(subject, counterbalance_indx, run)
+function ShapeColor(subject, counterbalance_indx, run)
     % Shape Color Paradigm 2.2
     % Stuart J. Duffield November 2021
     % Displays the stimuli from the Monkey Turk experiments in blocks.
@@ -9,15 +9,15 @@ function ShapeColor_NewTest(subject, counterbalance_indx, run)
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = -400;
-    yGain = 400;
+    xGain = 400;
+    yGain = -400;
     xOffset = 0;
     yOffset = 0;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
     rewardDur = 0.1; % seconds
-    rewardWait = 5; % seconds
+    rewardWait = 3; % seconds
     rewardPerf = .90; % 90% fixation to get reward
     
     

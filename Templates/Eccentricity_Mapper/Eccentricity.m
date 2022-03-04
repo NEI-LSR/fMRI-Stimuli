@@ -5,7 +5,7 @@ function Eccentricity(subject, counterbalance_indx, run)
     
 
     % Initialize DAQ
-    %DAQ('Debug',true);
+    DAQ('Debug',false);
     DAQ('Init');
     xGain = 400;
     yGain = 400;
