@@ -34,6 +34,7 @@ function Eccentricity(subject, counterbalance_indx, run)
     runExpTime = datestr(now); % Get the time the run occured at.
 
     dataSaveFile = ['Data/' subject '_' num2str(run) '_Data.mat']; % File to save both run data and eye data
+    movSaveFile = ['Data/' subject '_' num2str(run) '_Movie.mov']; % Create Movie Filename
 
     % Manually set screennumbers for experimenter and viewer displays:
     expscreen = 1; 
@@ -199,7 +200,8 @@ function Eccentricity(subject, counterbalance_indx, run)
     
     % Begin actual stimulus presentation
     try
-        Screen('DrawText', expWindow, 'Ready');
+        movie = Screen('CreateMovie', expWindow, movSaveFile, [],[], 10); % Initialize Movie
+        Screen('DrawText', expWindow, 'Ready',xCenterExp,yCenterExp);
         Screen('Flip', expWindow);
         Screen('Flip', viewWindow);
         
@@ -266,10 +268,15 @@ function Eccentricity(subject, counterbalance_indx, run)
             Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
             
             % Draw Time Elapsed and Fixation Percent on framebuffer
-            Screen('DrawText',expWindow, ['Time:' num2str(toc) '/' num2str(exactDur)])
+            Screen('DrawText',expWindow, ['Time:' num2str(toc) '/' num2str(exactDur)],0,0)
             fixationPerc = mean(fixation(1:frameIdx,1))*100;
             fixationText = ['Fixation:' num2str(fixationPerc)];
-            Screen('DrawText',expWindow,fixationText,0,100);
+            Screen('DrawText',expWindow,fixationText,0,50);
+
+            % Add this frame to the movie
+            if rem(frameIdx,3)==1
+                Screen('AddFrameToMovie',expWindow,[],[],movie);
+            end
 
             % Flip
             [timestamp] = Screen('Flip', viewWindow, flips(frameIdx));
@@ -281,6 +288,7 @@ function Eccentricity(subject, counterbalance_indx, run)
                 [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime,rewardPerf,rewardDur,timeSinceLastJuice);
             end
             if quitNow == true
+                Screen('FinalizeMovie', movie);
                 sca;
                 break;
             end
@@ -291,7 +299,9 @@ function Eccentricity(subject, counterbalance_indx, run)
     catch error
         rethrow(error)
     end % End of stim presentation
-    
+    if quitNow == false
+        Screen('FinalizeMovie', movie);
+    end
     save(dataSaveFile,'blockorder','eyePosition');
     sca;
     disp(fixationPerc);
