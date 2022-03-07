@@ -16,7 +16,7 @@ function Movie_Play(subject, run)
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
     rewardDur = 0.1; % seconds
-    rewardWait = 5; % seconds
+    rewardWait = 2.5; % seconds
     rewardPerf = .90; % 90% fixation to get reward
     
     
