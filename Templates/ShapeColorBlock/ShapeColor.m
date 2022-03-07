@@ -9,8 +9,8 @@ function ShapeColor(subject, counterbalance_indx, run)
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = 400;
-    yGain = -400;
+    xGain = -550;
+    yGain = 600;
     xOffset = 0;
     yOffset = 0;
     xChannel = 2;

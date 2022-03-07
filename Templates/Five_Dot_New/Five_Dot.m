@@ -8,8 +8,8 @@ function FiveDot
 
     % Initialize DAQ
     DAQ('Init');
-    xGain = 550;
-    yGain = -600;
+    xGain = -550;
+    yGain = 600;
     xOffset = 0;
     yOffset = 0;
     xChannel = 2;
