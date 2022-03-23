@@ -8,7 +8,7 @@ function SC(subject, counterbalance_indx, run)
     % Parameters you care about:
     rewardDur = 0.1; % seconds
     rewardWait = 5; % seconds
-    rewardPerf = .90; % 90% fixation to get reward
+    rewardPerf = .80; % 90% fixation to get reward
     choiceDur = 0.5; % Needs to fixate at choice for this time period before getting reward
     choiceRewardDur = 2;
     exactDur = 870; % Need to manually calculate
@@ -26,7 +26,7 @@ function SC(subject, counterbalance_indx, run)
     grayCase = 3;
     bwCase = 4;
     % Initialize DAQ
-    DAQ('Debug',true);
+    DAQ('Debug',false);
     DAQ('Init');
     xGain = -550;
     yGain = 600;
@@ -155,7 +155,8 @@ function SC(subject, counterbalance_indx, run)
         BWTex(i) = Screen('MakeTexture',viewWindow,chromBW(:,:,:,i));
         chromTex(i) = Screen('MakeTexture',expWindow,chrom(:,:,:,i));
     end
-
+    
+    allTex = [achromTex; circleTex; BWTex; chromTex];
     achromOrder = randperm(length(achromTex)); % Order by which achromatic shapes are presented
     circleOrder = randperm(length(circleTex)); % Order by which colors are presented
     bwOrder = randperm(length(BWTex)); % Order by which black and white shapes are presented
@@ -185,11 +186,14 @@ function SC(subject, counterbalance_indx, run)
     timeSinceLastJuice = 0;
     timeAtLastJuice = 0;
     quitNow = false;
-
+    initialRects = createTiledRects(expRect,length(allTex),4);
     % Begind acutal stimulus presentation 
     try
         movie = Screen('CreateMovie', expWindow, movSaveFile,[],[],movieFPS);
         Screen('DrawText',expWindow,'Ready',xCenterExp,yCenterExp);
+        for i = 1:length(allTex)
+            Screen('DrawTexture',expWindow,allTex(i),[],initialRects(:,i))
+        end
         Screen('Flip',expWindow);
         Screen('Flip',viewWindow);
 
@@ -225,7 +229,7 @@ function SC(subject, counterbalance_indx, run)
 
 
         % Begin Stimulus
-        while true
+           while true
             % Get the time that the block starts
             if blockTime >=blocklength*TR | frameIdx == 1;
                 isgray = false; % is it going to be gray? Determined by switch below
@@ -291,7 +295,7 @@ function SC(subject, counterbalance_indx, run)
             end
 
             if timeSinceLastJuice > rewardWait
-                if sum(fixation((frameIdx-((fps*rewardWait)+1)):frameIdx),"all",'omitnan') > rewardPerf*fps*rewardWait
+                if sum(fixation((frameIdx-((fps*rewardWait))+1):frameIdx),"all",'omitnan') > rewardPerf*fps*rewardWait
                     [juiceEndTime,juiceOn]= juice(rewardDur,juiceEndTime,toc,juiceOn);
                     timeSinceLastJuice = 0;
                     timeAtLastJuice = toc;
@@ -532,6 +536,28 @@ function SC(subject, counterbalance_indx, run)
         dist = hypot(xDiff,yDiff);
         inCircle = radius>dist;
     end
+    
+    function rects = createTiledRects(arearect,numRects,rows)
+        totwidth = arearect(3)-arearect(1);
+        totheight = arearect(4)-arearect(2);
+        stimPerRow = ceil(numRects/rows);
+        widths = totwidth/stimPerRow;
+        heights = totheight/rows;
+        rect_base = [0 0 widths heights];
+        centers_x = (arearect(1)+widths/2):widths:arearect(3);
+        centers_y = (arearect(2)+heights/2):heights:arearect(4);
+        rects = NaN(4,numRects);
+        for i = 1:rows
+            for j = 1:stimPerRow
+                k = (i-1)*stimPerRow+j;
+                rects(:,k) = CenterRectOnPointd(rect_base,centers_x(j),centers_y(i));
+            end
+        end
+    end
+
+
+
+
 end
 
 
