@@ -29,10 +29,17 @@ background = cat(3,uint8(zeros(size(alphaCircle))+backgroundRGB(1)),uint8(zeros(
 for i = 1:imageNumbers
     
 
-    chrom(:,:,:,i) = cat(3,imoverlay(imgCH{i},maskCH{i},[cRED(i),cGREEN(i),cBLUE(i)]/255),(alphaCH{i}+maskCH{i}));
-    chromBW(:,:,:,i) = cat(3,imoverlay(imgCH{i},maskCH{i},backgroundRGB/255),alphaCH{i});
-    achrom(:,:,:,i) = cat(3,imoverlay(imgACH{i},maskACH{i},backgroundRGB/255),alphaACH{i});
+    chrom(:,:,:,i) = imoverlay(imoverlay(imgCH{i},maskCH{i},[cRED(i),cGREEN(i),cBLUE(i)]/255),abs(double(alphaCH{i}+maskCH{i})-double(repmat(255,size(alphaCH{i})))),backgroundRGB/255);
+    imshow(chrom(:,:,:,i))
+    exportgraphics(gca,[num2str(i) 'chromatic.png'])
+    chromBW(:,:,:,i) = imoverlay(imoverlay(imgCH{i},maskCH{i},backgroundRGB/255),abs(double(alphaCH{i}+maskCH{i})-double(repmat(255,size(alphaCH{i})))),backgroundRGB/255);
+    imshow(chromBW(:,:,:,i))
+    exportgraphics(gca,[num2str(i) 'chromaticBW.png'])
+    achrom(:,:,:,i) = imoverlay(imoverlay(imgACH{i},maskACH{i},backgroundRGB/255),abs(double(alphaACH{i}+maskACH{i})-double(repmat(255,size(alphaACH{i})))),backgroundRGB/255);
+    imshow(achrom(:,:,:,i))
+    exportgraphics(gca,[num2str(i) 'achromatic.png'])
     circle = zeros(size(imgCircle));
+
     
     red = uint8(zeros(size(alphaCircle))+cRED(i));
     green = uint8(zeros(size(alphaCircle))+cGREEN(i));
