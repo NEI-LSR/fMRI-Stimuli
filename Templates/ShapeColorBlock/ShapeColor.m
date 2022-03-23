@@ -241,7 +241,12 @@ function ShapeColor(subject, counterbalance_indx, run)
                 viewStimRect = CenterRectOnPointd(baseRect, round(xCenter+jitterX(frameIdx)), round(yCenter+jitterY(frameIdx)));
                 expStimRect = CenterRectOnPointd(baseRect, round(xCenterExp+jitterX(frameIdx)), round(yCenterExp+jitterY(frameIdx)));
             end
-            
+            % Draw Info on FrameBuffer
+            infotext = ['Time Elapsed: ', num2str(toc), '/', num2str(exactDur), newline,...
+                'Fixation Percentage: ', num2str(sum(fixation(1:frameIdx,1))/length(fixation(1:frameIdx,1)*100))];
+               
+            DrawFormattedText(expWindow,infotext);
+
             % Draw Stimulus on Framebuffer
             Screen('DrawTexture', viewWindow, texture(frameIdx),[],viewStimRect);
             Screen('DrawTexture', expWindow, texture(frameIdx),[],expStimRect);  
