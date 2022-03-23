@@ -82,7 +82,7 @@ function SC(subject, counterbalance_indx, run)
 
     % Load Textures:
     load([stimDir '/' 'achrom.mat'], 'achrom'); % Achromatic Shapes
-    %load([stimDir '/' 'chrom.mat'], 'chrom'); % Chromatic Shapes
+    load([stimDir '/' 'chrom.mat'], 'chrom'); % Chromatic Shapes
     load([stimDir '/' 'chromBW.mat'], 'chromBW'); % Chromatic Shapes Black and White
     load([stimDir '/' 'colorcircles.mat'], 'colorcircles'); % Colored Circles
 
@@ -90,10 +90,13 @@ function SC(subject, counterbalance_indx, run)
         achrom = achrom(:,:,:,1:2:end);
         chromBW = chromBW(:,:,:,1:2:end);
         colorcircles = colorcircles(:,:,:,1:2:end);
+        chrom = chrom(:,:,:,1:2:end);
     elseif LumSetting == 2
         achrom = achrom(:,:,:,2:2:end);
         chromBW = chromBW(:,:,:,2:2:end);
         colorcircles = colorcircles(:,:,:,2:2:end);
+        chrom = chrom(:,:,:,2:2:end);
+
     end
 
     % Initialize Screens
@@ -124,6 +127,7 @@ function SC(subject, counterbalance_indx, run)
     
     % Make base rectangle and centered rectangle for stimulus presentation
     baseRect = [0 0 stimPix stimPix]; % Size of the texture rect
+    sideViewRect = CenterRectOnPointd(baseRect,0.5*stimPix,yCenterExp);
     choiceRightRect = CenterRectOnPointd(baseRect,xCenter+0.5*distPix,yCenter);
     choiceLeftRect = CenterRectOnPointd(baseRect,xCenter-0.5*distPix,yCenter);
     choiceRightRectExp = CenterRectOnPointd(baseRect,xCenterExp+0.5*distPix,yCenterExp);
@@ -139,14 +143,17 @@ function SC(subject, counterbalance_indx, run)
     achromTex = NaN(size(achrom,4),1); % Initialize NaN Vectors
     circleTex = NaN(size(colorcircles,4),1);
     BWTex = NaN(size(chromBW,4),1);
+    chromTex = NaN(size(chrom,4),1);
     
     assert(size(achrom,4)==size(colorcircles,4),'The number of images for achromatic shapes and colored circles do not match');
     assert(size(achrom,4)==size(chromBW,4),'The number of images for achromatic shapes and black and white shapes do not match');
-    
+    assert(size(achrom,4)==size(chrom,4),'The number of images for achromatic shapes and chromatic shapes do not mathch');
+
     for i = 1:size(achrom,4) % Create the textures
         achromTex(i) = Screen('MakeTexture',viewWindow,achrom(:,:,:,i));
         circleTex(i) = Screen('MakeTexture',viewWindow,colorcircles(:,:,:,i));
         BWTex(i) = Screen('MakeTexture',viewWindow,chromBW(:,:,:,i));
+        chromTex(i) = Screen('MakeTexture',expWindow,chrom(:,:,:,i));
     end
 
     achromOrder = randperm(length(achromTex)); % Order by which achromatic shapes are presented
@@ -198,20 +205,21 @@ function SC(subject, counterbalance_indx, run)
             end
         end
         
-        flips = ifi:ifi:exactDur;
+        flips = ifi:ifi:exactDur+10; % Adding a bit of leeway
         flips = flips + GetSecs;
         
         tic; % start timing
         startBlockTime = toc; % start block timer
         blockTime = 0;
-        blockIndx = 1; % What block are we in
+        blockIndx = 0; % What block are we in
         frameIdx = 1; % What frame are we in
         achromIndx = 1;
         circleIndx = 1;
         bwIndx = 1;
         correctSideChoices = randi(2,length(blockorder(blockorder~=grayCase)),1); % 1 will be correct choice on left, 2 will be correct choice on right
         sideChoices = zeros(length(blockorder(blockorder~=grayCase)),1); 
-        choiceIndx = 1;
+        choiceIndx = 0;
+        correctChoiceCounter = 0;
         isgray = false;
         circleColor = white;
 
@@ -229,13 +237,14 @@ function SC(subject, counterbalance_indx, run)
                             stimTex = achromTex(achromOrder(achromIndx)); % What will be displayed
                             choiceCorrectTex = stimTex; % Correct choice texture
                             unchosenInds = setdiff(achromOrder,achromOrder(achromIndx)); % What was not displayed
-                            choiceIncorrectInd = randsample(unchosenInds,1); % What will be shown as the incorrect texure 
+                            choiceIncorrectInd = randsample(unchosenInds,1); % What will be shown as the incorrect texture 
                             choiceIncorrectTex = achromTex(choiceIncorrectInd);
                             achromIndx = achromIndx+1; % Move achrom selection up 1
                             blockType = 'Achromatic Shapes';
                         case colorCase % Colored Cirles
                             stimTex = circleTex(circleOrder(circleIndx)); % What will be displayed
                             choiceCorrectTex = BWTex(circleOrder(circleIndx)); % Correct choice texture
+                            chromDispTex = chromTex(circleOrder(circleIndx)); % Corresponding chromatic shape
                             unchosenInds = setdiff(circleOrder,circleOrder(circleIndx)); % What was not displayed
                             choiceIncorrectInd = randsample(unchosenInds,1); % What will be shown as the incorrect texure
                             choiceIncorrectTex = BWTex(choiceIncorrectInd);
@@ -247,6 +256,7 @@ function SC(subject, counterbalance_indx, run)
                         case bwCase % Black and White Color Associated Shapes
                             stimTex = BWTex(bwOrder(bwIndx)); % What will be displayed
                             choiceCorrectTex = circleTex(bwOrder(bwIndx)); % Correct choice texture
+                            chromDispTex = chromTex(bwOrder(bwIndx)); % Corresponding chromatic shape
                             unchosenInds = setdiff(bwOrder,bwOrder(bwIndx)); % What was not displayed
                             choiceIncorrectInd = randsample(unchosenInds,1); % What will be shown as the incorrect texure
                             choiceIncorrectTex = circleTex(choiceIncorrectInd);
@@ -338,10 +348,18 @@ function SC(subject, counterbalance_indx, run)
                 'Correct Choice Side: ', choice, newline,...
                 'Block Type: ', blockType,newline,...
                 'Juice: ', juiceSetting,newline,...
-                'Juice End Time: ', num2str(juiceEndTime)];
+                'Juice End Time: ', num2str(juiceEndTime),newline,...
+                'Correct Number of Choices:' num2str(correctChoiceCounter), '/' num2str(choiceIndx)];
                
 
             DrawFormattedText(expWindow,infotext);
+
+            % Draw associated chromatic shape if BW block or circle block
+            if blockIndx <= length(blockorder)
+                if blockorder(blockIndx) == bwCase || blockorder(blockIndx) == colorCase
+                    Screen('DrawTexture',expWindow,chromDispTex,[],sideViewRect);
+                end
+            end
 
             if blockTime < stimDur*TR % In stimulus presentation mode
 
@@ -392,49 +410,54 @@ function SC(subject, counterbalance_indx, run)
                     rightFixation(frameIdx) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2),rightFixRect);
 
                     % Draw choices
-                    if correctSideChoices(choiceIndx) == 1 % Left side
-                        Screen('DrawTexture',viewWindow,choiceCorrectTex,[],choiceLeftRect);
-                        Screen('DrawTexture',viewWindow,choiceIncorrectTex,[],choiceRightRect);
-                        Screen('DrawTexture',expWindow,choiceCorrectTex,[],choiceLeftRectExp); 
-                        Screen('DrawTexture',expWindow,choiceIncorrectTex,[],choiceRightRectExp);
-                        if  leftFixation(frameIdx) == 1 % Turn it green
-                            choiceColorLeft = [0 255 0];
-                        else
-                            choiceColorLeft = [255 255 255];
-                        end
-                        if rightFixation == 1 
-                            choiceColorRight = [255 0 0];
-                        else
-                            choiceColorRight = [255 255 255];
-                        end
-                        % for actual reward processing
-                        if sideChoices(choiceIndx) == 0 && sum(leftFixation(frameIdx-(choiceDur*fps+1):frameIdx),'all','omitnan') == choiceDur*fps
-                            [juiceEndTime, juiceOn] = juice(choiceRewardDur,juiceEndTime,toc,juiceOn)
-                            sideChoices(choiceIndx) = 1;
-                        elseif sideChoices(choiceIndx) == 0 && sum(rightFixation(frameIdx-(choiceDur*fps+1):frameIdx),'all','omitnan') == choiceDur*fps
-                            sideChoices(choiceIndx) = 2;
-                        end
+                    if sideChoices(choiceIndx) == 0
+                        if correctSideChoices(choiceIndx) == 1 % Left side
+                            Screen('DrawTexture',viewWindow,choiceCorrectTex,[],choiceLeftRect);
+                            Screen('DrawTexture',viewWindow,choiceIncorrectTex,[],choiceRightRect);
+                            Screen('DrawTexture',expWindow,choiceCorrectTex,[],choiceLeftRectExp); 
+                            Screen('DrawTexture',expWindow,choiceIncorrectTex,[],choiceRightRectExp);
+                            if  leftFixation(frameIdx) == 1 % Turn it green
+                                choiceColorLeft = [0 255 0];
+                            else
+                                choiceColorLeft = [255 255 255];
+                            end
+                            if rightFixation == 1 
+                                choiceColorRight = [255 0 0];
+                            else
+                                choiceColorRight = [255 255 255];
+                            end
+                            % for actual reward processing
+                            if sideChoices(choiceIndx) == 0 && sum(leftFixation(frameIdx-(choiceDur*fps+1):frameIdx),'all','omitnan') == choiceDur*fps
+                                [juiceEndTime, juiceOn] = juice(choiceRewardDur,juiceEndTime,toc,juiceOn);
+                                sideChoices(choiceIndx) = 1;
+                                correctChoiceCounter = correctChoiceCounter+1;
+                            elseif sideChoices(choiceIndx) == 0 && sum(rightFixation(frameIdx-(choiceDur*fps+1):frameIdx),'all','omitnan') == choiceDur*fps
+                                sideChoices(choiceIndx) = 2;
+                            end
+    
+                        elseif correctSideChoices(choiceIndx) == 2 % Right side
+                            Screen('DrawTexture',viewWindow,choiceCorrectTex,[],choiceRightRect);
+                            Screen('DrawTexture',viewWindow,choiceIncorrectTex,[],choiceLeftRect);
+                            Screen('DrawTexture',expWindow,choiceCorrectTex,[],choiceRightRectExp); 
+                            Screen('DrawTexture',expWindow,choiceIncorrectTex,[],choiceLeftRectExp); 
+                            if leftFixation(frameIdx) == 1 
+                                choiceColorLeft = [255 0 0];
+                            else
+                                choiceColorLeft = [255 255 255];
+                            end
+                            if rightFixation(frameIdx) == 1 
+                                choiceColorRight = [0 255 0];
+                            else
+                                choiceColorRight = [255 255 255];
+                            end
+                            if sideChoices(choiceIndx) == 0 && sum(leftFixation(frameIdx-(choiceDur*fps+1):frameIdx),'all','omitnan') == choiceDur*fps
+                                sideChoices(choiceIndx) = 1;
+                            elseif sideChoices(choiceIndx) == 0 && sum(rightFixation(frameIdx-(choiceDur*fps+1):frameIdx),'all','omitnan') == choiceDur*fps
+                                [juiceEndTime, juiceOn] = juice(choiceRewardDur,juiceEndTime,toc,juiceOn)
+                                sideChoices(choiceIndx) = 2;
+                                correctChoiceCounter = correctChoiceCounter+1;
 
-                    elseif correctSideChoices(choiceIndx) == 2 % Right side
-                        Screen('DrawTexture',viewWindow,choiceCorrectTex,[],choiceRightRect);
-                        Screen('DrawTexture',viewWindow,choiceIncorrectTex,[],choiceLeftRect);
-                        Screen('DrawTexture',expWindow,choiceCorrectTex,[],choiceRightRectExp); 
-                        Screen('DrawTexture',expWindow,choiceIncorrectTex,[],choiceLeftRectExp); 
-                        if leftFixation(frameIdx) == 1 
-                            choiceColorLeft = [255 0 0];
-                        else
-                            choiceColorLeft = [255 255 255];
-                        end
-                        if rightFixation(frameIdx) == 1 
-                            choiceColorRight = [0 255 0];
-                        else
-                            choiceColorRight = [255 255 255];
-                        end
-                        if sideChoices(choiceIndx) == 0 && sum(leftFixation(frameIdx-(choiceDur*fps+1):frameIdx),'all','omitnan') == choiceDur*fps
-                            sideChoices(choiceIndx) = 1;
-                        elseif sideChoices(choiceIndx) == 0 && sum(rightFixation(frameIdx-(choiceDur*fps+1):frameIdx),'all','omitnan') == choiceDur*fps
-                            [juiceEndTime, juiceOn] = juice(choiceRewardDur,juiceEndTime,toc,juiceOn)
-                            sideChoices(choiceIndx) = 2;
+                            end
                         end
                     end
                     % Draw fixation windows on framebuffer
@@ -464,7 +487,8 @@ function SC(subject, counterbalance_indx, run)
     catch error
         rethrow(error)
     end % End of stim presentation
-    disp(sum(fixation)/length(fixation(1:frameIdx,1)));
+    disp(['Fixation: ' sum(fixation)/length(fixation(1:frameIdx,1))]);
+    disp(['Correct Number of Choices: ' num2str(correctChoiceCounter), '/' num2str(choiceIndx)])
 
     function [juiceEndTime,juiceOn] = juice(howLong,juiceEndTime, curTime,juiceOn)
         if howLong > 0
