@@ -28,8 +28,8 @@ function SC(subject, counterbalance_indx, run)
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = -550;
-    yGain = 600;
+    xGain = -1500;
+    yGain = 1500;
     xOffset = 0;
     yOffset = 0;
     xChannel = 2;
@@ -59,7 +59,7 @@ function SC(subject, counterbalance_indx, run)
 
     % Gray of the background:
     %gray = [31 29 47]; 
-    gray = [125 125 125];
+    gray = [150 132 153];
     % Other colors
     red = [255 0 0];
     green = [0 255 0];
@@ -187,13 +187,17 @@ function SC(subject, counterbalance_indx, run)
     timeAtLastJuice = 0;
     quitNow = false;
     initialRects = createTiledRects(expRect,length(allTex),4);
+    initialRectsView = createTiledRects(viewRect,length(allTex),4);
+
     % Begind acutal stimulus presentation 
     try
         movie = Screen('CreateMovie', expWindow, movSaveFile,[],[],movieFPS);
         Screen('DrawText',expWindow,'Ready',xCenterExp,yCenterExp);
         for i = 1:length(allTex)
-            Screen('DrawTexture',expWindow,allTex(i),[],initialRects(:,i))
+            Screen('DrawTexture',expWindow,allTex(i),[],initialRects(:,i));
+            Screen('DrawTexture',viewWindow,allTex(i),[],initialRectsView(:,i));
         end
+
         Screen('Flip',expWindow);
         Screen('Flip',viewWindow);
 

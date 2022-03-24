@@ -6,17 +6,17 @@ function SC(subject, counterbalance_indx, run)
     % displayed. At the end of the block there will be a choice
     
     % Parameters you care about:
-    rewardDur = 0.1; % seconds
-    rewardWait = 5; % seconds
-    rewardPerf = .80; % 90% fixation to get reward
-    choiceDur = 0.5; % Needs to fixate at choice for this time period before getting reward
-    choiceRewardDur = 2;
+    rewardDur = 0.03; % seconds
+    rewardWait = 3; % seconds
+    rewardPerf = .75; % 90% fixation to get reward
+    choiceDur = 0.15; % Needs to fixate at choice for this time period before getting reward
+    choiceRewardDur = 1;
     exactDur = 870; % Need to manually calculate
     LumSetting = 1; % 1 is high luminance colors and shapes, 2 is low
     choiceDistAngle = 10; % The presented choices will be seperated by 10 degrees of visual angle
-    stimDur = 8; % Number of TRs the block stimulus will be shown
+    stimDur = 7; % Number of TRs the block stimulus will be shown
     grayDur = 1; % Number of TRs the inter-event interval will be on, showing gray
-    choiceDur = 1; % Number of TRs the choice will be on
+    choiceDur = 2; % Number of TRs the choice will be on
     blocklength = stimDur+grayDur+choiceDur; % Number of TRs per block
     movieFPS = 10;
     manualMovementPix = 10;
@@ -28,8 +28,8 @@ function SC(subject, counterbalance_indx, run)
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = -550;
-    yGain = 600;
+    xGain = -1700;
+    yGain = 1500;
     xOffset = 0;
     yOffset = 0;
     xChannel = 2;
@@ -67,7 +67,7 @@ function SC(subject, counterbalance_indx, run)
     white = [255 255 255];
 
     % Load in block orders
-    blockorders = csvread('blockorder.csv'); % This is produced from the counterbalance script @kurt braunlich wrote for me
+    blockorders = csvread('blockorder_1_2_no_grey.csv'); % This is produced from the counterbalance script @kurt braunlich wrote for me
     blockorder = blockorders(counterbalance_indx,:); % Get the blockorder used for this run
 
     % Exact Duration
