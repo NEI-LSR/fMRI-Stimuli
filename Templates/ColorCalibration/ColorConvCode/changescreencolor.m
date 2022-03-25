@@ -18,6 +18,7 @@ Screen('Flip',Window);
 mNum = 1; % Measure Number
 measurements = struct('gunVals',{},'xyY',{},'XYZ',{},'xyYJudd',{},'XYZJudd',{},'LMS',{},'spectra',{});
 date_time=strrep(strrep(datestr(datetime),' ','_'),':','_')
+
 saveFile = ['manualMeasurements\' date_time];
 
 while true
