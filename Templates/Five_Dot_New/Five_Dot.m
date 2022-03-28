@@ -8,8 +8,9 @@ function FiveDot
 
     % Initialize DAQ
     DAQ('Init');
-    xGain = -1500;
-    yGain = 1500;
+    xGain = -800;
+    yGain = 900;
+    gainStep = 50;
     xOffset = 0;
     yOffset = 0;
     xChannel = 2;
@@ -152,16 +153,31 @@ function FiveDot
                 xCenterExp = xCenterExp - pixPerAngle;
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
                 xCenter = xCenter - pixPerAngle;
+            elseif keyCode(KbName('t'))
+                [xCenter, yCenter] = RectCenter(viewRect); % Get center of the view screen
+                fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
+                [xCenterExp, yCenterExp] = RectCenter(expRect); % Get center of the experimentor's screen
+            elseif keyCode(KbName('y'))
+                xGain = xGain + 50;
+            elseif keyCode(KbName('h'))
+                xGain = xGain - 50;
+             elseif keyCode(KbName('u'))
+                yGain = yGain + 50;
+            elseif keyCode(KbName('j'))
+                yGain = yGain - 50;
+                               
             elseif keyCode(KbName('p'))
                 quitNow = true;
             end
 
             
-            % Draw Stimulus on Framebuffer
-            %Screen('DrawTexture', viewWindow, texture(frameIdx),[],viewStimRect);
-            %Screen('DrawTexture', expWindow, texture(frameIdx),[],expStimRect);  
-            %Screen('DrawTexture', viewWindow, texture(frameIdx)); % Needs to be sized and have jitter
-            %Screen('DrawTexture', expWindow, texture(frameIdx)); % Needs to be sized and have jitter
+            % Draw Text on FrameBuffer:
+            text = ['xGain: ', num2str(xGain), newline,...
+                'yGain: ' num2str(yGain), newline,...
+                'xLocation: ' num2str(xCenter),  newline,...
+                'yLocation: ' num2str(yCenter)];
+
+            DrawFormattedText(expWindow, text);
             
             % Draw Fixation Cross on Framebuffer
             Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
@@ -193,6 +209,9 @@ function FiveDot
         rethrow(error)
     end % End of stim presentation
     
+    disp(['xGain: ' num2str(xGain)]);
+    disp(['yGain: ' num2str(yGain)]);
+
     save(dataSaveFile, 'eyePosition');
     sca;
     
