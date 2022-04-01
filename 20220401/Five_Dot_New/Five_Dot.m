@@ -11,13 +11,13 @@ function FiveDot
     xGain = -1200;
     yGain = 1200;
     gainStep = 50;
-    xOffset = 0;
-    yOffset = 0;
+    xOffset = 1345;
+    yOffset = -887;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
     rewardDur = 0.1; % seconds
-    rewardWait = 2; % seconds
+    rewardWait = 1.5; % seconds
     rewardPerf = .80; % 90% fixation to get reward
     
     % How long will this last
@@ -51,6 +51,7 @@ function FiveDot
     ifi = 1/fps;
     
     % Gray of the background:
+    %gray = [31 29 47]; % Wooster Shape-Color Gray 
     gray = [128 128 128]; 
     
     % Initialize Screens
@@ -171,8 +172,26 @@ function FiveDot
             elseif keyCode(KbName('g'))
                 yGain = yGain - 50;
             elseif keyCode(KbName('q'))
-                linecolorIdx = randi([1 5], 1);
-                linecolor = linecolors(linecolorIdx,:);
+                %linecolorIdx = randi([1 5], 1);
+                %linecolor = linecolors(linecolorIdx,:);
+                linecolor = [randi([1 255],1) randi([1 255],1) randi([1 255],1)];
+            elseif keyCode(KbName('v'))
+                if lineWidthPix < 10;
+                    fixCrossDimPix = fixCrossDimPix + 4; % Fixation cross arm length
+                    lineWidthPix = lineWidthPix + 1; % Fixation cross arm thickness
+                    xCoords = [-fixCrossDimPix fixCrossDimPix 0 0]; 
+                    yCoords = [0 0 -fixCrossDimPix fixCrossDimPix];
+                    allCoords = [xCoords; yCoords];
+                end
+            elseif keyCode(KbName('b'))
+                if lineWidthPix > 1
+                    fixCrossDimPix = fixCrossDimPix - 4; % Fixation cross arm length
+                    lineWidthPix = lineWidthPix - 1; % Fixation cross arm thickness
+                    xCoords = [-fixCrossDimPix fixCrossDimPix 0 0]; 
+                    yCoords = [0 0 -fixCrossDimPix fixCrossDimPix];
+                    allCoords = [xCoords; yCoords];
+                end
+    allCoords = [xCoords; yCoords];
             elseif keyCode(KbName('p'))
                 quitNow = true;
             end
@@ -190,7 +209,8 @@ function FiveDot
             
             % Draw Fixation Cross on Framebuffer
             Screen('DrawLines', viewWindow, allCoords, lineWidthPix, linecolor, [xCenter yCenter], 2);
-            
+            Screen('DrawLines', expWindow, allCoords, lineWidthPix, linecolor, [xCenterExp yCenterExp], 2);
+
             % Draw fixation window on framebuffer
             Screen('FrameOval', expWindow, linecolor, fixRect);
 
@@ -220,6 +240,8 @@ function FiveDot
     
     disp(['xGain: ' num2str(xGain)]);
     disp(['yGain: ' num2str(yGain)]);
+    disp(['xOffset: ' num2str(xOffset)]);
+    disp(['yOffset: ' num2str(yOffset)]);
 
     save(dataSaveFile, 'eyePosition');
     sca;

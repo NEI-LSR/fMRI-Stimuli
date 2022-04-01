@@ -10,14 +10,14 @@ function Movie_Play(subject, run)
     DAQ('Init');
     xGain = 550;
     yGain = -600;
-    xOffset = 0;
-    yOffset = 0;
+    xOffset = 1345;
+    yOffset = -887;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
     rewardDur = 0.1; % seconds
-    rewardWait = 5; % seconds
-    rewardPerf = .90; % 90% fixation to get reward
+    rewardWait = 1.5; % seconds
+    rewardPerf = .80; % 90% fixation to get reward
     
     
     
@@ -70,8 +70,8 @@ function Movie_Play(subject, run)
     [xCenterExp, yCenterExp] = RectCenter(expRect); % Get center of the experimentor's screen
     
     pixPerAngle = 40; % Number of pixels per degree of visual angle
-    stimPix = 10*pixPerAngle; % How large the stimulus rectangle will be
-    fixPix = 10*pixPerAngle; % How large the fixation will be
+    stimPix = 2*pixPerAngle; % How large the stimulus rectangle will be
+    fixPix = 2*pixPerAngle; % How large the fixation will be
 
 
     fixCrossDimPix = 10; % Fixation cross arm length
