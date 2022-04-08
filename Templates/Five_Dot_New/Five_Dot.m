@@ -8,8 +8,8 @@ function FiveDot
 
     % Initialize DAQ
     DAQ('Init');
-    xGain = -1200;
-    yGain = 1200;
+    xGain = -200;
+    yGain = -1200;
     gainStep = 50;
     xOffset = 1345;
     yOffset = -887;
@@ -17,7 +17,7 @@ function FiveDot
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
     rewardDur = 0.1; % seconds
-    rewardWait = 1.5; % seconds
+    rewardWait = 4; % seconds
     rewardPerf = .80; % 90% fixation to get reward
     
     % How long will this last
@@ -44,7 +44,7 @@ function FiveDot
     
     % Prep mvie info
     movieName = 'sherlock_seg1.mp4';
-    stimDir = [curdir]; % Change this if you move the location of the stimuli:
+    %stimDir = [curdir]; % Change this if you move the location of the stimuli:
     movieFile = [stimDir '\' movieName]
     if ~isfile(movieFile)
         error('No movie file')
@@ -86,7 +86,6 @@ function FiveDot
     xCoords = [-fixCrossDimPix fixCrossDimPix 0 0]; 
     yCoords = [0 0 -fixCrossDimPix fixCrossDimPix];
     allCoords = [xCoords; yCoords];
-    
     % Make base rectangle and centered rectangle for stimulus presentation
     baseRect = [0 0 stimPix stimPix]; % Size of the texture rect
     
@@ -94,8 +93,9 @@ function FiveDot
     baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
     fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
     % Make stimulus rect
-    viewStimRect = CenterRectOnPointd(baseFixRect, xCenter,yCenter);
-    expStimRect = CenterRectOnPointd(baseFixRect, xCenterExp,yCenterExp);
+    stimRect = [0 0 0.5*fixPix 0.5*fixPix];
+    viewStimRect = CenterRectOnPointd(stimRect, xCenter,yCenter);
+    expStimRect = CenterRectOnPointd(stimRect, xCenterExp,yCenterExp);
     % Load Fixation Grid and Create Texture:
     load([stimDir '/' 'fixGrid.mat'], 'fixGrid'); % Loads the .mat file with the fixation grid texture
     fixGridTex = Screen('MakeTexture', viewWindow, fixGrid); % Creates the fixation grid as a texture
@@ -112,7 +112,7 @@ function FiveDot
     
     % Prep movie if needed
     [movie duration fps] = Screen('OpenMovie', viewWindow, movieFile)
-    play_movie = false;
+    play_movie = true;
     % Begin actual stimulus presentation
     try
         Screen('DrawTexture', expWindow, fixGridTex);
@@ -196,6 +196,10 @@ function FiveDot
                     xCoords = [-fixCrossDimPix fixCrossDimPix 0 0]; 
                     yCoords = [0 0 -fixCrossDimPix fixCrossDimPix];
                     allCoords = [xCoords; yCoords];
+                    stimRect(3) = stimRect(3) + 8;
+                    stimRect(4) = stimRect(4) + 8;
+                    viewStimRect = CenterRectOnPointd(stimRect, xCenter,yCenter);
+                    expStimRect = CenterRectOnPointd(stimRect, xCenterExp,yCenterExp);
                 end
             elseif keyCode(KbName('b'))
                 if lineWidthPix > 1
@@ -204,6 +208,10 @@ function FiveDot
                     xCoords = [-fixCrossDimPix fixCrossDimPix 0 0]; 
                     yCoords = [0 0 -fixCrossDimPix fixCrossDimPix];
                     allCoords = [xCoords; yCoords];
+                    stimRect(3) = stimRect(3) - 8;
+                    stimRect(4) = stimRect(4) - 8;
+                    viewStimRect = CenterRectOnPointd(stimRect, xCenter,yCenter);
+                    expStimRect = CenterRectOnPointd(stimRect, xCenterExp,yCenterExp);
                 end
             elseif keyCode(KbName('z'))
                 if play_movie == false
@@ -221,7 +229,7 @@ function FiveDot
             tex = Screen('GetMovieImage', viewWindow, movie);
             if play_movie == true
                 Screen('DrawTexture', viewWindow,tex,[],viewStimRect);
-                Screen('DrawTexture', viewWindow,tex,[],expStimRect);
+                Screen('DrawTexture', expWindow,tex,[],expStimRect);
 
             end
 
