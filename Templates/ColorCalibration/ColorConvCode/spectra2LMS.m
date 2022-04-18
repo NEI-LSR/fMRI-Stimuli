@@ -5,9 +5,11 @@ function LMS = spectra2LMS(S, color_matching_function)
 switch color_matching_function
  case {'LMS' 'lms'}
     conefundsSP = csvread('conefund_smithpokorny.csv')
-    temp = 10.^conefundsSP(:, 2:4);
     %conesensitivities = [conefundsSP(:, 1), temp];
-    conesensitivities = [conefundsSP(:, 1), 1./max(temp).*temp];
+    temp = 10.^conefundsSP(:, 2:4);
+    con_sens_ax1 = conefundsSP(:, 1);
+    trans_temp = repmat(1./max(temp), 90, 1);
+    conesensitivities = [con_sens_ax1, temp.*trans_temp];
  otherwise
     error(['Unknown color matching function '  ...
          color_matching_function '.'])

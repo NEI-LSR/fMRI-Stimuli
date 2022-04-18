@@ -1,7 +1,7 @@
 % Changes Screen Color
 % Stuart J Duffield 2021-12-14
 global PRport
-PRport = 'COM3';
+PRport = 'COM6';
 StepSize = 1;
 ScreenSize = [];
 KbName('UnifyKeyNames');
@@ -15,7 +15,7 @@ screen = max(Screen('Screens'));
 [Window, Rect] = Screen('OpenWindow', screen, color, ScreenSize);
 Screen('DrawText', Window, num2str(color),[],[],textcolor);
 Screen('Flip',Window);
-mNum = 1; % Measure Number
+mNum = 1; % Measure Numberp
 measurements = struct('gunVals',{},'xyY',{},'XYZ',{},'xyYJudd',{},'XYZJudd',{},'LMS',{},'spectra',{});
 date_time=strrep(strrep(datestr(datetime),' ','_'),':','_')
 

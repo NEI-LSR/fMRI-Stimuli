@@ -1,10 +1,10 @@
 %% LMS/DKL
 clear 
 close all
-LMSgray = [0.55461 0.45616 0.27202] % insert the LMS value of the gray you measured
+LMSgray = [0.54529 0.44988 0.26871]; % insert the LMS value of the gray you measured
 graypointRGB = [128 128 128]; % What is the value of the isoluminant RGB that you want? 
 whiteJumps = 0.2*256; % Not sure what this does yet
-scalingF = 0.1; % How far along the gamut of the direction with the least gamut range do you want to extend?
+scalingF = .3; % How far along the gamut of the direction with the least gamut range do you want to extend?
 angles = [0, 45, 90, 135, 180, 225, 270, 315]; % What angles in DKL space do you want to compute your colors around
 lumAngle = 0; % What angle along the LMS axis do you want to calculate around?
 angles = deg2rad(angles); % Convert to radians
@@ -31,8 +31,13 @@ spectrum = [LumValues.red(end).Spectrum(:,1), LumValues.red(end).Spectrum(:,2),.
 xyzJuddVosCMF = textread('ciexyz_juddvos.csv', '', 'delimiter', ',');  % Judd/Vos CMF 2deg from CVRL website
 rellumeffJuddVos = textread('lumefficiency_juddvos.csv', '', 'delimiter', ',');
 conefundsSP = textread('conefund_smithpokorny.csv', '', 'delimiter', ',');
+
+% Below changed by SL to fix matrix broadcasting. Assumed each col should
+% be scaled independently 20220415
 temp = 10.^conefundsSP(:, 2:4);
-conesensitivities = [conefundsSP(:, 1), 1./max(temp).*temp];
+con_sens_ax1 = conefundsSP(:, 1);
+trans_temp = repmat(1./max(temp), 90, 1);
+conesensitivities = [con_sens_ax1, temp.*trans_temp];
 
 
 allSampling = 380:1:780; % for all distributions (cones fundamentals, CMF, spectrum etc.)
