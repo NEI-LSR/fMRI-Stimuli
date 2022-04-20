@@ -1,27 +1,30 @@
 function FiveDot
-    % Shape Color Paradigm 2.2
-    % Stuart J. Duffield November 2021
-    % Displays the stimuli from the Monkey Turk experiments in blocks.
-    % Blocks include gray, colored chromatic shapes, black and white chromatic
-    % shapes, achromatic shapes, and colored blobs.
+
     
 
     % Initialize DAQ
     DAQ('Init');
-    xGain = -200;
-    yGain = -1200;
+    xGain = 500;
+    yGain = 500;
     gainStep = 50;
-    xOffset = 1345;
-    yOffset = -887;
+    xOffset = -830;
+    yOffset = 512;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
     rewardDur = 0.1; % seconds
-    rewardWait = 4; % seconds
-    rewardPerf = .80; % 90% fixation to get reward
-    
+    rewardWait = 3; % seconds
+    newRewardRate = rewardWait;
+    maxChange = 0.3; % How much does it change
+    rewardCalcDur = 10; % Number of seconds fixation is calculated over 
+    incRate = true; % Change rate?
+    rewardPerf = .80; % 80% fixation to get reward
+    % play movie?
+    start_movie = true;
+    play_movie = true;
+
     % How long will this last
-    exactDur = 2000;
+    exactDur = 6000;
     
     linecolorIdx = 1;
     linecolors = [0 0 0; 255 0 0; 0 255 0; 0 0 255; 255 255 255];
@@ -43,10 +46,11 @@ function FiveDot
     dataSaveFile = ['Data/'  'EyeData_Data.mat']; % File to save eye data
     
     % Prep mvie info
-    movieName = 'sherlock_seg1.mp4';
+    movieName = 'our_planet.mp4';
     %stimDir = [curdir]; % Change this if you move the location of the stimuli:
     movieFile = [stimDir '\' movieName]
-    if ~isfile(movieFile)
+    
+    if start_movie && ~isfile(movieFile)
         error('No movie file')
     end
 
@@ -111,12 +115,15 @@ function FiveDot
     timeSinceLastJuice = GetSecs-juiceDistTime;
     
     % Prep movie if needed
-    [movie duration fps] = Screen('OpenMovie', viewWindow, movieFile)
-    play_movie = true;
+    if start_movie
+        [movie duration fps] = Screen('OpenMovie', viewWindow, movieFile)
+    end
     % Begin actual stimulus presentation
     try
         Screen('DrawTexture', expWindow, fixGridTex);
-        Screen('PlayMovie',movie,1)
+        if start_movie
+            Screen('PlayMovie',movie,1)
+        end
         Screen('Flip', expWindow);
         Screen('Flip', viewWindow);
         
@@ -225,8 +232,9 @@ function FiveDot
 
 
             % Draw movie if playing on framebuffer
-
-            tex = Screen('GetMovieImage', viewWindow, movie);
+            if start_movie
+                tex = Screen('GetMovieImage', viewWindow, movie);
+            end
             if play_movie == true
                 Screen('DrawTexture', viewWindow,tex,[],viewStimRect);
                 Screen('DrawTexture', expWindow,tex,[],expStimRect);
@@ -238,7 +246,8 @@ function FiveDot
                 'yGain: ' num2str(yGain), newline,...
                 'xLocation: ' num2str(xCenter),  newline,...
                 'yLocation: ' num2str(yCenter), newline,...
-                'Fixation Percentage: ', num2str(sum(fixation(1:frameIdx,1))/length(fixation(1:frameIdx,1)*100))];
+                'Fixation Percentage: ', num2str(sum(fixation(1:frameIdx,1))/length(fixation(1:frameIdx,1)*100)), newline...
+                'Reward Rate :' num2str(newRewardRate)];
 
             DrawFormattedText(expWindow, text);
             
@@ -257,9 +266,11 @@ function FiveDot
             [timestamp2] = Screen('Flip', expWindow, flips(frameIdx));
             
             % Juice Reward
-            
+            if incRate == true && frameIdx > fps*rewardCalcDur
+                 newRewardRate = ((1+maxChange) - sum(fixation(frameIdx-fps*rewardCalcDur+1:frameIdx),"all")/(fps*rewardCalcDur))*rewardWait;
+            end
             if frameIdx > fps*rewardWait
-                [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime,rewardPerf,rewardDur,timeSinceLastJuice);
+                [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,newRewardRate,fixation,juiceDistTime,rewardPerf,rewardDur,timeSinceLastJuice);
             end
             if quitNow == true
                 sca;
