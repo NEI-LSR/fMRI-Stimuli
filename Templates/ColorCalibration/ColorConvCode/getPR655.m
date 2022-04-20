@@ -11,7 +11,7 @@ catch
 end
 
 
-PR655write('M5')
+PR655write('M5');
 
 
 [spec] = getPRValues();

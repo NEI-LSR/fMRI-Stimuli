@@ -48,8 +48,8 @@ for i = 1:size(startRGBs,1)
         changeColor(color,Window);
         [measurements,mNum]=getMeasure(measurements,mNum,color,i,targType,targColor);
         [nextcolor,mag,measurements] = colorDescent(measurements,targColor,targType,thresh);
-        allRGBs = reshape(extractfield(measurements,'gunVals'),3,[]);
-        currRGBs = allRGBs(:,extractfield(measurements,'colorNumber')==i)';
+        allRGBs = reshape(extractfield(measurements,'gunVals'),[],3);
+        currRGBs = allRGBs(extractfield(measurements,'colorNumber')==i,:);
         if ismember(nextcolor,currRGBs,'row')
             disp('Next color has already been measured, stopping now')
             break
