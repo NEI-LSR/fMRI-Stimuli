@@ -4,11 +4,11 @@ close all
 LMSgray = [0.54529 0.44988 0.26871]; % insert the LMS value of the gray you measured
 graypointRGB = [128 128 128]; % What is the value of the isoluminant RGB that you want? 
 whiteJumps = 0.2*256; % Not sure what this does yet
-scalingF = .3; % How far along the gamut of the direction with the least gamut range do you want to extend?
-angles = [0, 45, 90, 135, 180, 225, 270, 315]; % What angles in DKL space do you want to compute your colors around
-lumAngle = 0; % What angle along the LMS axis do you want to calculate around?
+scalingF = .9; % How far along the gamut of the direction with the least gamut range do you want to extend?
+angles = [0, 45, 90, 135, 180, 225, 270, 315, 0, 0]; % What angles in DKL space do you want to compute your colors around
+lumAngles = [0, 0, 0, 0, 0, 0, 0, 0, 90, -90]; % What angle along the LMS axis do you want to calculate around?
 angles = deg2rad(angles); % Convert to radians
-lumAngle = deg2rad(lumAngle); % Convert to radians
+lumAngles = deg2rad(lumAngles); % Convert to radians
 graypoint = graypointRGB/256; % Convert RGB graypoint into decimal
 bgLMS = LMSgray'; % Transpose for the background LMS value
 
@@ -71,9 +71,10 @@ M_DKLToConeInc = inv(M_ConeIncToDKL);
 coneIncs = [];
 cosAngles = cos(angles); % Get the cosine values of angles
 sinAngles = sin(angles); % Get the sine values of angles
-sinLumAngle = sin(lumAngle); % Get the 'height' by which we find the point
+sinLumAngles = sin(lumAngles); % Get the 'height' by which we find the point
+cosLumAngles = cos(lumAngles); % Get the 'sign' of the luminance angle
 for i = 1:length(angles)
-    coneIncs(:,i) = M_DKLToConeInc*[sinLumAngle cosAngles(i) sinAngles(i)]';
+    coneIncs(:,i) = M_DKLToConeInc*[sinLumAngles(i) cosLumAngles(i)*cosAngles(i) cosLumAngles(i)*sinAngles(i)]';
 end
 
 

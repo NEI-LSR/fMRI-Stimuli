@@ -27,9 +27,6 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
     %% Initialize Parameters
     dirChange = 'Linear'; % 'Linear', 'Circular'
     swtichPerSecond = 0.5; % Number of times the direction of the textures switches direction
-    if strcmp(dirChange,'Circular')
-        switchPerSecond = 1;
-    end
     cyclesPerSec = 0.75; % This does two different things for the different conditions: In linear, its the number of cycles that pass by in a second
     % In circular, its the time it takes for a whole 'circle' to complete
 
@@ -299,9 +296,9 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
                 
             % Draw stimuli
             
-            texInd = rem(frameIdx,((fps/cyclesPerSec)/swtichPerSecond))
+            texInd = rem(frameIdx,((fps/cyclesPerSec))/)
             if texInd == 0;
-                texInd = floor(((fps/cyclesPerSec)/swtichPerSecond));
+                texInd = fps/cyclesPerSec;
             end
             if block > 0;
                 Screen('DrawTexture',viewWindow,tex{block}{frequency}(texInd),[],viewRect);
