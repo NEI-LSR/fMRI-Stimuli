@@ -6,18 +6,24 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
     % displayed. At the end of the block there will be a choice
     
     % Parameters you care about:
-    rewardDur = 0.04; % seconds
-    rewardWait = 9; % seconds
+    rewardDur = 0.2; % seconds
+    rewardDurChange = 0.01; 
+    incRate = true;
+    baseRewardWait = 3; % seconds
+    rewardWait = baseRewardWait;
+    maxChange = 0.3; % How much does it change
+    rewardCalcDur = 10; % Number of seconds fixation is calculated over 
+    rewardWaitChange = 0.01;
     rewardPerf = .75; % 75% fixation to get reward
     exactDur = 540; % Need to manually calculate
 
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = -550;
-    yGain = 900;
-    xOffset = 0;
-    yOffset = 0;
+    xGain = -600;
+    yGain = 600;
+    xOffset = -500;
+    yOffset = -827;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
@@ -229,7 +235,9 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
             else
                 circleColor = white;
             end
-
+            if incRate == true && frameIdx > fps*rewardCalcDur
+                 rewardWait = ((1+maxChange) - sum(fixation(frameIdx-fps*rewardCalcDur+1:frameIdx),"all")/(fps*rewardCalcDur))*baseRewardWait;
+            end
             if timeSinceLastJuice > rewardWait
                 if frameIdx < fps*rewardWait;
                     tempFrameIdx = fps*rewardWait;
@@ -272,6 +280,14 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
                 xOffset = xOffset-manualMovementPix;
             elseif keyCode(KbName('j')) % Juice
                 [juiceEndTime,juiceOn]=juice(rewardDur,juiceEndTime,toc,juiceOn);
+            elseif keyCode(KbName('z')) % Juice
+                rewardDur = rewardDur + rewardDurChange;
+            elseif keyCode(KbName('x')) % Juice
+                rewardDur = rewardDur - rewardDurChange;
+            elseif keyCode(KbName('c')) % Juice
+                rewardWait = rewardWait + rewardWaitChange;
+            elseif keyCode(KbName('v')) % Juice
+                rewardWait = rewardWait - rewardWaitChange;
             elseif keyCode(KbName('w')) && fixPix > pixPerAngle/2 % Increase fixation circle
                 fixPix = fixPix - pixPerAngle/2; % Shrink fixPix by half a degree of visual angle
                 baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
@@ -288,7 +304,9 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
             infotext = ['Time Elapsed: ', num2str(toc), '/', num2str(exactDur), newline,...
                 'Fixation Percentage: ', num2str(sum(fixation(1:frameIdx,1))/length(fixation(1:frameIdx,1)*100)), newline,...
                 'Juice: ', juiceSetting,newline,...
-                'Juice End Time: ', num2str(juiceEndTime)]
+                'Juice End Time: ', num2str(juiceEndTime),newline...,
+                'Reward Duration (+Z/-X): ' num2str(rewardDur),newline,...
+                'Reward Wait Time (+C/-V): ' num2str(rewardWait)]
                
 
             DrawFormattedText(expWindow,infotext);
