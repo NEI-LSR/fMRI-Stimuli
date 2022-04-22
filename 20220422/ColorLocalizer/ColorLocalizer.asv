@@ -12,12 +12,12 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
     exactDur = 540; % Need to manually calculate
 
     % Initialize DAQ
-    DAQ('Debug',false);
+    DAQ('Debug',true);
     DAQ('Init');
-    xGain = -600;
-    yGain = 600;
-    xOffset = -524;
-    yOffset = -827;
+    xGain = -550;
+    yGain = 900;
+    xOffset = 0;
+    yOffset = 0;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
@@ -27,9 +27,6 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
     %% Initialize Parameters
     dirChange = 'Linear'; % 'Linear', 'Circular'
     swtichPerSecond = 0.5; % Number of times the direction of the textures switches direction
-    if strcmp(dirChange,'Circular')
-        switchPerSecond = 1;
-    end
     cyclesPerSec = 0.75; % This does two different things for the different conditions: In linear, its the number of cycles that pass by in a second
     % In circular, its the time it takes for a whole 'circle' to complete
 
@@ -81,7 +78,7 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
     green = [0 255 0];
     
     stim_colors = {
-        [144 144 144; 109 109 109],...
+        [149 149 149; 112 112 112],...
         [234 78	132; 17	179	124],...
         [203 90	156; 52	165	101],...
         [128 124 162; 129 129 94],...
@@ -174,7 +171,7 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
 
     % Begind acutal stimulus presentation 
     try
-        movie = Screen('CreateMovie', viewWindow, movSaveFile,[],[],movieFPS);
+        movie = Screen('CreateMovie', expWindow, movSaveFile,[],[],movieFPS);
         Screen('DrawText',expWindow,'Ready',xCenterExp,yCenterExp);
 
 
@@ -299,9 +296,9 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
                 
             % Draw stimuli
             
-            texInd = rem(frameIdx,((fps/cyclesPerSec)/swtichPerSecond))
+            texInd = rem(frameIdx,((fps/cyclesPerSec))/)
             if texInd == 0;
-                texInd = floor(((fps/cyclesPerSec)/swtichPerSecond));
+                texInd = fps/cyclesPerSec;
             end
             if block > 0;
                 Screen('DrawTexture',viewWindow,tex{block}{frequency}(texInd),[],viewRect);
@@ -314,7 +311,7 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
 
             % add this frame to the movie
             if rem(frameIdx,fps/movieFPS)==1
-                Screen('AddFrameToMovie',viewWindow,[],[],movie)
+                Screen('AddFrameToMovie',expWindow,[],[],movie)
             end
 
             % Flip

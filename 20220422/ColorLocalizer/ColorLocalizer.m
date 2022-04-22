@@ -14,10 +14,10 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = -600;
-    yGain = 600;
-    xOffset = -524;
-    yOffset = -827;
+    xGain = -550;
+    yGain = 900;
+    xOffset = 0;
+    yOffset = 0;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
