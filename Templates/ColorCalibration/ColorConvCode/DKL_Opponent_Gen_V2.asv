@@ -136,8 +136,3 @@ save(targetLMSF); % Save all variables for now
 M_XYZ2RGB = XYZToRGBMatrix(redxyY(end,1),redxyY(end,2),greenxyY(end,1),greenxyY(end,2),bluexyY(end,1),bluexyY(end,2),whitexyY(end,1),whitexyY(end,2));
 M_RGB2XYZ = inv(M_XYZ2RGB);
 
-XYZ = M_RGB2XYZ*est_RGB_Lookup;
-xyY = thXYZToxyY(XYZ)';
-DrawChromaticity
-hold on
-scatter(xyY(:,1),xyY(:,2))
