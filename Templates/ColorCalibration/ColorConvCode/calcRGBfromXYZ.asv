@@ -35,7 +35,7 @@ M = XYZToRGBMatrix(xr,yr,xg,yg,xb,yb,xw,yw);
 targRGB = round((M*targXYZ_edited))';
 roundedRGB = targRGB;
 roundedRGB(roundedRGB > 256) = 256;
-roundedRGB(roundedRGB < 1) = 1;
+roundedRGB(roundedRGB < 1) = 0;
 
 roundedRGB = roundedRGB';
 
