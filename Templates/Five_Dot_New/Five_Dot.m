@@ -4,24 +4,24 @@ function FiveDot
 
     % Initialize DAQ
     DAQ('Init');
-    xGain = 500;
-    yGain = 500;
-    gainStep = 50;
-    xOffset = -830;
-    yOffset = 512;
+    xGain = -220;
+    yGain = 205;
+    gainStep = 5;
+    xOffset = -930;
+    yOffset = 650;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
-    rewardDur = 0.1; % seconds
-    rewardWait = 3; % seconds
+    rewardDur = 0.05; % seconds
+    rewardWait = 6; % seconds
     newRewardRate = rewardWait;
-    maxChange = 0.3; % How much does it change
+    maxChange = 0.5; % How much does it change
     rewardCalcDur = 10; % Number of seconds fixation is calculated over 
     incRate = true; % Change rate?
     rewardPerf = .80; % 80% fixation to get reward
     % play movie?
     start_movie = true;
-    play_movie = true;
+    play_movie = false;
 
     % How long will this last
     exactDur = 6000;
@@ -164,34 +164,42 @@ function FiveDot
                 fixPix = fixPix + pixPerAngle/2; % Increase fixPix by half a degree of visual angle
                 baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
-            elseif keyCode(KbName('w')) && yCenter < 1050 % Move fixation up
+            elseif keyCode(KbName('s')) && yCenter < 1050 % Move fixation up
                 yCenterExp = yCenterExp + pixPerAngle;
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
                 yCenter = yCenter + pixPerAngle;
-            elseif keyCode(KbName('s')) && yCenter > 0 % Move fixation down
+                viewStimRect = CenterRectOnPointd(stimRect, xCenter,yCenter);
+                expStimRect = CenterRectOnPointd(stimRect, xCenterExp,yCenterExp);
+            elseif keyCode(KbName('w')) && yCenter > 0 % Move fixation down
                 yCenterExp = yCenterExp - pixPerAngle;
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
                 yCenter = yCenter - pixPerAngle;
+                viewStimRect = CenterRectOnPointd(stimRect, xCenter,yCenter);
+                expStimRect = CenterRectOnPointd(stimRect, xCenterExp,yCenterExp);
             elseif keyCode(KbName('d')) && xCenter < 1900 % move fixation right
                 xCenterExp = xCenterExp + pixPerAngle;
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
                 xCenter = xCenter + pixPerAngle;
+                viewStimRect = CenterRectOnPointd(stimRect, xCenter,yCenter);
+                expStimRect = CenterRectOnPointd(stimRect, xCenterExp,yCenterExp);
             elseif keyCode(KbName('a')) && xCenter > 0 % Move fixation left
                 xCenterExp = xCenterExp - pixPerAngle;
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
                 xCenter = xCenter - pixPerAngle;
+                viewStimRect = CenterRectOnPointd(stimRect, xCenter,yCenter);
+                expStimRect = CenterRectOnPointd(stimRect, xCenterExp,yCenterExp);
             elseif keyCode(KbName('f'))
                 [xCenter, yCenter] = RectCenter(viewRect); % Get center of the view screen
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
                 [xCenterExp, yCenterExp] = RectCenter(expRect); % Get center of the experimentor's screen
             elseif keyCode(KbName('y'))
-                xGain = xGain + 50;
+                xGain = xGain + gainStep;
             elseif keyCode(KbName('h'))
-                xGain = xGain - 50;
+                xGain = xGain - gainStep;
              elseif keyCode(KbName('t'))
-                yGain = yGain + 50;
+                yGain = yGain + gainStep;
             elseif keyCode(KbName('g'))
-                yGain = yGain - 50;
+                yGain = yGain - gainStep;
             elseif keyCode(KbName('q'))
                 %linecolorIdx = randi([1 5], 1);
                 %linecolor = linecolors(linecolorIdx,:);

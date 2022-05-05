@@ -8,7 +8,7 @@ KbName('UnifyKeyNames');
 Screen('Preference', 'SkipSyncTests', 1); 
 Screen('Preference', 'VisualDebugLevel', 0);
 Screen('Preference', 'Verbosity', 0);
-Screen('Preference', 'SuppressAllWarnings', 1);
+Screen('Preference', 'SuppressAllWarnings', 1);p
 color = [0 0 0];
 textcolor = [255 255 255] - color;
 screen = max(Screen('Screens'));

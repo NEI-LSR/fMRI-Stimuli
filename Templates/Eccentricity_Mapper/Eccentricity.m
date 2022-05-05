@@ -7,15 +7,15 @@ function Eccentricity(subject, counterbalance_indx, run)
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = 400;
-    yGain = 400;
-    xOffset = 0;
-    yOffset = 0;
+    xGain = -225;
+    yGain = 190;
+    xOffset = -930;
+    yOffset = 650;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
-    rewardDur = 0.08; % seconds
-    rewardWait = 5; % seconds
+    rewardDur = 0.1; % seconds
+    rewardWait = 2; % seconds
     rewardPerf = .90; % 90% fixation to get reward
     
     
