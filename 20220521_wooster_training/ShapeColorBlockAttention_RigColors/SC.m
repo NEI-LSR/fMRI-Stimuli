@@ -6,18 +6,20 @@ function SC(subject, counterbalance_indx, run)
     % displayed. At the end of the block there will be a choice
     
     % Parameters you care about:
+    repeat_blockorder = 6;
     rewardDur = 0.01; % seconds
     rewardWait = 3; % seconds
     rewardPerf = .75; % 90% fixation to get reward
     choiceDur = 0.5; % Needs to fixate at choice for this time period before getting reward
-    choiceRewardDur = 0.2;
-    choiceRewardIncrement = 0.1;
-    %exactDur = 129; % Need to manually calculate
+    choiceRewardDur = 0.3;
+    choiceRewardIncrement = 0.01;
+    exactDur = 873; % Need to manually calculate
+    exactDur = ceil(exactDur);
     endGrayDur = 3; % End gray duration
     LumSetting = 2; % 1 is high luminance colors and shapes, 2 is low
     choiceDistAngle = 10; % The presented choices will be seperated by 10 degrees of visual angle
     stimDur = 1; % Number of TRs the block stimulus will be shown
-    grayDur = .1; % Number of TRs the inter-event interval will be on, showing gray
+    grayDur = .3; % Number of TRs the inter-event interval will be on, showing gray
     choiceSectionDur = 1; % Number of TRs the choice will be on
     blocklength = stimDur+grayDur+choiceSectionDur; % Number of TRs per block
     movieFPS = 10;
@@ -72,9 +74,9 @@ function SC(subject, counterbalance_indx, run)
     % Load in block orders
     blockorders = csvread('blockorder_nogray.csv'); % This is produced from the counterbalance script @kurt braunlich wrote for me
     blockorder = blockorders(counterbalance_indx,:); % Get the blockorder used for this run
-
+    blockorder=repmat(blockorder,1,repeat_blockorder);
     % Exact Duration
-    runDur = TR*blocklength*length(blockorder)+endGrayDur; % Calculating this to compare to exact duration
+    runDur = ceil(TR*blocklength*length(blockorder)+endGrayDur); % Calculating this to compare to exact duration
     if runDur ~= exactDur % Ya gotta check or else you waste your scan time
         disp(['Run dur:' num2str(runDur)])
         disp(['ExactDur: ' num2str(exactDur)])
@@ -160,7 +162,11 @@ function SC(subject, counterbalance_indx, run)
         BWTex(i) = Screen('MakeTexture',viewWindow,chromBW(:,:,:,i));
         chromTex(i) = Screen('MakeTexture',expWindow,chrom(:,:,:,i));
     end
-    
+    achromTex = repmat(achromTex,repeat_blockorder,1);
+    circleTex = repmat(circleTex,repeat_blockorder,1);
+    BWTex = repmat(BWTex,repeat_blockorder,1);
+    chromTex = repmat(chromTex,repeat_blockorder,1);
+
     allTex = [achromTex; circleTex; BWTex; chromTex];
     achromOrder = randperm(length(achromTex)); % Order by which achromatic shapes are presented
     circleOrder = randperm(length(circleTex)); % Order by which colors are presented
