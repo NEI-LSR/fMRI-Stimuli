@@ -492,7 +492,10 @@ function SC(subject, counterbalance_indx, run)
             % Flip
             [timestamp] = Screen('Flip', viewWindow, flips(frameIdx));
             [timestamp2] = Screen('Flip', expWindow, flips(frameIdx));
-
+            
+            save(dataSaveFile,"correct_stim","incorrect_stim","eyePosition","achromTex","circleTex", ...
+            "BWTex","chromTex","correctSideChoices","sideChoices","stimulus_order","LumSetting","achromCase","colorCase","bwCase","grayCase","blockorder","correctChoiceCounter");
+            save(dataSaveFileAll);
             [juiceEndTime,juiceOn] = juice(0,juiceEndTime, toc,juiceOn);
 
             if quitNow == true
@@ -505,7 +508,10 @@ function SC(subject, counterbalance_indx, run)
     catch error
         rethrow(error)
     end % End of stim presentation
-    disp(['Fixation: ' sum(fixation)/length(fixation(1:frameIdx,1))]);
+    save(dataSaveFile,"correct_stim","incorrect_stim","eyePosition","achromTex","circleTex", ...
+     "BWTex","chromTex","correctSideChoices","sideChoices","stimulus_order","LumSetting","achromCase","colorCase","bwCase","grayCase","blockorder","correctChoiceCounter");
+    save(dataSaveFileAll);
+    disp(['Fixation: ' num2str(sum(fixation)/length(fixation(1:frameIdx,1)))]);
     disp(['Correct Number of Choices: ' num2str(correctChoiceCounter), '/' num2str(choiceIndx)])
 
     function [juiceEndTime,juiceOn] = juice(howLong,juiceEndTime, curTime,juiceOn)
