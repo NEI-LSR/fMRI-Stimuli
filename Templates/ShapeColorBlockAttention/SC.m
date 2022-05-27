@@ -6,18 +6,22 @@ function SC(subject, counterbalance_indx, run)
     % displayed. At the end of the block there will be a choice
     
     % Parameters you care about:
+    repeat_blockorder = 5;
     rewardDur = 0.04; % seconds
-    rewardWait = 9; % seconds
-    rewardPerf = .75; % 75% fixation to get reward
-    choiceDur = 1; % Needs to fixate at choice for this time period before getting reward
-    choiceRewardDur = 0.5;
-    exactDur = 534; % Need to manually calculate
-    LumSetting = 1; % 1 is high luminance colors and shapes, 2 is low
+    rewardWait = 2; % seconds
+    rewardPerf = .75; % 90% fixation to get reward
+    choiceDur = 0.7; % Needs to fixate at choice for this time period before getting reward
+    choiceRewardDur = 0.3;
+    choiceRewardIncrement = 0;
+    exactDur = 2271; % Need to manually calculate
+    exactDur = ceil(exactDur);
+    endGrayDur = 3; % End gray duration
+    LumSetting = 2; % 1 is high luminance colors and shapes, 2 is low
     choiceDistAngle = 10; % The presented choices will be seperated by 10 degrees of visual angle
     stimDur = 4; % Number of TRs the block stimulus will be shown
     grayDur = 1; % Number of TRs the inter-event interval will be on, showing gray
-    choiceDur = 1; % Number of TRs the choice will be on
-    blocklength = stimDur+grayDur+choiceDur; % Number of TRs per block
+    choiceSectionDur = 1; % Number of TRs the choice will be on
+    blocklength = stimDur+grayDur+choiceSectionDur; % Number of TRs per block
     movieFPS = 10;
     manualMovementPix = 10;
     % cases
@@ -28,10 +32,10 @@ function SC(subject, counterbalance_indx, run)
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = -550;
-    yGain = 900;
-    xOffset = 0;
-    yOffset = 0;
+    xGain = -180;
+    yGain = 205;
+    xOffset = -1086;
+    yOffset = -355;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
@@ -46,10 +50,9 @@ function SC(subject, counterbalance_indx, run)
         mkdir('Data');
     end
     runExpTime = datestr(now); % Get the time the run occured at.
-    dataSaveFile = ['Data/' subject '_' num2str(run) '_Data.mat']; % File to save both run data and eye data
-    dataSaveFileAll = ['Data/' subject '_' num2str(run) '_Data_all.mat']; % File to save both run data and eye data
-
-    movSaveFile = ['Data/' subject '_' num2str(run) '_Movie.mov']; % Create Movie Filename
+    date_time=strrep(strrep(datestr(datetime),' ','_'),':','_') % Get the numstring of the time 
+    dataSaveFile = ['Data/' subject '_' num2str(run) '_' date_time '_Data.mat']; % File to save both run data and eye data
+    movSaveFile = ['Data/' subject '_' num2str(run) '_' date_time '_Movie.mov']; % Create Movie Filename
 
     % Refresh rate of monitors:
     fps = 30;
@@ -60,8 +63,8 @@ function SC(subject, counterbalance_indx, run)
     TR = 3; % TR length
 
     % Gray of the background:
-    gray = [31 29 47]; 
-    %gray = [150 132 153];
+    %gray = [31 29 47]; 
+    gray = [118,98,128];
     % Other colors
     red = [255 0 0];
     green = [0 255 0];
@@ -69,14 +72,18 @@ function SC(subject, counterbalance_indx, run)
     white = [255 255 255];
 
     % Load in block orders
-    blockorders = csvread('blockorder.csv'); % This is produced from the counterbalance script @kurt braunlich wrote for me
+    blockorders = csvread('blockorder_nogray.csv'); % This is produced from the counterbalance script @kurt braunlich wrote for me
     blockorder = blockorders(counterbalance_indx,:); % Get the blockorder used for this run
-
+    blockorder=repmat(blockorder,1,repeat_blockorder);
     % Exact Duration
-    runDur = TR*blocklength*length(blockorder)+30; % Calculating this to compare to exact duration
-    if runDur ~= exactDur % Ya gotta check or else you waste your scan time
-        error('Run duration calculated from run parameters does not match hardcoded run duration length.')
-    end
+    runDur = ceil(TR*blocklength*length(blockorder)+endGrayDur); % Calculating this to compare to exact duration
+    exactDur = runDur;
+    disp(['Run dur:' num2str(runDur)])
+    %if runDur ~= exactDur % Ya gotta check or else you waste your scan time
+    %    disp(['Run dur:' num2str(runDur)])
+    %    disp(['ExactDur: ' num2str(exactDur)])
+    %    error('Run duration calculated from run parameters does not match hardcoded run duration length.')
+    %end
 
     % Manually set screennumbers for experimenter and viewer displays:
     expscreen = 1; 
@@ -157,14 +164,16 @@ function SC(subject, counterbalance_indx, run)
         BWTex(i) = Screen('MakeTexture',viewWindow,chromBW(:,:,:,i));
         chromTex(i) = Screen('MakeTexture',expWindow,chrom(:,:,:,i));
     end
-    
+    achromTex = repmat(achromTex,repeat_blockorder,1);
+    circleTex = repmat(circleTex,repeat_blockorder,1);
+    BWTex = repmat(BWTex,repeat_blockorder,1);
+    chromTex = repmat(chromTex,repeat_blockorder,1);
+
     allTex = [achromTex; circleTex; BWTex; chromTex];
     achromOrder = randperm(length(achromTex)); % Order by which achromatic shapes are presented
     circleOrder = randperm(length(circleTex)); % Order by which colors are presented
     bwOrder = randperm(length(BWTex)); % Order by which black and white shapes are presented
     stimulus_order = []; % Save this for later
-    correct_stim = [];
-    incorrect_stim = [];
     
 
     eyePosition = NaN(fps*exactDur,2);
@@ -191,17 +200,14 @@ function SC(subject, counterbalance_indx, run)
     timeAtLastJuice = 0;
     quitNow = false;
     initialRects = createTiledRects(expRect,length(allTex),4);
-    initialRectsView = createTiledRects(viewRect,length(allTex),4);
-
     % Begind acutal stimulus presentation 
     try
         movie = Screen('CreateMovie', expWindow, movSaveFile,[],[],movieFPS);
         Screen('DrawText',expWindow,'Ready',xCenterExp,yCenterExp);
         for i = 1:length(allTex)
-            Screen('DrawTexture',expWindow,allTex(i),[],initialRects(:,i));
-            Screen('DrawTexture',viewWindow,allTex(i),[],initialRectsView(:,i));
+            Screen('DrawTexture',expWindow,allTex(i),[],initialRects(:,i))
+            Screen('DrawTexture',viewWindow,allTex(i),[],initialRects(:,i))
         end
-
         Screen('Flip',expWindow);
         Screen('Flip',viewWindow);
 
@@ -247,25 +253,29 @@ function SC(subject, counterbalance_indx, run)
                     switch blockorder(blockIndx) % Setting all the relevant texture info. Really should consolidate this with the code below
                         case achromCase % ACh
                             stimTex = achromTex(achromOrder(achromIndx)); % What will be displayed
-                            stimulus_order = [stimulus_order stimTex]; % Add stimulus to thing
                             choiceCorrectTex = stimTex; % Correct choice texture
                             unchosenInds = setdiff(achromOrder,achromOrder(achromIndx)); % What was not displayed
-                            choiceIncorrectInd = randsample(unchosenInds,1); % What will be shown as the incorrect texture 
+                            while true % check to make sure incorrect and correct tex are not the same
+                                choiceIncorrectInd = randsample(unchosenInds,1); % What will be shown as the incorrect texture 
+                                if achromTex(choiceIncorrectInd) ~= choiceCorrectTex
+                                    break
+                                end
+                            end
                             choiceIncorrectTex = achromTex(choiceIncorrectInd);
-                            correct_stim = [correct_stim choiceCorrectTex];
-                            incorrect_stim = [incorrect_stim choiceIncorrectTex];
                             achromIndx = achromIndx+1; % Move achrom selection up 1
                             blockType = 'Achromatic Shapes';
                         case colorCase % Colored Cirles
                             stimTex = circleTex(circleOrder(circleIndx)); % What will be displayed
-                            stimulus_order = [stimulus_order stimTex]; % Add stimulus to thing
                             choiceCorrectTex = BWTex(circleOrder(circleIndx)); % Correct choice texture
                             chromDispTex = chromTex(circleOrder(circleIndx)); % Corresponding chromatic shape
                             unchosenInds = setdiff(circleOrder,circleOrder(circleIndx)); % What was not displayed
-                            choiceIncorrectInd = randsample(unchosenInds,1); % What will be shown as the incorrect texure
+                            while true
+                                choiceIncorrectInd = randsample(unchosenInds,1); % What will be shown as the incorrect texure
+                                if circleTex(choiceIncorrectInd) ~= stimTex
+                                    break
+                                end
+                            end
                             choiceIncorrectTex = BWTex(choiceIncorrectInd);
-                            correct_stim = [correct_stim choiceCorrectTex];
-                            incorrect_stim = [incorrect_stim choiceIncorrectTex];
                             circleIndx = circleIndx+1;
                             blockType = 'Colored Circles';
                         case grayCase % Gray
@@ -273,14 +283,16 @@ function SC(subject, counterbalance_indx, run)
                             blockType = 'Gray';
                         case bwCase % Black and White Color Associated Shapes
                             stimTex = BWTex(bwOrder(bwIndx)); % What will be displayed
-                            stimulus_order = [stimulus_order stimTex]; % Add stimulus to thing
                             choiceCorrectTex = circleTex(bwOrder(bwIndx)); % Correct choice texture
                             chromDispTex = chromTex(bwOrder(bwIndx)); % Corresponding chromatic shape
                             unchosenInds = setdiff(bwOrder,bwOrder(bwIndx)); % What was not displayed
-                            choiceIncorrectInd = randsample(unchosenInds,1); % What will be shown as the incorrect texure
+                            while true
+                                choiceIncorrectInd = randsample(unchosenInds,1); % What will be shown as the incorrect texure
+                                if circleTex(choiceIncorrectInd) ~= choiceCorrectTex
+                                    break
+                                end
+                            end
                             choiceIncorrectTex = circleTex(choiceIncorrectInd);
-                            correct_stim = [correct_stim choiceCorrectTex];
-                            incorrect_stim = [incorrect_stim choiceIncorrectTex];
                             bwIndx = bwIndx+1;
                             blockType = 'Black and White Chromatic Shapes';
                     end
@@ -295,15 +307,25 @@ function SC(subject, counterbalance_indx, run)
                 if toc >= exactDur
                     quitNow = true;
                 end
+                if frameIdx >= exactDur*fps;
+                    quitNow = true;
+                end
             end
+
+            if quitNow == true
+                Screen('FinalizeMovie', movie);
+                sca
+                save(dataSaveFile);
+                disp(['Fixation: ' num2str(sum(fixation)/length(fixation(1:frameIdx,1)))]);
+                disp(['Correct Number of Choices: ' num2str(correctChoiceCounter), '/' num2str(choiceIndx)])
+                break;
+                
+            end
+
             blockTime = toc-startBlockTime;
             blockTracker(frameIdx) = blockIndx; % Store what block we're in
             choices = {'Left','Right'};
-            if choiceIndx == 0
-                choice = choices{correctSideChoices(1)};
-            else
-                choice = choices{correctSideChoices(choiceIndx)};
-            end
+            choice = choices{correctSideChoices(choiceIndx)};
             
             % Collect eye position
             [eyePosition(frameIdx,1),eyePosition(frameIdx,2)] = eyeTrack(xChannel,yChannel,xGain,yGain,xOffset,yOffset);
@@ -316,13 +338,13 @@ function SC(subject, counterbalance_indx, run)
             end
 
             if timeSinceLastJuice > rewardWait
-                if frameIdx < fps*rewardWait;
-                    tempFrameIdx = fps*rewardWait;
-                else
-                    tempFrameIdx = frameIdx;
+                startIdx = round(frameIdx-((fps*rewardWait)+1));
+                if startIdx < 1
+                    startIdx = 1;
+                elseif startIdx >=frameIdx
+                    startIdx = frameIdx - 1;
                 end
-
-                if sum(fixation((tempFrameIdx-(fps*rewardWait)+1):tempFrameIdx),"all",'omitnan') > rewardPerf*fps*rewardWait
+                if sum(fixation(startIdx:frameIdx),"all",'omitnan') > rewardPerf*fps*rewardWait
                     [juiceEndTime,juiceOn]= juice(rewardDur,juiceEndTime,toc,juiceOn);
                     timeSinceLastJuice = 0;
                     timeAtLastJuice = toc;
@@ -425,9 +447,7 @@ function SC(subject, counterbalance_indx, run)
             elseif blockTime >= (stimDur+grayDur)*TR % Choice interval
 
 
-                % Draw eyetrace on framebuffer
-                Screen('DrawDots', expWindow, eyePosition(frameIdx,:)',5);
-                
+
                 % Draw stimuli
                 if isgray == true
                     % If gray draw fixation cross
@@ -436,8 +456,6 @@ function SC(subject, counterbalance_indx, run)
                     % Draw fixation window
                     Screen('FrameOval',expWindow,white,fixRect);
                 elseif isgray == false
-                    % Prevent juicing during choice block
-                    timeSinceLastJuice = 0;
                     % check to see where fixation is
                     leftFixation(frameIdx) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2),leftFixRect);
                     rightFixation(frameIdx) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2),rightFixRect);
@@ -489,41 +507,57 @@ function SC(subject, counterbalance_indx, run)
                                 [juiceEndTime, juiceOn] = juice(choiceRewardDur,juiceEndTime,toc,juiceOn)
                                 sideChoices(choiceIndx) = 2;
                                 correctChoiceCounter = correctChoiceCounter+1;
+                                choiceRewardDur = choiceRewardDur+choiceRewardIncrement;
+
 
                             end
                         end
+                     
                     end
                     % Draw fixation windows on framebuffer
                     Screen('FrameOval',expWindow, choiceColorRight, rightFixRect);
                     Screen('FrameOval',expWindow,choiceColorLeft, leftFixRect);
+
+                    % Draw eyetrace on framebuffer
+                    Screen('DrawDots', expWindow, eyePosition(frameIdx,:)',5);
+                
                 end
             end
 
             % add this frame to the movie
+            % ALSO SAVE
             if rem(frameIdx,fps/movieFPS)==1
                 Screen('AddFrameToMovie',expWindow,[],[],movie)
+                %save(dataSaveFile);
             end
 
             % Flip
             [timestamp] = Screen('Flip', viewWindow, flips(frameIdx));
             [timestamp2] = Screen('Flip', expWindow, flips(frameIdx));
-
+            
+            
             [juiceEndTime,juiceOn] = juice(0,juiceEndTime, toc,juiceOn);
-
+            
+            
+            frameIdx = frameIdx+1;
+            if frameIdx >= exactDur*fps
+                quitNow = true
+            end
             if quitNow == true
                 Screen('FinalizeMovie', movie);
                 sca
                 break;
             end
-            frameIdx = frameIdx+1;
         end
     catch error
         rethrow(error)
+        save(dataSaveFile);
+        disp(['Fixation: ' num2str(sum(fixation,'omitnan')/length(fixation(1:frameIdx,1)))]);
+        disp(['Correct Number of Choices: ' num2str(correctChoiceCounter), '/' num2str(choiceIndx)])
+
     end % End of stim presentation
-    save(dataSaveFile,"correct_stim","incorrect_stim","eyePosition","achromTex","circleTex", ...
-     "BWTex","chromTex","correctSideChoices","sideChoices","stimulus_order","LumSetting","achromCase","colorCase","bwCase","grayCase","blockorder","correctChoiceCounter");
-    save(dataSaveFileAll);
-    disp(['Fixation: ' num2str(sum(fixation)/length(fixation(1:frameIdx,1)))]);
+    save(dataSaveFile);
+    disp(['Fixation: ' num2str(sum(fixation,'omitnan')/length(fixation(1:frameIdx,1)))]);
     disp(['Correct Number of Choices: ' num2str(correctChoiceCounter), '/' num2str(choiceIndx)])
 
     function [juiceEndTime,juiceOn] = juice(howLong,juiceEndTime, curTime,juiceOn)
