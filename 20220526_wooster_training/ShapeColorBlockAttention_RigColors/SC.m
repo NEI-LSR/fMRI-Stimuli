@@ -34,8 +34,8 @@ function SC(subject, counterbalance_indx, run)
     DAQ('Init');
     xGain = -180;
     yGain = 205;
-    xOffset = -1086;
-    yOffset = -355;
+    xOffset = -1049;
+    yOffset = -411;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
