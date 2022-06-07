@@ -1,7 +1,7 @@
 %% LMS/DKL
 
 clear 
-close all
+%close all
 LMSgray = [0.55461 0.45616 0.27202] % insert the LMS value of the gray you measured
 graypointRGB = [128 128 128]; % What is the value of the isoluminant RGB that you want? This isn't really necessary\
 whiteJumps = 0.2*256;
@@ -218,5 +218,18 @@ set(gca,'xticklabel',{[]})
 title('Luminance (L+M)')
 legend('location','bestoutside')
 
-saveas(DKL_Map,'DKLMap.png')
-saveas(Lum_Check,'Luminances.png')
+%saveas(DKL_Map,'DKLMap.png')
+%saveas(Lum_Check,'Luminances.png')
+
+whitexyY = reshape(extractfield(LumValues.white,'xyYJudd'),3,[])';
+redxyY = reshape(extractfield(LumValues.red,'xyYJudd'),3,[])';
+greenxyY = reshape(extractfield(LumValues.green,'xyYJudd'),3,[])';
+bluexyY = reshape(extractfield(LumValues.blue,'xyYJudd'),3,[])';
+M_XYZ2RGB = XYZToRGBMatrix(redxyY(end,1),redxyY(end,2),greenxyY(end,1),greenxyY(end,2),bluexyY(end,1),bluexyY(end,2),whitexyY(end,1),whitexyY(end,2));
+M_RGB2XYZ = inv(M_XYZ2RGB);
+XYZ = M_RGB2XYZ*vertcat(rgb_monitor,graypointRGB)';
+xyY = thXYZToxyY(XYZ)';
+figure;
+DrawChromaticity
+hold on
+scatter(xyY(:,1),xyY(:,2))
