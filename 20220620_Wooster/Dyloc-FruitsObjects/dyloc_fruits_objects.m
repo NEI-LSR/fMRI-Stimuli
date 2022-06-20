@@ -17,16 +17,16 @@ channels = [1,2];
 port = 1;
 global gain Vcent; %set this after 5 dot task
 
-gain(1) = -600;
-gain(2) = 810;
-Vcent(1) = 0;
-Vcent(2) = -.4688;
+gain(1) = -500;
+gain(2) = 700;
+Vcent(1) = -.86;
+Vcent(2) = -.52;
 
 global manualJuiceStart
 manualJuiceStart = 0;
 
-juiceInterval = 2; %seconds before juice reward
-juiceTime = 0.1;
+juiceInterval = 1.2; %seconds before juice reward
+juiceTime = 0.09;
 
 disp(['Juice Interval is: ' num2str(juiceInterval)])
 keyboard

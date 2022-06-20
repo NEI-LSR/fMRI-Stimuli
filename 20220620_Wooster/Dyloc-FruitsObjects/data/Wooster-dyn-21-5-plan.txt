@@ -1,0 +1,82 @@
+   0.0 	      0 	 fix
+  30.0 	      5 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_bw\banana 3.avi
+  33.0 	      5 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_bw\strawberry 1.avi
+  36.0 	      5 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_bw\coconut 1.avi
+  39.0 	      5 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_bw\coconut 2.avi
+  42.0 	      5 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_bw\beans 2.avi
+  45.0 	      5 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_bw\tomato 1.avi
+  48.0 	      5 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_bw\strawberry 2.avi
+  51.0 	      5 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_bw\watermelon 2.avi
+  54.0 	      5 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_bw\carrot 3.avi
+  57.0 	      5 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_bw\watermelon 1.avi
+  60.0 	      6 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects_bw\obj_60_bw.avi
+  63.0 	      6 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects_bw\obj_8_bw.avi
+  66.0 	      6 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects_bw\obj_2_bw.avi
+  69.0 	      6 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects_bw\obj_19_bw.avi
+  72.0 	      6 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects_bw\obj_21_bw.avi
+  75.0 	      6 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects_bw\obj_52_bw.avi
+  78.0 	      6 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects_bw\obj_10_bw.avi
+  81.0 	      6 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects_bw\obj_18_bw.avi
+  84.0 	      6 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects_bw\obj_7_bw.avi
+  87.0 	      6 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects_bw\obj_16_bw.avi
+  90.0 	      4 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15G\obj60_gscr.mov
+  93.0 	      4 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15G\obj23_gscr.mov
+  96.0 	      4 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15G\obj28_gscr.mov
+  99.0 	      4 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15G\obj21_gscr.mov
+ 102.0 	      4 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15G\obj51_gscr.mov
+ 105.0 	      4 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15G\obj55_gscr.mov
+ 108.0 	      4 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15G\obj25_gscr.mov
+ 111.0 	      4 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15G\obj05_gscr.mov
+ 114.0 	      4 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15G\obj01_gscr.mov
+ 117.0 	      4 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15G\obj27_gscr.mov
+ 120.0 	      7 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled_bw\purple eggplant 5.avi
+ 123.0 	      7 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled_bw\carrot 2.avi
+ 126.0 	      7 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled_bw\grape 8.avi
+ 129.0 	      7 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled_bw\grape 3.avi
+ 132.0 	      7 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled_bw\tomato 1.avi
+ 135.0 	      7 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled_bw\coconut 2.avi
+ 138.0 	      7 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled_bw\potato 3.avi
+ 141.0 	      7 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled_bw\strawberry 3.avi
+ 144.0 	      7 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled_bw\banana 3.avi
+ 147.0 	      7 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled_bw\carrot 3.avi
+ 150.0 	      3 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled\grape 3.avi
+ 153.0 	      3 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled\strawberry 1.avi
+ 156.0 	      3 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled\potato 3.avi
+ 159.0 	      3 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled\strawberry 2.avi
+ 162.0 	      3 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled\banana 8.avi
+ 165.0 	      3 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled\carrot 3.avi
+ 168.0 	      3 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled\beans 1.avi
+ 171.0 	      3 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled\onion 1.avi
+ 174.0 	      3 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled\orange 3.avi
+ 177.0 	      3 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit_scrambled\grape 8.avi
+ 180.0 	      8 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15GBW\obj34_gscr_bw.mov
+ 183.0 	      8 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15GBW\obj56_gscr_bw.mov
+ 186.0 	      8 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15GBW\obj3_gscr_bw.mov
+ 189.0 	      8 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15GBW\obj55_gscr_bw.mov
+ 192.0 	      8 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15GBW\obj51_gscr_bw.mov
+ 195.0 	      8 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15GBW\obj53_gscr_bw.mov
+ 198.0 	      8 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15GBW\obj10_gscr_bw.mov
+ 201.0 	      8 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15GBW\obj20_gscr_bw.mov
+ 204.0 	      8 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15GBW\obj46_gscr_bw.mov
+ 207.0 	      8 	 C:\Users\Admin\Documents\dyloc_stimuli\Scrambled15GBW\obj39_gscr_bw.mov
+ 210.0 	      2 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects\obj_53.mov
+ 213.0 	      2 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects\obj_46.mov
+ 216.0 	      2 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects\obj_11.mov
+ 219.0 	      2 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects\obj_17.mov
+ 222.0 	      2 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects\obj_48.mov
+ 225.0 	      2 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects\obj_7.mov
+ 228.0 	      2 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects\obj_37.mov
+ 231.0 	      2 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects\obj_38.mov
+ 234.0 	      2 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects\obj_34.mov
+ 237.0 	      2 	 C:\Users\Admin\Documents\dyloc_stimuli\Objects\obj_23.mov
+ 240.0 	      1 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit\orange 3.avi
+ 243.0 	      1 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit\coconut 1.avi
+ 246.0 	      1 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit\purple eggplant 5.avi
+ 249.0 	      1 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit\tomato 2.avi
+ 252.0 	      1 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit\potato 1.avi
+ 255.0 	      1 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit\grape 8.avi
+ 258.0 	      1 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit\grape 3.avi
+ 261.0 	      1 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit\beans 1.avi
+ 264.0 	      1 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit\tomato 1.avi
+ 267.0 	      1 	 C:\Users\Admin\Documents\dyloc_stimuli\Fruit\banana 1.avi
+ 270.0 	      0 	 fix
