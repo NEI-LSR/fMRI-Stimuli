@@ -20,7 +20,7 @@ function FiveDot
     incRate = true; % Change rate?
     rewardPerf = .80; % 80% fixation to get reward
     % play movie?
-    start_movie = true;
+    start_movie = false;
     play_movie = false;
 
     % How long will this last
@@ -298,6 +298,7 @@ function FiveDot
     disp(['yOffset: ' num2str(yOffset)]);
 
     save(dataSaveFile, 'eyePosition');
+    clear DAQ
     sca;
     
         
