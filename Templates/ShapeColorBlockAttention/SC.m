@@ -6,20 +6,20 @@ function SC(subject, counterbalance_indx, run)
     % displayed. At the end of the block there will be a choice
     
     % Parameters you care about:
-    repeat_blockorder = 5;
-    rewardDur = 0.04; % seconds
-    rewardWait = 2; % seconds
+    repeat_blockorder = 1;
+    rewardDur = 0.10; % seconds
+    rewardWait = 3; % seconds
     rewardPerf = .75; % 90% fixation to get reward
     choiceDur = 0.7; % Needs to fixate at choice for this time period before getting reward
-    choiceRewardDur = 0.3;
+    choiceRewardDur = 0.5;
     choiceRewardIncrement = 0;
-    exactDur = 2271; % Need to manually calculate
+    exactDur = 534; % Need to manually calculate
     exactDur = ceil(exactDur);
     endGrayDur = 3; % End gray duration
     LumSetting = 2; % 1 is high luminance colors and shapes, 2 is low
     choiceDistAngle = 10; % The presented choices will be seperated by 10 degrees of visual angle
-    stimDur = 4; % Number of TRs the block stimulus will be shown
-    grayDur = 1; % Number of TRs the inter-event interval will be on, showing gray
+    stimDur = 5; % Number of TRs the block stimulus will be shown
+    grayDur = 0; % Number of TRs the inter-event interval will be on, showing gray
     choiceSectionDur = 1; % Number of TRs the choice will be on
     blocklength = stimDur+grayDur+choiceSectionDur; % Number of TRs per block
     movieFPS = 10;
@@ -32,10 +32,10 @@ function SC(subject, counterbalance_indx, run)
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = -180;
-    yGain = 205;
-    xOffset = -1086;
-    yOffset = -355;
+    xGain = -700;
+    yGain = 700;
+    xOffset = -396;
+    yOffset = -805;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
@@ -72,18 +72,18 @@ function SC(subject, counterbalance_indx, run)
     white = [255 255 255];
 
     % Load in block orders
-    blockorders = csvread('blockorder_nogray.csv'); % This is produced from the counterbalance script @kurt braunlich wrote for me
+    blockorders = csvread('blockorder.csv'); % This is produced from the counterbalance script @kurt braunlich wrote for me
     blockorder = blockorders(counterbalance_indx,:); % Get the blockorder used for this run
     blockorder=repmat(blockorder,1,repeat_blockorder);
     % Exact Duration
     runDur = ceil(TR*blocklength*length(blockorder)+endGrayDur); % Calculating this to compare to exact duration
-    exactDur = runDur;
+    %exactDur = runDur;
     disp(['Run dur:' num2str(runDur)])
-    %if runDur ~= exactDur % Ya gotta check or else you waste your scan time
-    %    disp(['Run dur:' num2str(runDur)])
-    %    disp(['ExactDur: ' num2str(exactDur)])
-    %    error('Run duration calculated from run parameters does not match hardcoded run duration length.')
-    %end
+    if runDur ~= exactDur % Ya gotta check or else you waste your scan time
+        disp(['Run dur:' num2str(runDur)])
+        disp(['ExactDur: ' num2str(exactDur)])
+        %error('Run duration calculated from run parameters does not match hardcoded run duration length.')
+    end
 
     % Manually set screennumbers for experimenter and viewer displays:
     expscreen = 1; 
@@ -325,7 +325,12 @@ function SC(subject, counterbalance_indx, run)
             blockTime = toc-startBlockTime;
             blockTracker(frameIdx) = blockIndx; % Store what block we're in
             choices = {'Left','Right'};
-            choice = choices{correctSideChoices(choiceIndx)};
+            if isgray == true
+                choice = 'None';
+            else
+                choice = choices{correctSideChoices(choiceIndx)};
+            end
+            
             
             % Collect eye position
             [eyePosition(frameIdx,1),eyePosition(frameIdx,2)] = eyeTrack(xChannel,yChannel,xGain,yGain,xOffset,yOffset);
