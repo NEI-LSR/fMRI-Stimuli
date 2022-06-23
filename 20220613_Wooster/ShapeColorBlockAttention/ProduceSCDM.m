@@ -22,12 +22,20 @@ function [DM] = ProduceSCDM(mainpath, varargin)
         end
 
     end
-
-    dataPaths_init = dir([mainpath '\\*.mat']); % Get the initial data file paths. These may be changed depending on if the run was completed
+    
+    if ispc
+        dataPaths_init = dir([mainpath '\\*.mat']); % Get the initial data file paths. These may be changed depending on if the run was completed
+    else
+        dataPaths_init = dir([mainpath '//*.mat']); % Get the initial data file paths. These may be changed depending on if the run was completed
+    end
     dataPaths = {};
     LumSettings = [];
     for i=1:length(dataPaths_init)
-        path = [dataPaths_init(i).folder '\' dataPaths_init(i).name];
+        if ispc
+            path = [dataPaths_init(i).folder '\' dataPaths_init(i).name];
+        else
+            path = [dataPaths_init(i).folder '/' dataPaths_init(i).name];
+        end
         load(path,'frameIdx','exactDur','fps','LumSetting','TR');
         [~,pathfile,~] = fileparts(path);
         parts = split(pathfile,'_');
@@ -47,7 +55,7 @@ function [DM] = ProduceSCDM(mainpath, varargin)
 
     colors = ["LightRed","DarkRed","LightYellow","DarkYellow","LightGreen","DarkGreen","LightTurquiose","DarkTurquiose","LightBlue","DarkBlue","LightPurple","DarkPurple","LightGray","DarkGray"];
     chrom = ["Hourglass","UpArrow","Diamond","Spike","Lock","Bar","Spade","Dodecagon","Sawblade","Nail","Rabbit","Puzzle","Venn","Hat"];
-    achrom =["Chevron","Tie","Acorn","House","Pacman","Stickyhand","Bell","LeftArrow","Heart","Ditto","Crowbar","Diamond","Jellyfish","Star"];
+    achrom =["Chevron","Tie","Acorn","House","Pacman","Stickyhand","Bell","LeftArrow","Heart","Ditto","Crowbar","Gem","Jellyfish","Star"];
 
     colors_high = colors(1:2:end);
     chrom_high = chrom(1:2:end);
@@ -95,7 +103,12 @@ function [DM] = ProduceSCDM(mainpath, varargin)
 
     DM = array2table(DM_temp3);
     DM.Properties.VariableNames = split(num2str(IMAs),'  ')
-    writetable(DM,[mainpath '\\DMs.txt'],"Delimiter","\t")
+    if ispc
+        writetable(DM,[mainpath '\\DMs.txt'],"Delimiter","\t")
+    else
+        writetable(DM,[mainpath '//DMs.txt'],"Delimiter","\t")
+    end
+
 
             
     

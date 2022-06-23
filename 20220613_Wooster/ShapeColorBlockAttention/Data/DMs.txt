@@ -1,347 +1,347 @@
-4	 5	 6	 7	 8	 9	10	11	12
-Jellyfish	LightTurquiose	Background	Sawblade	Star	LightTurquiose	Background	Hat	LeftArrow
-Jellyfish	LightTurquiose	Background	Sawblade	Star	LightTurquiose	Background	Hat	LeftArrow
-Jellyfish	LightTurquiose	Background	Sawblade	Star	LightTurquiose	Background	Hat	LeftArrow
-Jellyfish	LightTurquiose	Background	Sawblade	Star	LightTurquiose	Background	Hat	LeftArrow
-Jellyfish	LightTurquiose	Background	Sawblade	Star	LightTurquiose	Background	Hat	LeftArrow
-Jellyfish_Choice	LightTurquiose_Choice	Background	Sawblade_Choice	Star_Choice	LightTurquiose_Choice	Background	Hat_Choice	LeftArrow_Choice
-DarkTurquiose	Background	Nail	Ditto	LightGray	Background	Spike	Acorn	LightBlue
-DarkTurquiose	Background	Nail	Ditto	LightGray	Background	Spike	Acorn	LightBlue
-DarkTurquiose	Background	Nail	Ditto	LightGray	Background	Spike	Acorn	LightBlue
-DarkTurquiose	Background	Nail	Ditto	LightGray	Background	Spike	Acorn	LightBlue
-DarkTurquiose	Background	Nail	Ditto	LightGray	Background	Spike	Acorn	LightBlue
-DarkTurquiose_Choice	Background	Nail_Choice	Ditto_Choice	LightGray_Choice	Background	Spike_Choice	Acorn_Choice	LightBlue_Choice
-Dodecagon	Heart	DarkYellow	Background	Diamond	House	LightYellow	Background	Puzzle
-Dodecagon	Heart	DarkYellow	Background	Diamond	House	LightYellow	Background	Puzzle
-Dodecagon	Heart	DarkYellow	Background	Diamond	House	LightYellow	Background	Puzzle
-Dodecagon	Heart	DarkYellow	Background	Diamond	House	LightYellow	Background	Puzzle
-Dodecagon	Heart	DarkYellow	Background	Diamond	House	LightYellow	Background	Puzzle
-Dodecagon_Choice	Heart_Choice	DarkYellow_Choice	Background	Diamond_Choice	House_Choice	LightYellow_Choice	Background	Puzzle_Choice
-Background	Nail	Bell	LightBlue	Background	Dodecagon	Bell	DarkGray	Background
-Background	Nail	Bell	LightBlue	Background	Dodecagon	Bell	DarkGray	Background
-Background	Nail	Bell	LightBlue	Background	Dodecagon	Bell	DarkGray	Background
-Background	Nail	Bell	LightBlue	Background	Dodecagon	Bell	DarkGray	Background
-Background	Nail	Bell	LightBlue	Background	Dodecagon	Bell	DarkGray	Background
-Background	Nail_Choice	Bell_Choice	LightBlue_Choice	Background	Dodecagon_Choice	Bell_Choice	DarkGray_Choice	Background
-Heart	DarkYellow	Background	Dodecagon	Bell	DarkRed	Background	Venn	Tie
-Heart	DarkYellow	Background	Dodecagon	Bell	DarkRed	Background	Venn	Tie
-Heart	DarkYellow	Background	Dodecagon	Bell	DarkRed	Background	Venn	Tie
-Heart	DarkYellow	Background	Dodecagon	Bell	DarkRed	Background	Venn	Tie
-Heart	DarkYellow	Background	Dodecagon	Bell	DarkRed	Background	Venn	Tie
-Heart_Choice	DarkYellow_Choice	Background	Dodecagon_Choice	Bell_Choice	DarkRed_Choice	Background	Venn_Choice	Tie_Choice
-DarkYellow	Background	Sawblade	Stickyhand	DarkGreen	Background	Nail	Bell	DarkPurple
-DarkYellow	Background	Sawblade	Stickyhand	DarkGreen	Background	Nail	Bell	DarkPurple
-DarkYellow	Background	Sawblade	Stickyhand	DarkGreen	Background	Nail	Bell	DarkPurple
-DarkYellow	Background	Sawblade	Stickyhand	DarkGreen	Background	Nail	Bell	DarkPurple
-DarkYellow	Background	Sawblade	Stickyhand	DarkGreen	Background	Nail	Bell	DarkPurple
-DarkYellow_Choice	Background	Sawblade_Choice	Stickyhand_Choice	DarkGreen_Choice	Background	Nail_Choice	Bell_Choice	DarkPurple_Choice
-Diamond	Chevron	DarkTurquiose	Background	UpArrow	Chevron	LightBlue	Background	Hat
-Diamond	Chevron	DarkTurquiose	Background	UpArrow	Chevron	LightBlue	Background	Hat
-Diamond	Chevron	DarkTurquiose	Background	UpArrow	Chevron	LightBlue	Background	Hat
-Diamond	Chevron	DarkTurquiose	Background	UpArrow	Chevron	LightBlue	Background	Hat
-Diamond	Chevron	DarkTurquiose	Background	UpArrow	Chevron	LightBlue	Background	Hat
-Diamond_Choice	Chevron_Choice	DarkTurquiose_Choice	Background	UpArrow_Choice	Chevron_Choice	LightBlue_Choice	Background	Hat_Choice
-Background	Diamond	Diamond	DarkTurquiose	Background	Sawblade	Jellyfish	DarkPurple	Background
-Background	Diamond	Diamond	DarkTurquiose	Background	Sawblade	Jellyfish	DarkPurple	Background
-Background	Diamond	Diamond	DarkTurquiose	Background	Sawblade	Jellyfish	DarkPurple	Background
-Background	Diamond	Diamond	DarkTurquiose	Background	Sawblade	Jellyfish	DarkPurple	Background
-Background	Diamond	Diamond	DarkTurquiose	Background	Sawblade	Jellyfish	DarkPurple	Background
-Background	Diamond_Choice	Diamond_Choice	DarkTurquiose_Choice	Background	Sawblade_Choice	Jellyfish_Choice	DarkPurple_Choice	Background
-Crowbar	LightRed	Background	Rabbit	Diamond	DarkTurquiose	Background	Puzzle	Acorn
-Crowbar	LightRed	Background	Rabbit	Diamond	DarkTurquiose	Background	Puzzle	Acorn
-Crowbar	LightRed	Background	Rabbit	Diamond	DarkTurquiose	Background	Puzzle	Acorn
-Crowbar	LightRed	Background	Rabbit	Diamond	DarkTurquiose	Background	Puzzle	Acorn
-Crowbar	LightRed	Background	Rabbit	Diamond	DarkTurquiose	Background	Puzzle	Acorn
-Crowbar_Choice	LightRed_Choice	Background	Rabbit_Choice	Diamond_Choice	DarkTurquiose_Choice	Background	Puzzle_Choice	Acorn_Choice
-LightPurple	Background	Diamond	Crowbar	DarkRed	Background	Spade	Stickyhand	DarkBlue
-LightPurple	Background	Diamond	Crowbar	DarkRed	Background	Spade	Stickyhand	DarkBlue
-LightPurple	Background	Diamond	Crowbar	DarkRed	Background	Spade	Stickyhand	DarkBlue
-LightPurple	Background	Diamond	Crowbar	DarkRed	Background	Spade	Stickyhand	DarkBlue
-LightPurple	Background	Diamond	Crowbar	DarkRed	Background	Spade	Stickyhand	DarkBlue
-LightPurple_Choice	Background	Diamond_Choice	Crowbar_Choice	DarkRed_Choice	Background	Spade_Choice	Stickyhand_Choice	DarkBlue_Choice
-Lock	Crowbar	DarkGreen	Background	Bar	Ditto	DarkBlue	Background	Spade
-Lock	Crowbar	DarkGreen	Background	Bar	Ditto	DarkBlue	Background	Spade
-Lock	Crowbar	DarkGreen	Background	Bar	Ditto	DarkBlue	Background	Spade
-Lock	Crowbar	DarkGreen	Background	Bar	Ditto	DarkBlue	Background	Spade
-Lock	Crowbar	DarkGreen	Background	Bar	Ditto	DarkBlue	Background	Spade
-Lock_Choice	Crowbar_Choice	DarkGreen_Choice	Background	Bar_Choice	Ditto_Choice	DarkBlue_Choice	Background	Spade_Choice
-Background	Puzzle	Star	DarkBlue	Background	Puzzle	Crowbar	DarkBlue	Background
-Background	Puzzle	Star	DarkBlue	Background	Puzzle	Crowbar	DarkBlue	Background
-Background	Puzzle	Star	DarkBlue	Background	Puzzle	Crowbar	DarkBlue	Background
-Background	Puzzle	Star	DarkBlue	Background	Puzzle	Crowbar	DarkBlue	Background
-Background	Puzzle	Star	DarkBlue	Background	Puzzle	Crowbar	DarkBlue	Background
-Background	Puzzle_Choice	Star_Choice	DarkBlue_Choice	Background	Puzzle_Choice	Crowbar_Choice	DarkBlue_Choice	Background
-Ditto	DarkRed	Background	Hat	Chevron	LightGreen	Background	Diamond	Chevron
-Ditto	DarkRed	Background	Hat	Chevron	LightGreen	Background	Diamond	Chevron
-Ditto	DarkRed	Background	Hat	Chevron	LightGreen	Background	Diamond	Chevron
-Ditto	DarkRed	Background	Hat	Chevron	LightGreen	Background	Diamond	Chevron
-Ditto	DarkRed	Background	Hat	Chevron	LightGreen	Background	Diamond	Chevron
-Ditto_Choice	DarkRed_Choice	Background	Hat_Choice	Chevron_Choice	LightGreen_Choice	Background	Diamond_Choice	Chevron_Choice
-DarkPurple	Background	Hourglass	Heart	DarkBlue	Background	Lock	Pacman	LightYellow
-DarkPurple	Background	Hourglass	Heart	DarkBlue	Background	Lock	Pacman	LightYellow
-DarkPurple	Background	Hourglass	Heart	DarkBlue	Background	Lock	Pacman	LightYellow
-DarkPurple	Background	Hourglass	Heart	DarkBlue	Background	Lock	Pacman	LightYellow
-DarkPurple	Background	Hourglass	Heart	DarkBlue	Background	Lock	Pacman	LightYellow
-DarkPurple_Choice	Background	Hourglass_Choice	Heart_Choice	DarkBlue_Choice	Background	Lock_Choice	Pacman_Choice	LightYellow_Choice
-UpArrow	Bell	LightYellow	Background	Spade	Crowbar	LightGray	Background	Spike
-UpArrow	Bell	LightYellow	Background	Spade	Crowbar	LightGray	Background	Spike
-UpArrow	Bell	LightYellow	Background	Spade	Crowbar	LightGray	Background	Spike
-UpArrow	Bell	LightYellow	Background	Spade	Crowbar	LightGray	Background	Spike
-UpArrow	Bell	LightYellow	Background	Spade	Crowbar	LightGray	Background	Spike
-UpArrow_Choice	Bell_Choice	LightYellow_Choice	Background	Spade_Choice	Crowbar_Choice	LightGray_Choice	Background	Spike_Choice
-Background	Lock	Jellyfish	DarkPurple	Background	Hat	LeftArrow	LightGray	Background
-Background	Lock	Jellyfish	DarkPurple	Background	Hat	LeftArrow	LightGray	Background
-Background	Lock	Jellyfish	DarkPurple	Background	Hat	LeftArrow	LightGray	Background
-Background	Lock	Jellyfish	DarkPurple	Background	Hat	LeftArrow	LightGray	Background
-Background	Lock	Jellyfish	DarkPurple	Background	Hat	LeftArrow	LightGray	Background
-Background	Lock_Choice	Jellyfish_Choice	DarkPurple_Choice	Background	Hat_Choice	LeftArrow_Choice	LightGray_Choice	Background
-Star	DarkGray	Background	Diamond	Heart	DarkBlue	Background	Nail	House
-Star	DarkGray	Background	Diamond	Heart	DarkBlue	Background	Nail	House
-Star	DarkGray	Background	Diamond	Heart	DarkBlue	Background	Nail	House
-Star	DarkGray	Background	Diamond	Heart	DarkBlue	Background	Nail	House
-Star	DarkGray	Background	Diamond	Heart	DarkBlue	Background	Nail	House
-Star_Choice	DarkGray_Choice	Background	Diamond_Choice	Heart_Choice	DarkBlue_Choice	Background	Nail_Choice	House_Choice
-DarkGray	Background	Spike	Tie	DarkPurple	Background	Rabbit	Crowbar	DarkGreen
-DarkGray	Background	Spike	Tie	DarkPurple	Background	Rabbit	Crowbar	DarkGreen
-DarkGray	Background	Spike	Tie	DarkPurple	Background	Rabbit	Crowbar	DarkGreen
-DarkGray	Background	Spike	Tie	DarkPurple	Background	Rabbit	Crowbar	DarkGreen
-DarkGray	Background	Spike	Tie	DarkPurple	Background	Rabbit	Crowbar	DarkGreen
-DarkGray_Choice	Background	Spike_Choice	Tie_Choice	DarkPurple_Choice	Background	Rabbit_Choice	Crowbar_Choice	DarkGreen_Choice
-Rabbit	Acorn	LightTurquiose	Background	Hat	Star	LightTurquiose	Background	Nail
-Rabbit	Acorn	LightTurquiose	Background	Hat	Star	LightTurquiose	Background	Nail
-Rabbit	Acorn	LightTurquiose	Background	Hat	Star	LightTurquiose	Background	Nail
-Rabbit	Acorn	LightTurquiose	Background	Hat	Star	LightTurquiose	Background	Nail
-Rabbit	Acorn	LightTurquiose	Background	Hat	Star	LightTurquiose	Background	Nail
-Rabbit_Choice	Acorn_Choice	LightTurquiose_Choice	Background	Hat_Choice	Star_Choice	LightTurquiose_Choice	Background	Nail_Choice
-Background	Hat	Crowbar	DarkGray	Background	Spade	Heart	LightRed	Background
-Background	Hat	Crowbar	DarkGray	Background	Spade	Heart	LightRed	Background
-Background	Hat	Crowbar	DarkGray	Background	Spade	Heart	LightRed	Background
-Background	Hat	Crowbar	DarkGray	Background	Spade	Heart	LightRed	Background
-Background	Hat	Crowbar	DarkGray	Background	Spade	Heart	LightRed	Background
-Background	Hat_Choice	Crowbar_Choice	DarkGray_Choice	Background	Spade_Choice	Heart_Choice	LightRed_Choice	Background
-LeftArrow	DarkTurquiose	Background	Spike	Crowbar	LightYellow	Background	Hourglass	Bell
-LeftArrow	DarkTurquiose	Background	Spike	Crowbar	LightYellow	Background	Hourglass	Bell
-LeftArrow	DarkTurquiose	Background	Spike	Crowbar	LightYellow	Background	Hourglass	Bell
-LeftArrow	DarkTurquiose	Background	Spike	Crowbar	LightYellow	Background	Hourglass	Bell
-LeftArrow	DarkTurquiose	Background	Spike	Crowbar	LightYellow	Background	Hourglass	Bell
-LeftArrow_Choice	DarkTurquiose_Choice	Background	Spike_Choice	Crowbar_Choice	LightYellow_Choice	Background	Hourglass_Choice	Bell_Choice
-LightYellow	Background	Puzzle	Jellyfish	LightGreen	Background	Dodecagon	Ditto	LightPurple
-LightYellow	Background	Puzzle	Jellyfish	LightGreen	Background	Dodecagon	Ditto	LightPurple
-LightYellow	Background	Puzzle	Jellyfish	LightGreen	Background	Dodecagon	Ditto	LightPurple
-LightYellow	Background	Puzzle	Jellyfish	LightGreen	Background	Dodecagon	Ditto	LightPurple
-LightYellow	Background	Puzzle	Jellyfish	LightGreen	Background	Dodecagon	Ditto	LightPurple
-LightYellow_Choice	Background	Puzzle_Choice	Jellyfish_Choice	LightGreen_Choice	Background	Dodecagon_Choice	Ditto_Choice	LightPurple_Choice
-Puzzle	House	DarkPurple	Background	Hourglass	Jellyfish	DarkPurple	Background	Hourglass
-Puzzle	House	DarkPurple	Background	Hourglass	Jellyfish	DarkPurple	Background	Hourglass
-Puzzle	House	DarkPurple	Background	Hourglass	Jellyfish	DarkPurple	Background	Hourglass
-Puzzle	House	DarkPurple	Background	Hourglass	Jellyfish	DarkPurple	Background	Hourglass
-Puzzle	House	DarkPurple	Background	Hourglass	Jellyfish	DarkPurple	Background	Hourglass
-Puzzle_Choice	House_Choice	DarkPurple_Choice	Background	Hourglass_Choice	Jellyfish_Choice	DarkPurple_Choice	Background	Hourglass_Choice
-Background	Hourglass	Acorn	DarkGreen	Background	Diamond	Pacman	LightBlue	Background
-Background	Hourglass	Acorn	DarkGreen	Background	Diamond	Pacman	LightBlue	Background
-Background	Hourglass	Acorn	DarkGreen	Background	Diamond	Pacman	LightBlue	Background
-Background	Hourglass	Acorn	DarkGreen	Background	Diamond	Pacman	LightBlue	Background
-Background	Hourglass	Acorn	DarkGreen	Background	Diamond	Pacman	LightBlue	Background
-Background	Hourglass_Choice	Acorn_Choice	DarkGreen_Choice	Background	Diamond_Choice	Pacman_Choice	LightBlue_Choice	Background
-Tie	DarkGreen	Background	Spade	Jellyfish	LightBlue	Background	Lock	Crowbar
-Tie	DarkGreen	Background	Spade	Jellyfish	LightBlue	Background	Lock	Crowbar
-Tie	DarkGreen	Background	Spade	Jellyfish	LightBlue	Background	Lock	Crowbar
-Tie	DarkGreen	Background	Spade	Jellyfish	LightBlue	Background	Lock	Crowbar
-Tie	DarkGreen	Background	Spade	Jellyfish	LightBlue	Background	Lock	Crowbar
-Tie_Choice	DarkGreen_Choice	Background	Spade_Choice	Jellyfish_Choice	LightBlue_Choice	Background	Lock_Choice	Crowbar_Choice
-LightRed	Background	Spade	LeftArrow	DarkYellow	Background	Venn	Tie	LightGreen
-LightRed	Background	Spade	LeftArrow	DarkYellow	Background	Venn	Tie	LightGreen
-LightRed	Background	Spade	LeftArrow	DarkYellow	Background	Venn	Tie	LightGreen
-LightRed	Background	Spade	LeftArrow	DarkYellow	Background	Venn	Tie	LightGreen
-LightRed	Background	Spade	LeftArrow	DarkYellow	Background	Venn	Tie	LightGreen
-LightRed_Choice	Background	Spade_Choice	LeftArrow_Choice	DarkYellow_Choice	Background	Venn_Choice	Tie_Choice	LightGreen_Choice
-Nail	Jellyfish	LightGray	Background	Venn	Heart	LightPurple	Background	Bar
-Nail	Jellyfish	LightGray	Background	Venn	Heart	LightPurple	Background	Bar
-Nail	Jellyfish	LightGray	Background	Venn	Heart	LightPurple	Background	Bar
-Nail	Jellyfish	LightGray	Background	Venn	Heart	LightPurple	Background	Bar
-Nail	Jellyfish	LightGray	Background	Venn	Heart	LightPurple	Background	Bar
-Nail_Choice	Jellyfish_Choice	LightGray_Choice	Background	Venn_Choice	Heart_Choice	LightPurple_Choice	Background	Bar_Choice
-Background	Sawblade	Ditto	LightTurquiose	Background	Bar	Diamond	LightYellow	Background
-Background	Sawblade	Ditto	LightTurquiose	Background	Bar	Diamond	LightYellow	Background
-Background	Sawblade	Ditto	LightTurquiose	Background	Bar	Diamond	LightYellow	Background
-Background	Sawblade	Ditto	LightTurquiose	Background	Bar	Diamond	LightYellow	Background
-Background	Sawblade	Ditto	LightTurquiose	Background	Bar	Diamond	LightYellow	Background
-Background	Sawblade_Choice	Ditto_Choice	LightTurquiose_Choice	Background	Bar_Choice	Diamond_Choice	LightYellow_Choice	Background
-Stickyhand	LightGreen	Background	UpArrow	LeftArrow	LightRed	Background	Dodecagon	Jellyfish
-Stickyhand	LightGreen	Background	UpArrow	LeftArrow	LightRed	Background	Dodecagon	Jellyfish
-Stickyhand	LightGreen	Background	UpArrow	LeftArrow	LightRed	Background	Dodecagon	Jellyfish
-Stickyhand	LightGreen	Background	UpArrow	LeftArrow	LightRed	Background	Dodecagon	Jellyfish
-Stickyhand	LightGreen	Background	UpArrow	LeftArrow	LightRed	Background	Dodecagon	Jellyfish
-Stickyhand_Choice	LightGreen_Choice	Background	UpArrow_Choice	LeftArrow_Choice	LightRed_Choice	Background	Dodecagon_Choice	Jellyfish_Choice
-DarkBlue	Background	Venn	Chevron	LightRed	Background	Bar	Chevron	LightTurquiose
-DarkBlue	Background	Venn	Chevron	LightRed	Background	Bar	Chevron	LightTurquiose
-DarkBlue	Background	Venn	Chevron	LightRed	Background	Bar	Chevron	LightTurquiose
-DarkBlue	Background	Venn	Chevron	LightRed	Background	Bar	Chevron	LightTurquiose
-DarkBlue	Background	Venn	Chevron	LightRed	Background	Bar	Chevron	LightTurquiose
-DarkBlue_Choice	Background	Venn_Choice	Chevron_Choice	LightRed_Choice	Background	Bar_Choice	Chevron_Choice	LightTurquiose_Choice
-Venn	Pacman	DarkRed	Background	Nail	Diamond	DarkGreen	Background	Diamond
-Venn	Pacman	DarkRed	Background	Nail	Diamond	DarkGreen	Background	Diamond
-Venn	Pacman	DarkRed	Background	Nail	Diamond	DarkGreen	Background	Diamond
-Venn	Pacman	DarkRed	Background	Nail	Diamond	DarkGreen	Background	Diamond
-Venn	Pacman	DarkRed	Background	Nail	Diamond	DarkGreen	Background	Diamond
-Venn_Choice	Pacman_Choice	DarkRed_Choice	Background	Nail_Choice	Diamond_Choice	DarkGreen_Choice	Background	Diamond_Choice
-Background	Venn	House	LightPurple	Background	Nail	Acorn	DarkTurquiose	Background
-Background	Venn	House	LightPurple	Background	Nail	Acorn	DarkTurquiose	Background
-Background	Venn	House	LightPurple	Background	Nail	Acorn	DarkTurquiose	Background
-Background	Venn	House	LightPurple	Background	Nail	Acorn	DarkTurquiose	Background
-Background	Venn	House	LightPurple	Background	Nail	Acorn	DarkTurquiose	Background
-Background	Venn_Choice	House_Choice	LightPurple_Choice	Background	Nail_Choice	Acorn_Choice	DarkTurquiose_Choice	Background
-Bell	LightBlue	Background	Puzzle	Acorn	DarkYellow	Background	Sawblade	Ditto
-Bell	LightBlue	Background	Puzzle	Acorn	DarkYellow	Background	Sawblade	Ditto
-Bell	LightBlue	Background	Puzzle	Acorn	DarkYellow	Background	Sawblade	Ditto
-Bell	LightBlue	Background	Puzzle	Acorn	DarkYellow	Background	Sawblade	Ditto
-Bell	LightBlue	Background	Puzzle	Acorn	DarkYellow	Background	Sawblade	Ditto
-Bell_Choice	LightBlue_Choice	Background	Puzzle_Choice	Acorn_Choice	DarkYellow_Choice	Background	Sawblade_Choice	Ditto_Choice
-LightTurquiose	Background	Rabbit	Diamond	LightBlue	Background	Puzzle	Heart	LightRed
-LightTurquiose	Background	Rabbit	Diamond	LightBlue	Background	Puzzle	Heart	LightRed
-LightTurquiose	Background	Rabbit	Diamond	LightBlue	Background	Puzzle	Heart	LightRed
-LightTurquiose	Background	Rabbit	Diamond	LightBlue	Background	Puzzle	Heart	LightRed
-LightTurquiose	Background	Rabbit	Diamond	LightBlue	Background	Puzzle	Heart	LightRed
-LightTurquiose_Choice	Background	Rabbit_Choice	Diamond_Choice	LightBlue_Choice	Background	Puzzle_Choice	Heart_Choice	LightRed_Choice
-Bar	Diamond	DarkGray	Background	Dodecagon	Tie	DarkTurquiose	Background	Sawblade
-Bar	Diamond	DarkGray	Background	Dodecagon	Tie	DarkTurquiose	Background	Sawblade
-Bar	Diamond	DarkGray	Background	Dodecagon	Tie	DarkTurquiose	Background	Sawblade
-Bar	Diamond	DarkGray	Background	Dodecagon	Tie	DarkTurquiose	Background	Sawblade
-Bar	Diamond	DarkGray	Background	Dodecagon	Tie	DarkTurquiose	Background	Sawblade
-Bar_Choice	Diamond_Choice	DarkGray_Choice	Background	Dodecagon_Choice	Tie_Choice	DarkTurquiose_Choice	Background	Sawblade_Choice
-Background	Spade	Heart	DarkYellow	Background	Lock	House	LightPurple	Background
-Background	Spade	Heart	DarkYellow	Background	Lock	House	LightPurple	Background
-Background	Spade	Heart	DarkYellow	Background	Lock	House	LightPurple	Background
-Background	Spade	Heart	DarkYellow	Background	Lock	House	LightPurple	Background
-Background	Spade	Heart	DarkYellow	Background	Lock	House	LightPurple	Background
-Background	Spade_Choice	Heart_Choice	DarkYellow_Choice	Background	Lock_Choice	House_Choice	LightPurple_Choice	Background
-Chevron	LightGray	Background	Venn	House	DarkGreen	Background	UpArrow	Stickyhand
-Chevron	LightGray	Background	Venn	House	DarkGreen	Background	UpArrow	Stickyhand
-Chevron	LightGray	Background	Venn	House	DarkGreen	Background	UpArrow	Stickyhand
-Chevron	LightGray	Background	Venn	House	DarkGreen	Background	UpArrow	Stickyhand
-Chevron	LightGray	Background	Venn	House	DarkGreen	Background	UpArrow	Stickyhand
-Chevron_Choice	LightGray_Choice	Background	Venn_Choice	House_Choice	DarkGreen_Choice	Background	UpArrow_Choice	Stickyhand_Choice
-DarkRed	Background	Dodecagon	Pacman	LightPurple	Background	Hourglass	House	LightGray
-DarkRed	Background	Dodecagon	Pacman	LightPurple	Background	Hourglass	House	LightGray
-DarkRed	Background	Dodecagon	Pacman	LightPurple	Background	Hourglass	House	LightGray
-DarkRed	Background	Dodecagon	Pacman	LightPurple	Background	Hourglass	House	LightGray
-DarkRed	Background	Dodecagon	Pacman	LightPurple	Background	Hourglass	House	LightGray
-DarkRed_Choice	Background	Dodecagon_Choice	Pacman_Choice	LightPurple_Choice	Background	Hourglass_Choice	House_Choice	LightGray_Choice
-Spade	Tie	LightRed	Background	Lock	Acorn	LightGreen	Background	Rabbit
-Spade	Tie	LightRed	Background	Lock	Acorn	LightGreen	Background	Rabbit
-Spade	Tie	LightRed	Background	Lock	Acorn	LightGreen	Background	Rabbit
-Spade	Tie	LightRed	Background	Lock	Acorn	LightGreen	Background	Rabbit
-Spade	Tie	LightRed	Background	Lock	Acorn	LightGreen	Background	Rabbit
-Spade_Choice	Tie_Choice	LightRed_Choice	Background	Lock_Choice	Acorn_Choice	LightGreen_Choice	Background	Rabbit_Choice
-Background	UpArrow	Stickyhand	LightGray	Background	Venn	Stickyhand	DarkGreen	Background
-Background	UpArrow	Stickyhand	LightGray	Background	Venn	Stickyhand	DarkGreen	Background
-Background	UpArrow	Stickyhand	LightGray	Background	Venn	Stickyhand	DarkGreen	Background
-Background	UpArrow	Stickyhand	LightGray	Background	Venn	Stickyhand	DarkGreen	Background
-Background	UpArrow	Stickyhand	LightGray	Background	Venn	Stickyhand	DarkGreen	Background
-Background	UpArrow_Choice	Stickyhand_Choice	LightGray_Choice	Background	Venn_Choice	Stickyhand_Choice	DarkGreen_Choice	Background
-Acorn	LightPurple	Background	Hourglass	Stickyhand	DarkPurple	Background	Rabbit	Star
-Acorn	LightPurple	Background	Hourglass	Stickyhand	DarkPurple	Background	Rabbit	Star
-Acorn	LightPurple	Background	Hourglass	Stickyhand	DarkPurple	Background	Rabbit	Star
-Acorn	LightPurple	Background	Hourglass	Stickyhand	DarkPurple	Background	Rabbit	Star
-Acorn	LightPurple	Background	Hourglass	Stickyhand	DarkPurple	Background	Rabbit	Star
-Acorn_Choice	LightPurple_Choice	Background	Hourglass_Choice	Stickyhand_Choice	DarkPurple_Choice	Background	Rabbit_Choice	Star_Choice
-LightBlue	Background	Bar	House	LightYellow	Background	Diamond	LeftArrow	DarkTurquiose
-LightBlue	Background	Bar	House	LightYellow	Background	Diamond	LeftArrow	DarkTurquiose
-LightBlue	Background	Bar	House	LightYellow	Background	Diamond	LeftArrow	DarkTurquiose
-LightBlue	Background	Bar	House	LightYellow	Background	Diamond	LeftArrow	DarkTurquiose
-LightBlue	Background	Bar	House	LightYellow	Background	Diamond	LeftArrow	DarkTurquiose
-LightBlue_Choice	Background	Bar_Choice	House_Choice	LightYellow_Choice	Background	Diamond_Choice	LeftArrow_Choice	DarkTurquiose_Choice
-Spike	Stickyhand	DarkBlue	Background	Sawblade	Stickyhand	LightRed	Background	Venn
-Spike	Stickyhand	DarkBlue	Background	Sawblade	Stickyhand	LightRed	Background	Venn
-Spike	Stickyhand	DarkBlue	Background	Sawblade	Stickyhand	LightRed	Background	Venn
-Spike	Stickyhand	DarkBlue	Background	Sawblade	Stickyhand	LightRed	Background	Venn
-Spike	Stickyhand	DarkBlue	Background	Sawblade	Stickyhand	LightRed	Background	Venn
-Spike_Choice	Stickyhand_Choice	DarkBlue_Choice	Background	Sawblade_Choice	Stickyhand_Choice	LightRed_Choice	Background	Venn_Choice
-Background	Bar	Pacman	LightRed	Background	UpArrow	Tie	LightTurquiose	Background
-Background	Bar	Pacman	LightRed	Background	UpArrow	Tie	LightTurquiose	Background
-Background	Bar	Pacman	LightRed	Background	UpArrow	Tie	LightTurquiose	Background
-Background	Bar	Pacman	LightRed	Background	UpArrow	Tie	LightTurquiose	Background
-Background	Bar	Pacman	LightRed	Background	UpArrow	Tie	LightTurquiose	Background
-Background	Bar_Choice	Pacman_Choice	LightRed_Choice	Background	UpArrow_Choice	Tie_Choice	LightTurquiose_Choice	Background
-Pacman	DarkBlue	Background	Bar	Tie	DarkGray	Background	Spike	Heart
-Pacman	DarkBlue	Background	Bar	Tie	DarkGray	Background	Spike	Heart
-Pacman	DarkBlue	Background	Bar	Tie	DarkGray	Background	Spike	Heart
-Pacman	DarkBlue	Background	Bar	Tie	DarkGray	Background	Spike	Heart
-Pacman	DarkBlue	Background	Bar	Tie	DarkGray	Background	Spike	Heart
-Pacman_Choice	DarkBlue_Choice	Background	Bar_Choice	Tie_Choice	DarkGray_Choice	Background	Spike_Choice	Heart_Choice
-LightGreen	Background	Hat	Bell	DarkGray	Background	Hat	Diamond	DarkGray
-LightGreen	Background	Hat	Bell	DarkGray	Background	Hat	Diamond	DarkGray
-LightGreen	Background	Hat	Bell	DarkGray	Background	Hat	Diamond	DarkGray
-LightGreen	Background	Hat	Bell	DarkGray	Background	Hat	Diamond	DarkGray
-LightGreen	Background	Hat	Bell	DarkGray	Background	Hat	Diamond	DarkGray
-LightGreen_Choice	Background	Hat_Choice	Bell_Choice	DarkGray_Choice	Background	Hat_Choice	Diamond_Choice	DarkGray_Choice
-Sawblade	Star	LightBlue	Background	Spike	LeftArrow	DarkRed	Background	Dodecagon
-Sawblade	Star	LightBlue	Background	Spike	LeftArrow	DarkRed	Background	Dodecagon
-Sawblade	Star	LightBlue	Background	Spike	LeftArrow	DarkRed	Background	Dodecagon
-Sawblade	Star	LightBlue	Background	Spike	LeftArrow	DarkRed	Background	Dodecagon
-Sawblade	Star	LightBlue	Background	Spike	LeftArrow	DarkRed	Background	Dodecagon
-Sawblade_Choice	Star_Choice	LightBlue_Choice	Background	Spike_Choice	LeftArrow_Choice	DarkRed_Choice	Background	Dodecagon_Choice
-Background	Spike	LeftArrow	LightYellow	Background	Hourglass	Chevron	DarkRed	Background
-Background	Spike	LeftArrow	LightYellow	Background	Hourglass	Chevron	DarkRed	Background
-Background	Spike	LeftArrow	LightYellow	Background	Hourglass	Chevron	DarkRed	Background
-Background	Spike	LeftArrow	LightYellow	Background	Hourglass	Chevron	DarkRed	Background
-Background	Spike	LeftArrow	LightYellow	Background	Hourglass	Chevron	DarkRed	Background
-Background	Spike_Choice	LeftArrow_Choice	LightYellow_Choice	Background	Hourglass_Choice	Chevron_Choice	DarkRed_Choice	Background
-Diamond	LightYellow	Background	Lock	Ditto	LightGray	Background	Bar	Diamond
-Diamond	LightYellow	Background	Lock	Ditto	LightGray	Background	Bar	Diamond
-Diamond	LightYellow	Background	Lock	Ditto	LightGray	Background	Bar	Diamond
-Diamond	LightYellow	Background	Lock	Ditto	LightGray	Background	Bar	Diamond
-Diamond	LightYellow	Background	Lock	Ditto	LightGray	Background	Bar	Diamond
-Diamond_Choice	LightYellow_Choice	Background	Lock_Choice	Ditto_Choice	LightGray_Choice	Background	Bar_Choice	Diamond_Choice
-DarkGreen	Background	Lock	Star	LightTurquiose	Background	UpArrow	Star	DarkYellow
-DarkGreen	Background	Lock	Star	LightTurquiose	Background	UpArrow	Star	DarkYellow
-DarkGreen	Background	Lock	Star	LightTurquiose	Background	UpArrow	Star	DarkYellow
-DarkGreen	Background	Lock	Star	LightTurquiose	Background	UpArrow	Star	DarkYellow
-DarkGreen	Background	Lock	Star	LightTurquiose	Background	UpArrow	Star	DarkYellow
-DarkGreen_Choice	Background	Lock_Choice	Star_Choice	LightTurquiose_Choice	Background	UpArrow_Choice	Star_Choice	DarkYellow_Choice
-Hourglass	Ditto	LightGreen	Background	Rabbit	Bell	DarkYellow	Background	Lock
-Hourglass	Ditto	LightGreen	Background	Rabbit	Bell	DarkYellow	Background	Lock
-Hourglass	Ditto	LightGreen	Background	Rabbit	Bell	DarkYellow	Background	Lock
-Hourglass	Ditto	LightGreen	Background	Rabbit	Bell	DarkYellow	Background	Lock
-Hourglass	Ditto	LightGreen	Background	Rabbit	Bell	DarkYellow	Background	Lock
-Hourglass_Choice	Ditto_Choice	LightGreen_Choice	Background	Rabbit_Choice	Bell_Choice	DarkYellow_Choice	Background	Lock_Choice
-Background	Dodecagon	Tie	LightGreen	Background	Rabbit	Star	LightGreen	Background
-Background	Dodecagon	Tie	LightGreen	Background	Rabbit	Star	LightGreen	Background
-Background	Dodecagon	Tie	LightGreen	Background	Rabbit	Star	LightGreen	Background
-Background	Dodecagon	Tie	LightGreen	Background	Rabbit	Star	LightGreen	Background
-Background	Dodecagon	Tie	LightGreen	Background	Rabbit	Star	LightGreen	Background
-Background	Dodecagon_Choice	Tie_Choice	LightGreen_Choice	Background	Rabbit_Choice	Star_Choice	LightGreen_Choice	Background
-House	DarkPurple	Background	Nail	Pacman	LightPurple	Background	Spade	Pacman
-House	DarkPurple	Background	Nail	Pacman	LightPurple	Background	Spade	Pacman
-House	DarkPurple	Background	Nail	Pacman	LightPurple	Background	Spade	Pacman
-House	DarkPurple	Background	Nail	Pacman	LightPurple	Background	Spade	Pacman
-House	DarkPurple	Background	Nail	Pacman	LightPurple	Background	Spade	Pacman
-House_Choice	DarkPurple_Choice	Background	Nail_Choice	Pacman_Choice	LightPurple_Choice	Background	Spade_Choice	Pacman_Choice
-LightGray	Background	UpArrow	Acorn	DarkTurquiose	Background	Sawblade	Jellyfish	DarkRed
-LightGray	Background	UpArrow	Acorn	DarkTurquiose	Background	Sawblade	Jellyfish	DarkRed
-LightGray	Background	UpArrow	Acorn	DarkTurquiose	Background	Sawblade	Jellyfish	DarkRed
-LightGray	Background	UpArrow	Acorn	DarkTurquiose	Background	Sawblade	Jellyfish	DarkRed
-LightGray	Background	UpArrow	Acorn	DarkTurquiose	Background	Sawblade	Jellyfish	DarkRed
-LightGray_Choice	Background	UpArrow_Choice	Acorn_Choice	DarkTurquiose_Choice	Background	Sawblade_Choice	Jellyfish_Choice	DarkRed_Choice
-Hat	LeftArrow	LightPurple	Background	Puzzle	Pacman	DarkGray	Background	UpArrow
-Hat	LeftArrow	LightPurple	Background	Puzzle	Pacman	DarkGray	Background	UpArrow
-Hat	LeftArrow	LightPurple	Background	Puzzle	Pacman	DarkGray	Background	UpArrow
-Hat	LeftArrow	LightPurple	Background	Puzzle	Pacman	DarkGray	Background	UpArrow
-Hat	LeftArrow	LightPurple	Background	Puzzle	Pacman	DarkGray	Background	UpArrow
-Hat_Choice	LeftArrow_Choice	LightPurple_Choice	Background	Puzzle_Choice	Pacman_Choice	DarkGray_Choice	Background	UpArrow_Choice
-Background	Rabbit	Chevron	DarkRed	Background	Spike	Ditto	DarkYellow	Background
-Background	Rabbit	Chevron	DarkRed	Background	Spike	Ditto	DarkYellow	Background
-Background	Rabbit	Chevron	DarkRed	Background	Spike	Ditto	DarkYellow	Background
-Background	Rabbit	Chevron	DarkRed	Background	Spike	Ditto	DarkYellow	Background
-Background	Rabbit	Chevron	DarkRed	Background	Spike	Ditto	DarkYellow	Background
-Background	Rabbit_Choice	Chevron_Choice	DarkRed_Choice	Background	Spike_Choice	Ditto_Choice	DarkYellow_Choice	Background
-Background	Background	Background	Background	Background	Background	Background	Background	Background
-Background	Background	Background	Background	Background	Background	Background	Background	Background
-Background	Background	Background	Background	Background	Background	Background	Background	Background
-Background	Background	Background	Background	Background	Background	Background	Background	Background
-Background	Background	Background	Background	Background	Background	Background	Background	Background
-Background	Background	Background	Background	Background	Background	Background	Background	Background
-Background	Background	Background	Background	Background	Background	Background	Background	Background
-Background	Background	Background	Background	Background	Background	Background	Background	Background
-Background	Background	Background	Background	Background	Background	Background	Background	Background
-Background	Background	Background	Background	Background	Background	Background	Background	Background
+4	 5	 6	 7	 8	10	11	12
+Jellyfish	LightTurquiose	Background	Sawblade	Star	Background	Hat	LeftArrow
+Jellyfish	LightTurquiose	Background	Sawblade	Star	Background	Hat	LeftArrow
+Jellyfish	LightTurquiose	Background	Sawblade	Star	Background	Hat	LeftArrow
+Jellyfish	LightTurquiose	Background	Sawblade	Star	Background	Hat	LeftArrow
+Jellyfish	LightTurquiose	Background	Sawblade	Star	Background	Hat	LeftArrow
+Jellyfish_Choice	LightTurquiose_Choice	Background	Sawblade_Choice	Star_Choice	Background	Hat_Choice	LeftArrow_Choice
+DarkTurquiose	Background	Nail	Ditto	LightGray	Spike	Acorn	LightBlue
+DarkTurquiose	Background	Nail	Ditto	LightGray	Spike	Acorn	LightBlue
+DarkTurquiose	Background	Nail	Ditto	LightGray	Spike	Acorn	LightBlue
+DarkTurquiose	Background	Nail	Ditto	LightGray	Spike	Acorn	LightBlue
+DarkTurquiose	Background	Nail	Ditto	LightGray	Spike	Acorn	LightBlue
+DarkTurquiose_Choice	Background	Nail_Choice	Ditto_Choice	LightGray_Choice	Spike_Choice	Acorn_Choice	LightBlue_Choice
+Dodecagon	Heart	DarkYellow	Background	Diamond	LightYellow	Background	Puzzle
+Dodecagon	Heart	DarkYellow	Background	Diamond	LightYellow	Background	Puzzle
+Dodecagon	Heart	DarkYellow	Background	Diamond	LightYellow	Background	Puzzle
+Dodecagon	Heart	DarkYellow	Background	Diamond	LightYellow	Background	Puzzle
+Dodecagon	Heart	DarkYellow	Background	Diamond	LightYellow	Background	Puzzle
+Dodecagon_Choice	Heart_Choice	DarkYellow_Choice	Background	Diamond_Choice	LightYellow_Choice	Background	Puzzle_Choice
+Background	Nail	Bell	LightBlue	Background	Bell	DarkGray	Background
+Background	Nail	Bell	LightBlue	Background	Bell	DarkGray	Background
+Background	Nail	Bell	LightBlue	Background	Bell	DarkGray	Background
+Background	Nail	Bell	LightBlue	Background	Bell	DarkGray	Background
+Background	Nail	Bell	LightBlue	Background	Bell	DarkGray	Background
+Background	Nail_Choice	Bell_Choice	LightBlue_Choice	Background	Bell_Choice	DarkGray_Choice	Background
+Heart	DarkYellow	Background	Dodecagon	Bell	Background	Venn	Tie
+Heart	DarkYellow	Background	Dodecagon	Bell	Background	Venn	Tie
+Heart	DarkYellow	Background	Dodecagon	Bell	Background	Venn	Tie
+Heart	DarkYellow	Background	Dodecagon	Bell	Background	Venn	Tie
+Heart	DarkYellow	Background	Dodecagon	Bell	Background	Venn	Tie
+Heart_Choice	DarkYellow_Choice	Background	Dodecagon_Choice	Bell_Choice	Background	Venn_Choice	Tie_Choice
+DarkYellow	Background	Sawblade	Stickyhand	DarkGreen	Nail	Bell	DarkPurple
+DarkYellow	Background	Sawblade	Stickyhand	DarkGreen	Nail	Bell	DarkPurple
+DarkYellow	Background	Sawblade	Stickyhand	DarkGreen	Nail	Bell	DarkPurple
+DarkYellow	Background	Sawblade	Stickyhand	DarkGreen	Nail	Bell	DarkPurple
+DarkYellow	Background	Sawblade	Stickyhand	DarkGreen	Nail	Bell	DarkPurple
+DarkYellow_Choice	Background	Sawblade_Choice	Stickyhand_Choice	DarkGreen_Choice	Nail_Choice	Bell_Choice	DarkPurple_Choice
+Diamond	Chevron	DarkTurquiose	Background	UpArrow	LightBlue	Background	Hat
+Diamond	Chevron	DarkTurquiose	Background	UpArrow	LightBlue	Background	Hat
+Diamond	Chevron	DarkTurquiose	Background	UpArrow	LightBlue	Background	Hat
+Diamond	Chevron	DarkTurquiose	Background	UpArrow	LightBlue	Background	Hat
+Diamond	Chevron	DarkTurquiose	Background	UpArrow	LightBlue	Background	Hat
+Diamond_Choice	Chevron_Choice	DarkTurquiose_Choice	Background	UpArrow_Choice	LightBlue_Choice	Background	Hat_Choice
+Background	Diamond	Gem	DarkTurquiose	Background	Jellyfish	DarkPurple	Background
+Background	Diamond	Gem	DarkTurquiose	Background	Jellyfish	DarkPurple	Background
+Background	Diamond	Gem	DarkTurquiose	Background	Jellyfish	DarkPurple	Background
+Background	Diamond	Gem	DarkTurquiose	Background	Jellyfish	DarkPurple	Background
+Background	Diamond	Gem	DarkTurquiose	Background	Jellyfish	DarkPurple	Background
+Background	Diamond_Choice	Gem_Choice	DarkTurquiose_Choice	Background	Jellyfish_Choice	DarkPurple_Choice	Background
+Crowbar	LightRed	Background	Rabbit	Gem	Background	Puzzle	Acorn
+Crowbar	LightRed	Background	Rabbit	Gem	Background	Puzzle	Acorn
+Crowbar	LightRed	Background	Rabbit	Gem	Background	Puzzle	Acorn
+Crowbar	LightRed	Background	Rabbit	Gem	Background	Puzzle	Acorn
+Crowbar	LightRed	Background	Rabbit	Gem	Background	Puzzle	Acorn
+Crowbar_Choice	LightRed_Choice	Background	Rabbit_Choice	Gem_Choice	Background	Puzzle_Choice	Acorn_Choice
+LightPurple	Background	Diamond	Crowbar	DarkRed	Spade	Stickyhand	DarkBlue
+LightPurple	Background	Diamond	Crowbar	DarkRed	Spade	Stickyhand	DarkBlue
+LightPurple	Background	Diamond	Crowbar	DarkRed	Spade	Stickyhand	DarkBlue
+LightPurple	Background	Diamond	Crowbar	DarkRed	Spade	Stickyhand	DarkBlue
+LightPurple	Background	Diamond	Crowbar	DarkRed	Spade	Stickyhand	DarkBlue
+LightPurple_Choice	Background	Diamond_Choice	Crowbar_Choice	DarkRed_Choice	Spade_Choice	Stickyhand_Choice	DarkBlue_Choice
+Lock	Crowbar	DarkGreen	Background	Bar	DarkBlue	Background	Spade
+Lock	Crowbar	DarkGreen	Background	Bar	DarkBlue	Background	Spade
+Lock	Crowbar	DarkGreen	Background	Bar	DarkBlue	Background	Spade
+Lock	Crowbar	DarkGreen	Background	Bar	DarkBlue	Background	Spade
+Lock	Crowbar	DarkGreen	Background	Bar	DarkBlue	Background	Spade
+Lock_Choice	Crowbar_Choice	DarkGreen_Choice	Background	Bar_Choice	DarkBlue_Choice	Background	Spade_Choice
+Background	Puzzle	Star	DarkBlue	Background	Crowbar	DarkBlue	Background
+Background	Puzzle	Star	DarkBlue	Background	Crowbar	DarkBlue	Background
+Background	Puzzle	Star	DarkBlue	Background	Crowbar	DarkBlue	Background
+Background	Puzzle	Star	DarkBlue	Background	Crowbar	DarkBlue	Background
+Background	Puzzle	Star	DarkBlue	Background	Crowbar	DarkBlue	Background
+Background	Puzzle_Choice	Star_Choice	DarkBlue_Choice	Background	Crowbar_Choice	DarkBlue_Choice	Background
+Ditto	DarkRed	Background	Hat	Chevron	Background	Diamond	Chevron
+Ditto	DarkRed	Background	Hat	Chevron	Background	Diamond	Chevron
+Ditto	DarkRed	Background	Hat	Chevron	Background	Diamond	Chevron
+Ditto	DarkRed	Background	Hat	Chevron	Background	Diamond	Chevron
+Ditto	DarkRed	Background	Hat	Chevron	Background	Diamond	Chevron
+Ditto_Choice	DarkRed_Choice	Background	Hat_Choice	Chevron_Choice	Background	Diamond_Choice	Chevron_Choice
+DarkPurple	Background	Hourglass	Heart	DarkBlue	Lock	Pacman	LightYellow
+DarkPurple	Background	Hourglass	Heart	DarkBlue	Lock	Pacman	LightYellow
+DarkPurple	Background	Hourglass	Heart	DarkBlue	Lock	Pacman	LightYellow
+DarkPurple	Background	Hourglass	Heart	DarkBlue	Lock	Pacman	LightYellow
+DarkPurple	Background	Hourglass	Heart	DarkBlue	Lock	Pacman	LightYellow
+DarkPurple_Choice	Background	Hourglass_Choice	Heart_Choice	DarkBlue_Choice	Lock_Choice	Pacman_Choice	LightYellow_Choice
+UpArrow	Bell	LightYellow	Background	Spade	LightGray	Background	Spike
+UpArrow	Bell	LightYellow	Background	Spade	LightGray	Background	Spike
+UpArrow	Bell	LightYellow	Background	Spade	LightGray	Background	Spike
+UpArrow	Bell	LightYellow	Background	Spade	LightGray	Background	Spike
+UpArrow	Bell	LightYellow	Background	Spade	LightGray	Background	Spike
+UpArrow_Choice	Bell_Choice	LightYellow_Choice	Background	Spade_Choice	LightGray_Choice	Background	Spike_Choice
+Background	Lock	Jellyfish	DarkPurple	Background	LeftArrow	LightGray	Background
+Background	Lock	Jellyfish	DarkPurple	Background	LeftArrow	LightGray	Background
+Background	Lock	Jellyfish	DarkPurple	Background	LeftArrow	LightGray	Background
+Background	Lock	Jellyfish	DarkPurple	Background	LeftArrow	LightGray	Background
+Background	Lock	Jellyfish	DarkPurple	Background	LeftArrow	LightGray	Background
+Background	Lock_Choice	Jellyfish_Choice	DarkPurple_Choice	Background	LeftArrow_Choice	LightGray_Choice	Background
+Star	DarkGray	Background	Diamond	Heart	Background	Nail	House
+Star	DarkGray	Background	Diamond	Heart	Background	Nail	House
+Star	DarkGray	Background	Diamond	Heart	Background	Nail	House
+Star	DarkGray	Background	Diamond	Heart	Background	Nail	House
+Star	DarkGray	Background	Diamond	Heart	Background	Nail	House
+Star_Choice	DarkGray_Choice	Background	Diamond_Choice	Heart_Choice	Background	Nail_Choice	House_Choice
+DarkGray	Background	Spike	Tie	DarkPurple	Rabbit	Crowbar	DarkGreen
+DarkGray	Background	Spike	Tie	DarkPurple	Rabbit	Crowbar	DarkGreen
+DarkGray	Background	Spike	Tie	DarkPurple	Rabbit	Crowbar	DarkGreen
+DarkGray	Background	Spike	Tie	DarkPurple	Rabbit	Crowbar	DarkGreen
+DarkGray	Background	Spike	Tie	DarkPurple	Rabbit	Crowbar	DarkGreen
+DarkGray_Choice	Background	Spike_Choice	Tie_Choice	DarkPurple_Choice	Rabbit_Choice	Crowbar_Choice	DarkGreen_Choice
+Rabbit	Acorn	LightTurquiose	Background	Hat	LightTurquiose	Background	Nail
+Rabbit	Acorn	LightTurquiose	Background	Hat	LightTurquiose	Background	Nail
+Rabbit	Acorn	LightTurquiose	Background	Hat	LightTurquiose	Background	Nail
+Rabbit	Acorn	LightTurquiose	Background	Hat	LightTurquiose	Background	Nail
+Rabbit	Acorn	LightTurquiose	Background	Hat	LightTurquiose	Background	Nail
+Rabbit_Choice	Acorn_Choice	LightTurquiose_Choice	Background	Hat_Choice	LightTurquiose_Choice	Background	Nail_Choice
+Background	Hat	Crowbar	DarkGray	Background	Heart	LightRed	Background
+Background	Hat	Crowbar	DarkGray	Background	Heart	LightRed	Background
+Background	Hat	Crowbar	DarkGray	Background	Heart	LightRed	Background
+Background	Hat	Crowbar	DarkGray	Background	Heart	LightRed	Background
+Background	Hat	Crowbar	DarkGray	Background	Heart	LightRed	Background
+Background	Hat_Choice	Crowbar_Choice	DarkGray_Choice	Background	Heart_Choice	LightRed_Choice	Background
+LeftArrow	DarkTurquiose	Background	Spike	Crowbar	Background	Hourglass	Bell
+LeftArrow	DarkTurquiose	Background	Spike	Crowbar	Background	Hourglass	Bell
+LeftArrow	DarkTurquiose	Background	Spike	Crowbar	Background	Hourglass	Bell
+LeftArrow	DarkTurquiose	Background	Spike	Crowbar	Background	Hourglass	Bell
+LeftArrow	DarkTurquiose	Background	Spike	Crowbar	Background	Hourglass	Bell
+LeftArrow_Choice	DarkTurquiose_Choice	Background	Spike_Choice	Crowbar_Choice	Background	Hourglass_Choice	Bell_Choice
+LightYellow	Background	Puzzle	Jellyfish	LightGreen	Dodecagon	Ditto	LightPurple
+LightYellow	Background	Puzzle	Jellyfish	LightGreen	Dodecagon	Ditto	LightPurple
+LightYellow	Background	Puzzle	Jellyfish	LightGreen	Dodecagon	Ditto	LightPurple
+LightYellow	Background	Puzzle	Jellyfish	LightGreen	Dodecagon	Ditto	LightPurple
+LightYellow	Background	Puzzle	Jellyfish	LightGreen	Dodecagon	Ditto	LightPurple
+LightYellow_Choice	Background	Puzzle_Choice	Jellyfish_Choice	LightGreen_Choice	Dodecagon_Choice	Ditto_Choice	LightPurple_Choice
+Puzzle	House	DarkPurple	Background	Hourglass	DarkPurple	Background	Hourglass
+Puzzle	House	DarkPurple	Background	Hourglass	DarkPurple	Background	Hourglass
+Puzzle	House	DarkPurple	Background	Hourglass	DarkPurple	Background	Hourglass
+Puzzle	House	DarkPurple	Background	Hourglass	DarkPurple	Background	Hourglass
+Puzzle	House	DarkPurple	Background	Hourglass	DarkPurple	Background	Hourglass
+Puzzle_Choice	House_Choice	DarkPurple_Choice	Background	Hourglass_Choice	DarkPurple_Choice	Background	Hourglass_Choice
+Background	Hourglass	Acorn	DarkGreen	Background	Pacman	LightBlue	Background
+Background	Hourglass	Acorn	DarkGreen	Background	Pacman	LightBlue	Background
+Background	Hourglass	Acorn	DarkGreen	Background	Pacman	LightBlue	Background
+Background	Hourglass	Acorn	DarkGreen	Background	Pacman	LightBlue	Background
+Background	Hourglass	Acorn	DarkGreen	Background	Pacman	LightBlue	Background
+Background	Hourglass_Choice	Acorn_Choice	DarkGreen_Choice	Background	Pacman_Choice	LightBlue_Choice	Background
+Tie	DarkGreen	Background	Spade	Jellyfish	Background	Lock	Crowbar
+Tie	DarkGreen	Background	Spade	Jellyfish	Background	Lock	Crowbar
+Tie	DarkGreen	Background	Spade	Jellyfish	Background	Lock	Crowbar
+Tie	DarkGreen	Background	Spade	Jellyfish	Background	Lock	Crowbar
+Tie	DarkGreen	Background	Spade	Jellyfish	Background	Lock	Crowbar
+Tie_Choice	DarkGreen_Choice	Background	Spade_Choice	Jellyfish_Choice	Background	Lock_Choice	Crowbar_Choice
+LightRed	Background	Spade	LeftArrow	DarkYellow	Venn	Tie	LightGreen
+LightRed	Background	Spade	LeftArrow	DarkYellow	Venn	Tie	LightGreen
+LightRed	Background	Spade	LeftArrow	DarkYellow	Venn	Tie	LightGreen
+LightRed	Background	Spade	LeftArrow	DarkYellow	Venn	Tie	LightGreen
+LightRed	Background	Spade	LeftArrow	DarkYellow	Venn	Tie	LightGreen
+LightRed_Choice	Background	Spade_Choice	LeftArrow_Choice	DarkYellow_Choice	Venn_Choice	Tie_Choice	LightGreen_Choice
+Nail	Jellyfish	LightGray	Background	Venn	LightPurple	Background	Bar
+Nail	Jellyfish	LightGray	Background	Venn	LightPurple	Background	Bar
+Nail	Jellyfish	LightGray	Background	Venn	LightPurple	Background	Bar
+Nail	Jellyfish	LightGray	Background	Venn	LightPurple	Background	Bar
+Nail	Jellyfish	LightGray	Background	Venn	LightPurple	Background	Bar
+Nail_Choice	Jellyfish_Choice	LightGray_Choice	Background	Venn_Choice	LightPurple_Choice	Background	Bar_Choice
+Background	Sawblade	Ditto	LightTurquiose	Background	Gem	LightYellow	Background
+Background	Sawblade	Ditto	LightTurquiose	Background	Gem	LightYellow	Background
+Background	Sawblade	Ditto	LightTurquiose	Background	Gem	LightYellow	Background
+Background	Sawblade	Ditto	LightTurquiose	Background	Gem	LightYellow	Background
+Background	Sawblade	Ditto	LightTurquiose	Background	Gem	LightYellow	Background
+Background	Sawblade_Choice	Ditto_Choice	LightTurquiose_Choice	Background	Gem_Choice	LightYellow_Choice	Background
+Stickyhand	LightGreen	Background	UpArrow	LeftArrow	Background	Dodecagon	Jellyfish
+Stickyhand	LightGreen	Background	UpArrow	LeftArrow	Background	Dodecagon	Jellyfish
+Stickyhand	LightGreen	Background	UpArrow	LeftArrow	Background	Dodecagon	Jellyfish
+Stickyhand	LightGreen	Background	UpArrow	LeftArrow	Background	Dodecagon	Jellyfish
+Stickyhand	LightGreen	Background	UpArrow	LeftArrow	Background	Dodecagon	Jellyfish
+Stickyhand_Choice	LightGreen_Choice	Background	UpArrow_Choice	LeftArrow_Choice	Background	Dodecagon_Choice	Jellyfish_Choice
+DarkBlue	Background	Venn	Chevron	LightRed	Bar	Chevron	LightTurquiose
+DarkBlue	Background	Venn	Chevron	LightRed	Bar	Chevron	LightTurquiose
+DarkBlue	Background	Venn	Chevron	LightRed	Bar	Chevron	LightTurquiose
+DarkBlue	Background	Venn	Chevron	LightRed	Bar	Chevron	LightTurquiose
+DarkBlue	Background	Venn	Chevron	LightRed	Bar	Chevron	LightTurquiose
+DarkBlue_Choice	Background	Venn_Choice	Chevron_Choice	LightRed_Choice	Bar_Choice	Chevron_Choice	LightTurquiose_Choice
+Venn	Pacman	DarkRed	Background	Nail	DarkGreen	Background	Diamond
+Venn	Pacman	DarkRed	Background	Nail	DarkGreen	Background	Diamond
+Venn	Pacman	DarkRed	Background	Nail	DarkGreen	Background	Diamond
+Venn	Pacman	DarkRed	Background	Nail	DarkGreen	Background	Diamond
+Venn	Pacman	DarkRed	Background	Nail	DarkGreen	Background	Diamond
+Venn_Choice	Pacman_Choice	DarkRed_Choice	Background	Nail_Choice	DarkGreen_Choice	Background	Diamond_Choice
+Background	Venn	House	LightPurple	Background	Acorn	DarkTurquiose	Background
+Background	Venn	House	LightPurple	Background	Acorn	DarkTurquiose	Background
+Background	Venn	House	LightPurple	Background	Acorn	DarkTurquiose	Background
+Background	Venn	House	LightPurple	Background	Acorn	DarkTurquiose	Background
+Background	Venn	House	LightPurple	Background	Acorn	DarkTurquiose	Background
+Background	Venn_Choice	House_Choice	LightPurple_Choice	Background	Acorn_Choice	DarkTurquiose_Choice	Background
+Bell	LightBlue	Background	Puzzle	Acorn	Background	Sawblade	Ditto
+Bell	LightBlue	Background	Puzzle	Acorn	Background	Sawblade	Ditto
+Bell	LightBlue	Background	Puzzle	Acorn	Background	Sawblade	Ditto
+Bell	LightBlue	Background	Puzzle	Acorn	Background	Sawblade	Ditto
+Bell	LightBlue	Background	Puzzle	Acorn	Background	Sawblade	Ditto
+Bell_Choice	LightBlue_Choice	Background	Puzzle_Choice	Acorn_Choice	Background	Sawblade_Choice	Ditto_Choice
+LightTurquiose	Background	Rabbit	Gem	LightBlue	Puzzle	Heart	LightRed
+LightTurquiose	Background	Rabbit	Gem	LightBlue	Puzzle	Heart	LightRed
+LightTurquiose	Background	Rabbit	Gem	LightBlue	Puzzle	Heart	LightRed
+LightTurquiose	Background	Rabbit	Gem	LightBlue	Puzzle	Heart	LightRed
+LightTurquiose	Background	Rabbit	Gem	LightBlue	Puzzle	Heart	LightRed
+LightTurquiose_Choice	Background	Rabbit_Choice	Gem_Choice	LightBlue_Choice	Puzzle_Choice	Heart_Choice	LightRed_Choice
+Bar	Gem	DarkGray	Background	Dodecagon	DarkTurquiose	Background	Sawblade
+Bar	Gem	DarkGray	Background	Dodecagon	DarkTurquiose	Background	Sawblade
+Bar	Gem	DarkGray	Background	Dodecagon	DarkTurquiose	Background	Sawblade
+Bar	Gem	DarkGray	Background	Dodecagon	DarkTurquiose	Background	Sawblade
+Bar	Gem	DarkGray	Background	Dodecagon	DarkTurquiose	Background	Sawblade
+Bar_Choice	Gem_Choice	DarkGray_Choice	Background	Dodecagon_Choice	DarkTurquiose_Choice	Background	Sawblade_Choice
+Background	Spade	Heart	DarkYellow	Background	House	LightPurple	Background
+Background	Spade	Heart	DarkYellow	Background	House	LightPurple	Background
+Background	Spade	Heart	DarkYellow	Background	House	LightPurple	Background
+Background	Spade	Heart	DarkYellow	Background	House	LightPurple	Background
+Background	Spade	Heart	DarkYellow	Background	House	LightPurple	Background
+Background	Spade_Choice	Heart_Choice	DarkYellow_Choice	Background	House_Choice	LightPurple_Choice	Background
+Chevron	LightGray	Background	Venn	House	Background	UpArrow	Stickyhand
+Chevron	LightGray	Background	Venn	House	Background	UpArrow	Stickyhand
+Chevron	LightGray	Background	Venn	House	Background	UpArrow	Stickyhand
+Chevron	LightGray	Background	Venn	House	Background	UpArrow	Stickyhand
+Chevron	LightGray	Background	Venn	House	Background	UpArrow	Stickyhand
+Chevron_Choice	LightGray_Choice	Background	Venn_Choice	House_Choice	Background	UpArrow_Choice	Stickyhand_Choice
+DarkRed	Background	Dodecagon	Pacman	LightPurple	Hourglass	House	LightGray
+DarkRed	Background	Dodecagon	Pacman	LightPurple	Hourglass	House	LightGray
+DarkRed	Background	Dodecagon	Pacman	LightPurple	Hourglass	House	LightGray
+DarkRed	Background	Dodecagon	Pacman	LightPurple	Hourglass	House	LightGray
+DarkRed	Background	Dodecagon	Pacman	LightPurple	Hourglass	House	LightGray
+DarkRed_Choice	Background	Dodecagon_Choice	Pacman_Choice	LightPurple_Choice	Hourglass_Choice	House_Choice	LightGray_Choice
+Spade	Tie	LightRed	Background	Lock	LightGreen	Background	Rabbit
+Spade	Tie	LightRed	Background	Lock	LightGreen	Background	Rabbit
+Spade	Tie	LightRed	Background	Lock	LightGreen	Background	Rabbit
+Spade	Tie	LightRed	Background	Lock	LightGreen	Background	Rabbit
+Spade	Tie	LightRed	Background	Lock	LightGreen	Background	Rabbit
+Spade_Choice	Tie_Choice	LightRed_Choice	Background	Lock_Choice	LightGreen_Choice	Background	Rabbit_Choice
+Background	UpArrow	Stickyhand	LightGray	Background	Stickyhand	DarkGreen	Background
+Background	UpArrow	Stickyhand	LightGray	Background	Stickyhand	DarkGreen	Background
+Background	UpArrow	Stickyhand	LightGray	Background	Stickyhand	DarkGreen	Background
+Background	UpArrow	Stickyhand	LightGray	Background	Stickyhand	DarkGreen	Background
+Background	UpArrow	Stickyhand	LightGray	Background	Stickyhand	DarkGreen	Background
+Background	UpArrow_Choice	Stickyhand_Choice	LightGray_Choice	Background	Stickyhand_Choice	DarkGreen_Choice	Background
+Acorn	LightPurple	Background	Hourglass	Stickyhand	Background	Rabbit	Star
+Acorn	LightPurple	Background	Hourglass	Stickyhand	Background	Rabbit	Star
+Acorn	LightPurple	Background	Hourglass	Stickyhand	Background	Rabbit	Star
+Acorn	LightPurple	Background	Hourglass	Stickyhand	Background	Rabbit	Star
+Acorn	LightPurple	Background	Hourglass	Stickyhand	Background	Rabbit	Star
+Acorn_Choice	LightPurple_Choice	Background	Hourglass_Choice	Stickyhand_Choice	Background	Rabbit_Choice	Star_Choice
+LightBlue	Background	Bar	House	LightYellow	Diamond	LeftArrow	DarkTurquiose
+LightBlue	Background	Bar	House	LightYellow	Diamond	LeftArrow	DarkTurquiose
+LightBlue	Background	Bar	House	LightYellow	Diamond	LeftArrow	DarkTurquiose
+LightBlue	Background	Bar	House	LightYellow	Diamond	LeftArrow	DarkTurquiose
+LightBlue	Background	Bar	House	LightYellow	Diamond	LeftArrow	DarkTurquiose
+LightBlue_Choice	Background	Bar_Choice	House_Choice	LightYellow_Choice	Diamond_Choice	LeftArrow_Choice	DarkTurquiose_Choice
+Spike	Stickyhand	DarkBlue	Background	Sawblade	LightRed	Background	Venn
+Spike	Stickyhand	DarkBlue	Background	Sawblade	LightRed	Background	Venn
+Spike	Stickyhand	DarkBlue	Background	Sawblade	LightRed	Background	Venn
+Spike	Stickyhand	DarkBlue	Background	Sawblade	LightRed	Background	Venn
+Spike	Stickyhand	DarkBlue	Background	Sawblade	LightRed	Background	Venn
+Spike_Choice	Stickyhand_Choice	DarkBlue_Choice	Background	Sawblade_Choice	LightRed_Choice	Background	Venn_Choice
+Background	Bar	Pacman	LightRed	Background	Tie	LightTurquiose	Background
+Background	Bar	Pacman	LightRed	Background	Tie	LightTurquiose	Background
+Background	Bar	Pacman	LightRed	Background	Tie	LightTurquiose	Background
+Background	Bar	Pacman	LightRed	Background	Tie	LightTurquiose	Background
+Background	Bar	Pacman	LightRed	Background	Tie	LightTurquiose	Background
+Background	Bar_Choice	Pacman_Choice	LightRed_Choice	Background	Tie_Choice	LightTurquiose_Choice	Background
+Pacman	DarkBlue	Background	Bar	Tie	Background	Spike	Heart
+Pacman	DarkBlue	Background	Bar	Tie	Background	Spike	Heart
+Pacman	DarkBlue	Background	Bar	Tie	Background	Spike	Heart
+Pacman	DarkBlue	Background	Bar	Tie	Background	Spike	Heart
+Pacman	DarkBlue	Background	Bar	Tie	Background	Spike	Heart
+Pacman_Choice	DarkBlue_Choice	Background	Bar_Choice	Tie_Choice	Background	Spike_Choice	Heart_Choice
+LightGreen	Background	Hat	Bell	DarkGray	Hat	Gem	DarkGray
+LightGreen	Background	Hat	Bell	DarkGray	Hat	Gem	DarkGray
+LightGreen	Background	Hat	Bell	DarkGray	Hat	Gem	DarkGray
+LightGreen	Background	Hat	Bell	DarkGray	Hat	Gem	DarkGray
+LightGreen	Background	Hat	Bell	DarkGray	Hat	Gem	DarkGray
+LightGreen_Choice	Background	Hat_Choice	Bell_Choice	DarkGray_Choice	Hat_Choice	Gem_Choice	DarkGray_Choice
+Sawblade	Star	LightBlue	Background	Spike	DarkRed	Background	Dodecagon
+Sawblade	Star	LightBlue	Background	Spike	DarkRed	Background	Dodecagon
+Sawblade	Star	LightBlue	Background	Spike	DarkRed	Background	Dodecagon
+Sawblade	Star	LightBlue	Background	Spike	DarkRed	Background	Dodecagon
+Sawblade	Star	LightBlue	Background	Spike	DarkRed	Background	Dodecagon
+Sawblade_Choice	Star_Choice	LightBlue_Choice	Background	Spike_Choice	DarkRed_Choice	Background	Dodecagon_Choice
+Background	Spike	LeftArrow	LightYellow	Background	Chevron	DarkRed	Background
+Background	Spike	LeftArrow	LightYellow	Background	Chevron	DarkRed	Background
+Background	Spike	LeftArrow	LightYellow	Background	Chevron	DarkRed	Background
+Background	Spike	LeftArrow	LightYellow	Background	Chevron	DarkRed	Background
+Background	Spike	LeftArrow	LightYellow	Background	Chevron	DarkRed	Background
+Background	Spike_Choice	LeftArrow_Choice	LightYellow_Choice	Background	Chevron_Choice	DarkRed_Choice	Background
+Gem	LightYellow	Background	Lock	Ditto	Background	Bar	Gem
+Gem	LightYellow	Background	Lock	Ditto	Background	Bar	Gem
+Gem	LightYellow	Background	Lock	Ditto	Background	Bar	Gem
+Gem	LightYellow	Background	Lock	Ditto	Background	Bar	Gem
+Gem	LightYellow	Background	Lock	Ditto	Background	Bar	Gem
+Gem_Choice	LightYellow_Choice	Background	Lock_Choice	Ditto_Choice	Background	Bar_Choice	Gem_Choice
+DarkGreen	Background	Lock	Star	LightTurquiose	UpArrow	Star	DarkYellow
+DarkGreen	Background	Lock	Star	LightTurquiose	UpArrow	Star	DarkYellow
+DarkGreen	Background	Lock	Star	LightTurquiose	UpArrow	Star	DarkYellow
+DarkGreen	Background	Lock	Star	LightTurquiose	UpArrow	Star	DarkYellow
+DarkGreen	Background	Lock	Star	LightTurquiose	UpArrow	Star	DarkYellow
+DarkGreen_Choice	Background	Lock_Choice	Star_Choice	LightTurquiose_Choice	UpArrow_Choice	Star_Choice	DarkYellow_Choice
+Hourglass	Ditto	LightGreen	Background	Rabbit	DarkYellow	Background	Lock
+Hourglass	Ditto	LightGreen	Background	Rabbit	DarkYellow	Background	Lock
+Hourglass	Ditto	LightGreen	Background	Rabbit	DarkYellow	Background	Lock
+Hourglass	Ditto	LightGreen	Background	Rabbit	DarkYellow	Background	Lock
+Hourglass	Ditto	LightGreen	Background	Rabbit	DarkYellow	Background	Lock
+Hourglass_Choice	Ditto_Choice	LightGreen_Choice	Background	Rabbit_Choice	DarkYellow_Choice	Background	Lock_Choice
+Background	Dodecagon	Tie	LightGreen	Background	Star	LightGreen	Background
+Background	Dodecagon	Tie	LightGreen	Background	Star	LightGreen	Background
+Background	Dodecagon	Tie	LightGreen	Background	Star	LightGreen	Background
+Background	Dodecagon	Tie	LightGreen	Background	Star	LightGreen	Background
+Background	Dodecagon	Tie	LightGreen	Background	Star	LightGreen	Background
+Background	Dodecagon_Choice	Tie_Choice	LightGreen_Choice	Background	Star_Choice	LightGreen_Choice	Background
+House	DarkPurple	Background	Nail	Pacman	Background	Spade	Pacman
+House	DarkPurple	Background	Nail	Pacman	Background	Spade	Pacman
+House	DarkPurple	Background	Nail	Pacman	Background	Spade	Pacman
+House	DarkPurple	Background	Nail	Pacman	Background	Spade	Pacman
+House	DarkPurple	Background	Nail	Pacman	Background	Spade	Pacman
+House_Choice	DarkPurple_Choice	Background	Nail_Choice	Pacman_Choice	Background	Spade_Choice	Pacman_Choice
+LightGray	Background	UpArrow	Acorn	DarkTurquiose	Sawblade	Jellyfish	DarkRed
+LightGray	Background	UpArrow	Acorn	DarkTurquiose	Sawblade	Jellyfish	DarkRed
+LightGray	Background	UpArrow	Acorn	DarkTurquiose	Sawblade	Jellyfish	DarkRed
+LightGray	Background	UpArrow	Acorn	DarkTurquiose	Sawblade	Jellyfish	DarkRed
+LightGray	Background	UpArrow	Acorn	DarkTurquiose	Sawblade	Jellyfish	DarkRed
+LightGray_Choice	Background	UpArrow_Choice	Acorn_Choice	DarkTurquiose_Choice	Sawblade_Choice	Jellyfish_Choice	DarkRed_Choice
+Hat	LeftArrow	LightPurple	Background	Puzzle	DarkGray	Background	UpArrow
+Hat	LeftArrow	LightPurple	Background	Puzzle	DarkGray	Background	UpArrow
+Hat	LeftArrow	LightPurple	Background	Puzzle	DarkGray	Background	UpArrow
+Hat	LeftArrow	LightPurple	Background	Puzzle	DarkGray	Background	UpArrow
+Hat	LeftArrow	LightPurple	Background	Puzzle	DarkGray	Background	UpArrow
+Hat_Choice	LeftArrow_Choice	LightPurple_Choice	Background	Puzzle_Choice	DarkGray_Choice	Background	UpArrow_Choice
+Background	Rabbit	Chevron	DarkRed	Background	Ditto	DarkYellow	Background
+Background	Rabbit	Chevron	DarkRed	Background	Ditto	DarkYellow	Background
+Background	Rabbit	Chevron	DarkRed	Background	Ditto	DarkYellow	Background
+Background	Rabbit	Chevron	DarkRed	Background	Ditto	DarkYellow	Background
+Background	Rabbit	Chevron	DarkRed	Background	Ditto	DarkYellow	Background
+Background	Rabbit_Choice	Chevron_Choice	DarkRed_Choice	Background	Ditto_Choice	DarkYellow_Choice	Background
+Background	Background	Background	Background	Background	Background	Background	Background
+Background	Background	Background	Background	Background	Background	Background	Background
+Background	Background	Background	Background	Background	Background	Background	Background
+Background	Background	Background	Background	Background	Background	Background	Background
+Background	Background	Background	Background	Background	Background	Background	Background
+Background	Background	Background	Background	Background	Background	Background	Background
+Background	Background	Background	Background	Background	Background	Background	Background
+Background	Background	Background	Background	Background	Background	Background	Background
+Background	Background	Background	Background	Background	Background	Background	Background
+Background	Background	Background	Background	Background	Background	Background	Background
