@@ -307,7 +307,7 @@ function FiveDot
 
         timeSinceLastJuice = GetSecs-juiceDistTime;
         
-        if juiceOn == false && timeSinceLastJuice > rewardWait && sum(fixation(frameIdx-fps*rewardWait+1:frameIdx),"all") > rewardPerf*fps*rewardWait
+        if juiceOn == false && timeSinceLastJuice > rewardWait && sum(fixation(round(frameIdx-fps*rewardWait+1):frameIdx),"all") > rewardPerf*fps*rewardWait
             juiceOn = true;
         end
         if juiceOn == true 
