@@ -13,7 +13,7 @@ function FiveDot
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
-    rewardDur = 0.08; % seconds
+    rewardDur = 0.04; % seconds
     rewardWait = 4; % seconds
     rewardDurChange = 0.001; 
     newRewardRate = rewardWait;

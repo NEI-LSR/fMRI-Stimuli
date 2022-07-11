@@ -9,15 +9,15 @@ function ShapeColor(subject, counterbalance_indx, run)
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain= -750
-    yGain= 600
-    xOffset= -333.5188
-    yOffset= -924.7499
+    xGain= -610
+    yGain= 860
+    xOffset= -47
+    yOffset= -49
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
-    rewardDur = 0.1; % seconds
-    rewardWait = 4; % seconds
+    rewardDur = 0.02; % seconds
+    rewardWait = 2; % seconds
     rewardPerf = .90; % 90% fixation to get reward
     
     
@@ -34,9 +34,9 @@ function ShapeColor(subject, counterbalance_indx, run)
     end
 
     runExpTime = datestr(now); % Get the time the run occured at.
-
-    dataSaveFile = ['Data/' subject '_' num2str(run) '_Data.mat']; % File to save both run data and eye data
-    movSaveFile = ['Data/' subject '_' num2str(run) '_Movie.mov']; % Create Movie Filename
+    date_time=strrep(strrep(datestr(datetime),' ','_'),':','_') % Get the numstring of the time 
+    dataSaveFile = ['Data/' subject '_' num2str(run) '_' date_time '_Data.mat']; % File to save both run data and eye data
+    movSaveFile = ['Data/' subject '_' num2str(run) '_' date_time '_Movie.mov']; % Create Movie Filename
 
     % Manually set screennumbers for experimenter and viewer displays:
     expscreen = 1; 
@@ -146,25 +146,25 @@ function ShapeColor(subject, counterbalance_indx, run)
             case 1 % Chromatic Shapes Uncolored
                 frames = (1:framesPerBlock)+(i-1)*framesPerBlock;
                 order = randperm(blocklength);
-                chromBWTex = baseTex(2:15)
+                chromBWTex = baseTex(2:15);
                 texture(frames) = repelem(chromBWTex(order),framesPerStim);
                 stimulus_order = [stimulus_order chromBWTex(order)];
             case 2 % Chromatic Shapes Colored
                 frames = (1:framesPerBlock)+(i-1)*framesPerBlock;
                 order = randperm(blocklength);
-                chromTex = baseTex(16:29)
+                chromTex = baseTex(16:29);
                 texture(frames) = repelem(chromTex(order),framesPerStim);
                 stimulus_order = [stimulus_order chromTex(order)];
             case 3 % Achromatic Shapes
                 frames = (1:framesPerBlock)+(i-1)*framesPerBlock;
                 order = randperm(blocklength);
-                AchromTex = baseTex(30:43)
+                AchromTex = baseTex(30:43);
                 texture(frames) = repelem(AchromTex(order),framesPerStim);
                 stimulus_order = [stimulus_order AchromTex(order)];
             case 4 % Colored Circles
                 frames = (1:framesPerBlock)+(i-1)*framesPerBlock;
                 order = randperm(blocklength);
-                circTex = baseTex(44:57)
+                circTex = baseTex(44:57);
                 texture(frames) = repelem(circTex(order),framesPerStim);
                 stimulus_order = [stimulus_order circTex(order)];
         end
@@ -256,7 +256,7 @@ function ShapeColor(subject, counterbalance_indx, run)
             infotext = ['Time Elapsed: ', num2str(toc), '/', num2str(exactDur), newline,...
                 'Fixation Percentage: ', num2str(sum(fixation(1:frameIdx,1))/length(fixation(1:frameIdx,1)*100)), newline,...
                 'Reward Duration (c/v to change): ', num2str(rewardDur),newline,...
-                'Reward Wait Time (z/x to change): ', num2str(rewardWait)]
+                'Reward Wait Time (z/x to change): ', num2str(rewardWait)];
                
             DrawFormattedText(expWindow,infotext);
 
@@ -308,7 +308,7 @@ function ShapeColor(subject, counterbalance_indx, run)
     end
     save(dataSaveFile, 'stimulus_order','circTex','AchromTex','chromTex','chromBWTex','blockorder','eyePosition','jitterX','jitterY');
     sca;
-    disp(sum(fixation)/sum(fps*exactDur)) %Display fixation percentage
+    disp(num2str(sum(fixation(1:frameIdx,1))/length(fixation(1:frameIdx,1)*100))); %Display fixation percentage
 
         
         
