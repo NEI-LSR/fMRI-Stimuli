@@ -1,7 +1,6 @@
 %% LMS/DKL
 clear 
 close all
-whichCones = 'StockmanSharpe'
 curDir = pwd;
 saveDir = [curDir '\targetvalues'];
 if ~isfolder(saveDir)
@@ -12,9 +11,9 @@ targetLMSF = [saveDir '\' extension '.mat'];
 LMSgray = [0.54529 0.44988 0.26871]; % insert the LMS value of the gray you measured
 graypointRGB = [128 128 128]; % What is the value of the isoluminant RGB that you want? 
 whiteJumps = 0.2*256; % Not sure what this does yet
-scalingF = .9; % How far along the gamut of the direction with the least gamut range do you want to extend?
-angles = [0, 45, 90, 135, 180, 225, 270, 315]; % What angles in DKL space do you want to compute your colors around
-lumAngles = [0, 0, 0, 0, 0, 0, 0, 0]; % What angle along the LMS axis do you want to calculate around?
+scalingF = 0.9; % How far along the gamut of the direction with the least gamut range do you want to extend?
+angles = [0, 45, 90, 135, 180, 225, 270, 315,0,0]; % What angles in DKL space do you want to compute your colors around
+lumAngles = [0, 0, 0, 0, 0, 0, 0, 0,90,-90]; % What angle along the LMS axis do you want to calculate around?
 angles = deg2rad(angles); % Convert to radians
 lumAngles = deg2rad(lumAngles); % Convert to radians
 graypoint = graypointRGB/256; % Convert RGB graypoint into decimal
@@ -110,8 +109,8 @@ scale = min(scales); % Find smallest gamut excursion to include all directions
 maxConeIncs = [];
 scaledConeIncs = [];
 for i = 1:length(angles)
-    maxConeIncs(:,i) = scale*primaryIncs(:,i);
-    scaledConeIncs(:,i) = scale*scalingF*coneIncs(:,i);
+    maxConeIncs(:,i) = scales(i)*primaryIncs(:,i);
+    scaledConeIncs(:,i) = scales(i)*scalingF*coneIncs(:,i);
 end
 
 
@@ -138,6 +137,7 @@ M_RGB2XYZ = inv(M_XYZ2RGB);
 
 XYZ = M_RGB2XYZ*est_RGB_Lookup;
 xyY = thXYZToxyY(XYZ)';
+figure
 DrawChromaticity
 hold on
 scatter(xyY(:,1),xyY(:,2))
