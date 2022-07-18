@@ -41,12 +41,10 @@ function [DM] = ProduceSCDM(mainpath, varargin)
         parts = split(pathfile,'_');
         runnum = parts{2};
 
-        if ismember(str2num(runnum),goodRuns)
-            if frameIdx >= exactDur*fps % did it finish?
-                dataPaths_index = length(dataPaths)+1;
-                dataPaths{dataPaths_index} = path; % Add it if it successfully finished
-                LumSettings = [LumSettings LumSetting];
-            end
+        if ismember(str2num(runnum),goodRuns) % Need to find a better way to determine if it finished
+            dataPaths_index = length(dataPaths)+1;
+            dataPaths{dataPaths_index} = path; % Add it if it successfully finished
+            LumSettings = [LumSettings LumSetting];
         end
 
      end

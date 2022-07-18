@@ -2,25 +2,32 @@ function SC(subject, counterbalance_indx, run)
     % Shape Color Paradigm 3.0
     % Stuart J. Duffield March 2022
     % Displays the stimuli from the Monkey Turk experiments in blocks.
-    % Here for each block one of 7 stimuli (of the original 14) will be
+    % Here for each block one of 7 stimuli (or the original 14) will be
     % displayed. At the end of the block there will be a choice
     
+    % Set random seed generator. 
+    seed = rng('shuffle'); % This essentially just makes sure that the seed
+    % is different each time. Sets the seed of the rng based on the current
+    % time, so every time this is ran it should have a different seed.
+
     % Parameters you care about:
     repeat_blockorder = 1;
-    rewardDur = 0.10; % seconds
-    rewardWait = 3; % seconds
+    rewardDur = 0.04; % seconds
+    rewardWait = 1; % seconds
+    rewardWaitChange = 0.01;
     rewardPerf = .75; % 90% fixation to get reward
     choiceDur = 0.7; % Needs to fixate at choice for this time period before getting reward
-    choiceRewardDur = 0.5;
+    choiceRewardDur = 0.3;
+    rewardKeyChange = 0.01;
     choiceRewardIncrement = 0;
-    exactDur = 534; % Need to manually calculate
+    exactDur = 1038; % Need to manually calculate
     exactDur = ceil(exactDur);
-    endGrayDur = 3; % End gray duration
-    LumSetting = 2; % 1 is high luminance colors and shapes, 2 is low
+    endGrayDur = 30; % End gray duration, in seconds
+    LumSetting = 3; % 1 is high luminance colors and shapes, 2 is low, 3 is all
     choiceDistAngle = 10; % The presented choices will be seperated by 10 degrees of visual angle
-    stimDur = 5; % Number of TRs the block stimulus will be shown
+    stimDur = 6; % Number of TRs the block stimulus will be shown
     grayDur = 0; % Number of TRs the inter-event interval will be on, showing gray
-    choiceSectionDur = 1; % Number of TRs the choice will be on
+    choiceSectionDur = 0 %1; % Number of TRs the choice will be on
     blocklength = stimDur+grayDur+choiceSectionDur; % Number of TRs per block
     movieFPS = 10;
     manualMovementPix = 10;
@@ -32,10 +39,10 @@ function SC(subject, counterbalance_indx, run)
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = -700;
+    xGain = -565;
     yGain = 700;
-    xOffset = -396;
-    yOffset = -805;
+    xOffset = -40;
+    yOffset = -200;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
@@ -63,8 +70,8 @@ function SC(subject, counterbalance_indx, run)
     TR = 3; % TR length
 
     % Gray of the background:
-    %gray = [31 29 47]; 
-    gray = [118,98,128];
+    gray = [31 29 47]; 
+    %gray = [118,98,128];
     % Other colors
     red = [255 0 0];
     green = [0 255 0];
@@ -75,14 +82,19 @@ function SC(subject, counterbalance_indx, run)
     blockorders = csvread('blockorder.csv'); % This is produced from the counterbalance script @kurt braunlich wrote for me
     blockorder = blockorders(counterbalance_indx,:); % Get the blockorder used for this run
     blockorder=repmat(blockorder,1,repeat_blockorder);
+    if LumSetting == 3
+        blockorder=repmat(blockorder,1,2); % Repeat blockorder for double length
+    end
     % Exact Duration
+
     runDur = ceil(TR*blocklength*length(blockorder)+endGrayDur); % Calculating this to compare to exact duration
+
     %exactDur = runDur;
     disp(['Run dur:' num2str(runDur)])
     if runDur ~= exactDur % Ya gotta check or else you waste your scan time
         disp(['Run dur:' num2str(runDur)])
         disp(['ExactDur: ' num2str(exactDur)])
-        %error('Run duration calculated from run parameters does not match hardcoded run duration length.')
+        error('Run duration calculated from run parameters does not match hardcoded run duration length.')
     end
 
     % Manually set screennumbers for experimenter and viewer displays:
@@ -95,17 +107,20 @@ function SC(subject, counterbalance_indx, run)
     load([stimDir '/' 'chromBW.mat'], 'chromBW'); % Chromatic Shapes Black and White
     load([stimDir '/' 'colorcircles.mat'], 'colorcircles'); % Colored Circles
 
-    if LumSetting == 1 % What set of stimuli are we using?
+    if LumSetting == 1 % High luminance
         achrom = achrom(:,:,:,1:2:end);
         chromBW = chromBW(:,:,:,1:2:end);
         colorcircles = colorcircles(:,:,:,1:2:end);
         chrom = chrom(:,:,:,1:2:end);
-    elseif LumSetting == 2
+        disp('High luminance conditions will be displayed')
+    elseif LumSetting == 2 % Low luminance
         achrom = achrom(:,:,:,2:2:end);
         chromBW = chromBW(:,:,:,2:2:end);
         colorcircles = colorcircles(:,:,:,2:2:end);
         chrom = chrom(:,:,:,2:2:end);
-
+        disp('Low luminance conditions will be displayed')
+    elseif LumSetting == 3 % Both
+        disp('All conditions will be displayed')
     end
 
     % Initialize Screens
@@ -181,7 +196,8 @@ function SC(subject, counterbalance_indx, run)
     leftFixation = NaN(fps*exactDur,1);
     rightFixation = NaN(fps*exactDur,1);
     blockTracker = NaN(fps*exactDur,1);
-    eventTracker = NaN(fps*exactDur,1);
+    juiceOnTracker = NaN(fps*exactDur,1); % Tracing whether juice is 'on' or not
+    timeTracker = NaN(fps*exactDur,1); % Actually track the time
 
     % Initialize Randoms
     randDists = rand([exactDur*fps,1]);
@@ -301,7 +317,7 @@ function SC(subject, counterbalance_indx, run)
                     blockType = 'Gray';
                 end
 
-                if isgray==false % Add one to choice index
+                if isgray==false && choiceSectionDur > 0 % Add one to choice index
                     choiceIndx = choiceIndx+1;
                 end
                 if toc >= exactDur
@@ -311,7 +327,12 @@ function SC(subject, counterbalance_indx, run)
                     quitNow = true;
                 end
             end
-
+            if toc >= exactDur
+                quitNow = true;
+            end
+            if frameIdx >= exactDur*fps;
+                quitNow = true;
+            end
             if quitNow == true
                 Screen('FinalizeMovie', movie);
                 sca
@@ -328,7 +349,11 @@ function SC(subject, counterbalance_indx, run)
             if isgray == true
                 choice = 'None';
             else
-                choice = choices{correctSideChoices(choiceIndx)};
+                if choiceSectionDur > 0 
+                    choice = choices{correctSideChoices(choiceIndx)};
+                else
+                    choice = NaN;
+                end
             end
             
             
@@ -376,27 +401,56 @@ function SC(subject, counterbalance_indx, run)
             if keyCode(KbName('r')) % Recenter
                 xOffset = xOffset + eyePosition(frameIdx,1)-xCenterExp;
                 yOffset = yOffset + eyePosition(frameIdx,2)-yCenterExp;
+                keyIsDown=0;
             elseif keyCode(KbName('UpArrow')) % Move fixation point up
                 yOffset = yOffset+manualMovementPix;
+                keyIsDown=0;
             elseif keyCode(KbName('DownArrow')) % Move fixation point down
                 yOffset = yOffset-manualMovementPix;
+                keyIsDown=0;
             elseif keyCode(KbName('LeftArrow'))
                 xOffset = xOffset+manualMovementPix;
+                keyIsDown=0;
             elseif keyCode(KbName('RightArrow'))
                 xOffset = xOffset-manualMovementPix;
+                keyIsDown=0;
             elseif keyCode(KbName('j')) % Juice
                 [juiceEndTime,juiceOn]=juice(rewardDur,juiceEndTime,toc,juiceOn);
+                keyIsDown=0;
+            elseif keyCode(KbName('z')) % Increase Choice Reward Dur
+                choiceRewardDur = choiceRewardDur + rewardKeyChange;
+                keyIsDown = 0;
+            elseif keyCode(KbName('x')) && choiceRewardDur > rewardKeyChange % Decrease Choice Reward Dur
+                choiceRewardDur = choiceRewardDur - rewardKeyChange;
+                keyIsDown = 0;
+            elseif keyCode(KbName('c'))
+                rewardDur = rewardDur + rewardKeyChange;
+                keyIsDown = 0;
+            elseif keyCode(KbName('v')) && rewardDur > rewardKeyChange
+                rewardDur = rewardDur - rewardKeyChange;
+                keyIsdown = 0;
+            elseif keyCode(KbName('b'))
+                rewardWait = rewardWaitChange + rewardWait;
+                keyIsdown = 0;
+            elseif keyCode(KbName('n')) && rewardWait > rewardWaitChange
+                rewardWait = rewardWait-rewardWaitChange;
+                keyIsdown = 0;
             elseif keyCode(KbName('w')) && fixPix > pixPerAngle/2 % Increase fixation circle
                 fixPix = fixPix - pixPerAngle/2; % Shrink fixPix by half a degree of visual angle
                 baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
+                keyIsDown=0;
             elseif keyCode(KbName('s')) && fixPix < pixPerAngle*10
                 fixPix = fixPix + pixPerAngle/2; % Increase fixPix by half a degree of visual angle
                 baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
+                keyIsDown=0;
+
             elseif keyCode(KbName('p'))
                 quitNow = true;
+                keyIsDown=0;
             end
+            
             
             
             infotext = ['Time Elapsed: ', num2str(toc), '/', num2str(exactDur), newline,...
@@ -407,7 +461,10 @@ function SC(subject, counterbalance_indx, run)
                 'Block Type: ', blockType,newline,...
                 'Juice: ', juiceSetting,newline,...
                 'Juice End Time: ', num2str(juiceEndTime),newline,...
-                'Correct Number of Choices:' num2str(correctChoiceCounter), '/' num2str(choiceIndx)];
+                'Correct Number of Choices: ' num2str(correctChoiceCounter), '/' num2str(choiceIndx), newline,...
+                'Choice Reward Duruation (+z/-x): ' num2str(choiceRewardDur),newline,...
+                'Reward Duration (+c/-v): ' num2str(rewardDur),newline,...
+                'Reward Wait Time (+b/-n): ' num2str(rewardWait)];
                
 
             DrawFormattedText(expWindow,infotext);
@@ -449,7 +506,7 @@ function SC(subject, counterbalance_indx, run)
 
                 % Draw eyetrace on framebuffer
                 Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
-            elseif blockTime >= (stimDur+grayDur)*TR % Choice interval
+            elseif blockTime >= (stimDur+grayDur)*TR && choiceSectionDur > 0 % Choice interval
 
 
 
@@ -459,7 +516,10 @@ function SC(subject, counterbalance_indx, run)
                     Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
 
                     % Draw fixation window
-                    Screen('FrameOval',expWindow,white,fixRect);
+                    Screen('FrameOval',expWindow,circleColor,fixRect);
+
+                    % Draw Eyetrace
+                    Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
                 elseif isgray == false
                     % check to see where fixation is
                     leftFixation(frameIdx) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2),leftFixRect);
@@ -527,6 +587,14 @@ function SC(subject, counterbalance_indx, run)
                     Screen('DrawDots', expWindow, eyePosition(frameIdx,:)',5);
                 
                 end
+            else
+                Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
+
+                % Draw fixation window
+                Screen('FrameOval',expWindow,circleColor,fixRect);
+
+                % Draw Eyetrace
+                Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
             end
 
             % add this frame to the movie
@@ -548,6 +616,9 @@ function SC(subject, counterbalance_indx, run)
             if frameIdx >= exactDur*fps
                 quitNow = true
             end
+            % Store any other variables:
+            juiceOnTracker(frameIdx) = juiceOn; % Is the juice on at this frame?
+            timeTracker(frameIdx) = toc; % What is the time at this frame?
             if quitNow == true
                 Screen('FinalizeMovie', movie);
                 sca
@@ -628,7 +699,7 @@ function SC(subject, counterbalance_indx, run)
 
 
 
-
+close all;
 end
 
 
