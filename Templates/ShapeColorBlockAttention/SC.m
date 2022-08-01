@@ -25,9 +25,9 @@ function SC(subject, counterbalance_indx, run)
     endGrayDur = 30; % End gray duration, in seconds
     LumSetting = 3; % 1 is high luminance colors and shapes, 2 is low, 3 is all
     choiceDistAngle = 10; % The presented choices will be seperated by 10 degrees of visual angle
-    stimDur = 6; % Number of TRs the block stimulus will be shown
+    stimDur = 5; % Number of TRs the block stimulus will be shown
     grayDur = 0; % Number of TRs the inter-event interval will be on, showing gray
-    choiceSectionDur = 0 %1; % Number of TRs the choice will be on
+    choiceSectionDur = 1; % Number of TRs the choice will be on
     blocklength = stimDur+grayDur+choiceSectionDur; % Number of TRs per block
     movieFPS = 10;
     manualMovementPix = 10;
@@ -39,10 +39,10 @@ function SC(subject, counterbalance_indx, run)
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = -565;
+    xGain = -500;
     yGain = 700;
-    xOffset = -40;
-    yOffset = -200;
+    xOffset = -64;
+    yOffset = -258;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
@@ -439,11 +439,15 @@ function SC(subject, counterbalance_indx, run)
                 fixPix = fixPix - pixPerAngle/2; % Shrink fixPix by half a degree of visual angle
                 baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
+                rightFixRect = CenterRectOnPointd(baseFixRect*2, xCenterExp+0.5*distPix, yCenterExp); % Area of fixation that can be looked at for choice on the right
+                leftFixRect = CenterRectOnPointd(baseFixRect*2, xCenterExp-0.5*distPix, yCenterExp); % Area of fixation that can be looked at for choiceo n the left
                 keyIsDown=0;
             elseif keyCode(KbName('s')) && fixPix < pixPerAngle*10
                 fixPix = fixPix + pixPerAngle/2; % Increase fixPix by half a degree of visual angle
                 baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
+                rightFixRect = CenterRectOnPointd(baseFixRect*2, xCenterExp+0.5*distPix, yCenterExp); % Area of fixation that can be looked at for choice on the right
+                leftFixRect = CenterRectOnPointd(baseFixRect*2, xCenterExp-0.5*distPix, yCenterExp); % Area of fixation that can be looked at for choiceo n the left
                 keyIsDown=0;
 
             elseif keyCode(KbName('p'))
