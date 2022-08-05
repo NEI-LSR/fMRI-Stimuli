@@ -21,7 +21,7 @@ if ~isdir([parentDir '\' dirName])
     mkdir([parentDir '\' dirName]);
 end
 
-data = dir([vidDir '\*.mov']);
+data = dir([vidDir '\*.avi']);
 n={};
 for i=1:length(data)
     n{end+1,1}=data(i).name;

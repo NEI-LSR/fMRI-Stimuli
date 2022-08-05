@@ -9,29 +9,31 @@ function ALZ_dyLocX_standard_BW_NIF_2022(subj_id, counterbalance_idx, acquisitio
 % 	randseed can be any number - controls item counterbalancing
 % 	run counts up from 1
 
+% Edited by Stuart J Duffield 2022 to work with the Matlab DAQ toolbox.
+
 %% setup DAQ stuff
 DAQ('Debug',false)
 DAQ('Init'); 
 %eye tracking info
 global channels port
-channels = [1,2];
-ttlChannel = 7;
+channels = [2,3];
+ttlChannel = 8;
 port = 1;
 global gain Vcent; %set this after 5 dot task
 
-gain(1) = -400;
-gain(2) = 400;
-Vcent(1) = 0.5811;
-Vcent(2) = 0.6828;
+gain(1) = -600;
+gain(2) = 700;
+Vcent(1) = -1.75;
+Vcent(2) = 0.68;
 
 global manualJuiceStart
 manualJuiceStart = 0;
 
-juiceInterval = 1.6; %seconds before juice reward
+juiceInterval = 0.75; %seconds before juice reward
 juiceTime = 0.040;
 
 disp(['Juice Interval is: ' num2str(juiceInterval)])
-keyboard
+%keyboard
 
 dataDir = ([pwd filesep subj_id filesep])
 thisExpDir = [dataDir date filesep]
@@ -450,7 +452,7 @@ BarColor2 = [255 0 0];
     end
 
     disp(sprintf('   actual run time:  %3.5f', GetSecs - expStart))
-
+    disp(Vcent)
     cd(rootDir);    
     Screen('CloseAll');
     cd EyeRecords;
