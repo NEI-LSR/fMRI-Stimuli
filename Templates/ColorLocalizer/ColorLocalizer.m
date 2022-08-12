@@ -1,23 +1,27 @@
 function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
-    % Shape Color Paradigm 3.0
+    % Color Localizer
     % Stuart J. Duffield March 2022
-    % Displays the stimuli from the Monkey Turk experiments in blocks.
-    % Here for each block one of 7 stimuli (of the original 14) will be
-    % displayed. At the end of the block there will be a choice
+
     
     % Parameters you care about:
     rewardDur = 0.04; % seconds
-    rewardWait = 9; % seconds
+    rewardDurChange = 0.01; 
+    incRate = false;
+    baseRewardWait = 5; % seconds
+    rewardWait = baseRewardWait;
+    maxChange = 0.3; % How much does it change
+    rewardCalcDur = 10; % Number of seconds fixation is calculated over 
+    rewardWaitChange = 0.01;
     rewardPerf = .75; % 75% fixation to get reward
     exactDur = 540; % Need to manually calculate
 
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = -600;
+    xGain = -500;
     yGain = 600;
-    xOffset = -524;
-    yOffset = -827;
+    xOffset = -600;
+    yOffset = -764;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
@@ -32,18 +36,16 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
     end
     cyclesPerSec = 0.75; % This does two different things for the different conditions: In linear, its the number of cycles that pass by in a second
     % In circular, its the time it takes for a whole 'circle' to complete
-
+    numblocks = 18;
     block_orders = [0     1     2     3     4     5;
-     1     2     3     4     5     0;
+     3     1     5     2     4     0;
      2     3     4     5     0     1;
      3     4     5     0     1     2;
      4     5     0     1     2     3;
      5     0     1     2     3     4];
-    block_orders = repmat(block_orders,1,3);
-    freq_orders = [1     2     3;
-     2     3     1;
-     3     1     2];
-    freq_orders = repmat(freq_orders,1,5);
+    block_orders = repmat(block_orders,1,numblocks/size(block_orders,2));
+    freq_orders = [1];
+    freq_orders = repmat(freq_orders,1,numblocks/size(freq_orders,2));
     block_order = block_orders(counterbalance_indx,:);
     freq_order = freq_orders(frequency_idx,:);
     block_length = 10; % TRs
@@ -87,7 +89,7 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
         [128 124 162; 129 129 94],...
         [54	161	149; 205 94	107]};
 
-    base_frequencies = [0.2,4,8]; % Cycles per degree
+    base_frequencies = [4]; % Cycles per degree
     frequencies = base_frequencies(freq_order);
 
 
@@ -125,7 +127,7 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
     xCoords = [-fixCrossDimPix fixCrossDimPix 0 0]; 
     yCoords = [0 0 -fixCrossDimPix fixCrossDimPix];
     allCoords = [xCoords; yCoords]; % Creates the fixation cross
-    
+    fixation = NaN(fps*exactDur,1); % initialize fixation vector
     gratings = {};
 
     % Prep textures
@@ -229,7 +231,9 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
             else
                 circleColor = white;
             end
-
+            if incRate == true && frameIdx > fps*rewardCalcDur
+                 rewardWait = ((1+maxChange) - sum(fixation(frameIdx-fps*rewardCalcDur+1:frameIdx),"all",'omitnan')/(fps*rewardCalcDur))*baseRewardWait;
+            end
             if timeSinceLastJuice > rewardWait
                 if frameIdx < fps*rewardWait;
                     tempFrameIdx = fps*rewardWait;
@@ -272,6 +276,14 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
                 xOffset = xOffset-manualMovementPix;
             elseif keyCode(KbName('j')) % Juice
                 [juiceEndTime,juiceOn]=juice(rewardDur,juiceEndTime,toc,juiceOn);
+            elseif keyCode(KbName('z')) % Juice
+                rewardDur = rewardDur + rewardDurChange;
+            elseif keyCode(KbName('x')) % Juice
+                rewardDur = rewardDur - rewardDurChange;
+            elseif keyCode(KbName('c')) % Juice
+                baseRewardWait = baseRewardWait + rewardWaitChange;
+            elseif keyCode(KbName('v')) % Juice
+                baseRewardWait = baseRewardWait - rewardWaitChange;
             elseif keyCode(KbName('w')) && fixPix > pixPerAngle/2 % Increase fixation circle
                 fixPix = fixPix - pixPerAngle/2; % Shrink fixPix by half a degree of visual angle
                 baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
@@ -288,7 +300,9 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
             infotext = ['Time Elapsed: ', num2str(toc), '/', num2str(exactDur), newline,...
                 'Fixation Percentage: ', num2str(sum(fixation(1:frameIdx,1))/length(fixation(1:frameIdx,1)*100)), newline,...
                 'Juice: ', juiceSetting,newline,...
-                'Juice End Time: ', num2str(juiceEndTime)]
+                'Juice End Time: ', num2str(juiceEndTime),newline...,
+                'Reward Duration (+Z/-X): ' num2str(rewardDur),newline,...
+                'Reward Wait Time (+C/-V): ' num2str(rewardWait)]
                
 
             DrawFormattedText(expWindow,infotext);
@@ -339,7 +353,7 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
     end % End of stim presentation
 
     save(dataSaveFile);
-    disp(['Fixation: ' num2str(sum(fixation)/length(fixation(1:frameIdx,1)))]);
+    disp(['Fixation: ' num2str(sum(fixation)/length(fixation(1:frameIdx,1),'all','omitnan'))]);
 
     function [juiceEndTime,juiceOn] = juice(howLong,juiceEndTime,curTime,juiceOn)
         if howLong > 0

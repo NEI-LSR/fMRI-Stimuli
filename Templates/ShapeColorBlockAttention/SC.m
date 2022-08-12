@@ -25,9 +25,9 @@ function SC(subject, counterbalance_indx, run)
     endGrayDur = 30; % End gray duration, in seconds
     LumSetting = 3; % 1 is high luminance colors and shapes, 2 is low, 3 is all
     choiceDistAngle = 10; % The presented choices will be seperated by 10 degrees of visual angle
-    stimDur = 5; % Number of TRs the block stimulus will be shown
+    stimDur = 6; % Number of TRs the block stimulus will be shown
     grayDur = 0; % Number of TRs the inter-event interval will be on, showing gray
-    choiceSectionDur = 1; % Number of TRs the choice will be on
+    choiceSectionDur = 0; % Number of TRs the choice will be on
     blocklength = stimDur+grayDur+choiceSectionDur; % Number of TRs per block
     movieFPS = 10;
     manualMovementPix = 10;
@@ -41,8 +41,8 @@ function SC(subject, counterbalance_indx, run)
     DAQ('Init');
     xGain = -500;
     yGain = 700;
-    xOffset = -64;
-    yOffset = -258;
+    xOffset = -265;
+    yOffset = -184;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
