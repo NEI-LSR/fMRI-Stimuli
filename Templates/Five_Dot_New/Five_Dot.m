@@ -1,30 +1,33 @@
+
 function FiveDot
 
     
 
     % Initialize DAQ
     DAQ('Init');
-    xGain = -220;
-    yGain = 205;
+    xGain = -500;
+    yGain = 700;
+    xOffset = -203;
+    yOffset = -272;
     gainStep = 5;
-    xOffset = -930;
-    yOffset = 650;
     xChannel = 2;
     yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
-    rewardDur = 0.05; % seconds
-    rewardWait = 6; % seconds
+    rewardDur = 0.02; % seconds
+    rewardWait = 2; % seconds
+    rewardDurChange = 0.001; 
     newRewardRate = rewardWait;
-    maxChange = 0.5; % How much does it change
+    rewardWaitChange = 0.01;
+    maxChange = 0.2; % How much does it change
     rewardCalcDur = 10; % Number of seconds fixation is calculated over 
     incRate = true; % Change rate?
     rewardPerf = .80; % 80% fixation to get reward
     % play movie?
-    start_movie = false;
-    play_movie = false;
+    start_movie = true;
+    play_movie = true;
 
     % How long will this last
-    exactDur = 6000;
+    exactDur = 3600;
     
     linecolorIdx = 1;
     linecolors = [0 0 0; 255 0 0; 0 255 0; 0 0 255; 255 255 255];
@@ -40,13 +43,14 @@ function FiveDot
     if ~isfolder('Data') % Switch this to isfolder if matlab 2017 or later
         mkdir('Data');
     end
-
+    
+    date_time=strrep(strrep(datestr(datetime),' ','_'),':','_') % Get the numstring of the time
     runExpTime = datestr(now); % Get the time the run occured at.
 
-    dataSaveFile = ['Data/'  'EyeData_Data.mat']; % File to save eye data
+    dataSaveFile = ['Data/'  num2str(date_time) '_EyeData.mat']; % File to save eye data
     
     % Prep mvie info
-    movieName = 'our_planet.mp4';
+    movieName = 'baboon.mp4' %'sherlock_seg1.mp4';
     %stimDir = [curdir]; % Change this if you move the location of the stimuli:
     movieFile = [stimDir '\' movieName]
     
@@ -117,7 +121,7 @@ function FiveDot
     % Prep movie if needed
     if start_movie
         [movie duration fps] = Screen('OpenMovie', viewWindow, movieFile)
-    end
+    end 
     % Begin actual stimulus presentation
     try
         Screen('DrawTexture', expWindow, fixGridTex);
@@ -164,13 +168,13 @@ function FiveDot
                 fixPix = fixPix + pixPerAngle/2; % Increase fixPix by half a degree of visual angle
                 baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
-            elseif keyCode(KbName('s')) && yCenter < 1050 % Move fixation up
+            elseif keyCode(KbName('w')) && yCenter < 1050 % Move fixation up
                 yCenterExp = yCenterExp + pixPerAngle;
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
                 yCenter = yCenter + pixPerAngle;
                 viewStimRect = CenterRectOnPointd(stimRect, xCenter,yCenter);
                 expStimRect = CenterRectOnPointd(stimRect, xCenterExp,yCenterExp);
-            elseif keyCode(KbName('w')) && yCenter > 0 % Move fixation down
+            elseif keyCode(KbName('s')) && yCenter > 0 % Move fixation down
                 yCenterExp = yCenterExp - pixPerAngle;
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
                 yCenter = yCenter - pixPerAngle;
@@ -201,8 +205,6 @@ function FiveDot
             elseif keyCode(KbName('g'))
                 yGain = yGain - gainStep;
             elseif keyCode(KbName('q'))
-                %linecolorIdx = randi([1 5], 1);
-                %linecolor = linecolors(linecolorIdx,:);
                 linecolor = [randi([1 255],1) randi([1 255],1) randi([1 255],1)];
             elseif keyCode(KbName('v'))
                 if lineWidthPix < 10;
@@ -228,12 +230,20 @@ function FiveDot
                     viewStimRect = CenterRectOnPointd(stimRect, xCenter,yCenter);
                     expStimRect = CenterRectOnPointd(stimRect, xCenterExp,yCenterExp);
                 end
-            elseif keyCode(KbName('z'))
+            elseif keyCode(KbName('z')) && start_movie == true
                 if play_movie == false
                     play_movie = true
                 elseif play_movie == true
                     play_movie = false
                 end
+            elseif keyCode(KbName('1!')) % Juice
+                rewardDur = rewardDur + rewardDurChange;
+            elseif keyCode(KbName('2@')) % Juice
+                rewardDur = rewardDur - rewardDurChange;
+            elseif keyCode(KbName('3#')) % Juice
+                rewardWait = rewardWait + rewardWaitChange;
+            elseif keyCode(KbName('4$')) % Juice
+                rewardWait = rewardWait - rewardWaitChange;
             elseif keyCode(KbName('p'))
                 quitNow = true;
             end
@@ -250,12 +260,18 @@ function FiveDot
             end
 
             % Draw Text on FrameBuffer:
-            text = ['xGain: ', num2str(xGain), newline,...
-                'yGain: ' num2str(yGain), newline,...
-                'xLocation: ' num2str(xCenter),  newline,...
-                'yLocation: ' num2str(yCenter), newline,...
+            text = ['xGain (Y+/H-): ', num2str(xGain), newline,...
+                'yGain (T+/G-): ' num2str(yGain), newline,...
+                'xLocation (D+/A-): ' num2str(xCenter),  newline,...
+                'yLocation (W+/S-): ' num2str(yCenter), newline,...
                 'Fixation Percentage: ', num2str(sum(fixation(1:frameIdx,1))/length(fixation(1:frameIdx,1)*100)), newline...
-                'Reward Rate :' num2str(newRewardRate)];
+                'Reward Duration (+1/-2): ' num2str(rewardDur),newline,...
+                'Reward Wait Time (+3/-4): ' num2str(newRewardRate),newline,...
+                'R: Recenter',newline,...
+                'J: Juice',newline,...
+                'F: Put fixation cross back at center',newline,...
+                'V+/B-: Increase/Decrease fixation cross size',newline,...
+                'Z: Play/Pause movie'];
 
             DrawFormattedText(expWindow, text);
             
@@ -275,7 +291,7 @@ function FiveDot
             
             % Juice Reward
             if incRate == true && frameIdx > fps*rewardCalcDur
-                 newRewardRate = ((1+maxChange) - sum(fixation(frameIdx-fps*rewardCalcDur+1:frameIdx),"all")/(fps*rewardCalcDur))*rewardWait;
+                 newRewardRate = ((1+maxChange) - sum(fixation(round(frameIdx-fps*rewardCalcDur+1):frameIdx),"all")/(fps*rewardCalcDur))*rewardWait;
             end
             if frameIdx > fps*rewardWait
                 [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,newRewardRate,fixation,juiceDistTime,rewardPerf,rewardDur,timeSinceLastJuice);
@@ -296,18 +312,18 @@ function FiveDot
     disp(['yGain: ' num2str(yGain)]);
     disp(['xOffset: ' num2str(xOffset)]);
     disp(['yOffset: ' num2str(yOffset)]);
+    disp(['Fixation: ' num2str(sum(fixation,1,'omitnan')/length(fixation(~isnan(fixation))))]);
 
     save(dataSaveFile, 'eyePosition');
-    clear DAQ
     sca;
-    
+    close all;
         
         
     function [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime, rewardPerf,rewardDur,timeSinceLastJuice)
 
         timeSinceLastJuice = GetSecs-juiceDistTime;
         
-        if juiceOn == false && timeSinceLastJuice > rewardWait && sum(fixation(round(frameIdx-fps*rewardWait+1):frameIdx),"all") > rewardPerf*fps*rewardWait
+        if juiceOn == false && timeSinceLastJuice > rewardWait && sum(fixation(round(frameIdx-fps*rewardWait+1:frameIdx)),"all") > rewardPerf*fps*rewardWait
             juiceOn = true;
         end
         if juiceOn == true 
