@@ -73,6 +73,8 @@ params.grayCase = 4; % When blockorder == 4, it is a gray block. Currently unuse
 params.probeChance = 1/4.5; % The chance that it is a probe trial
 params.numProbes_init = params.probeChance*params.numblocks; % Number of probes per trial
 
+% Colors
+params.gray = [128 128 128];
 
 while true % Now we run a while loop to actually display the menu
     prompt = ['Menu',newline,...

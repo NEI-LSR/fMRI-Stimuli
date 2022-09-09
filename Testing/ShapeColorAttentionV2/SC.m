@@ -13,7 +13,10 @@ function [params] = SC(params)
     
     %% Initialize Parameters
     KbName('UnifyKeyNames'); % Create common key naming scheme for keyboard
-
+    
+    % Run information
+    params.complete = false; % Run not completed yet
+    
     % Set up save file paths
     params.runExpTime = datestr(now); % Get the time the run occured at.
     params.date_time = strrep(strrep(datestr(datetime),' ','_'),':','_'); % Get the numstring of the time 
@@ -273,16 +276,20 @@ function [params] = SC(params)
                 end
                 if toc >= params.runDur
                     quitNow = true;
+                    params.complete = true; % Run completed
                 end
                 if frameIdx >= params.runDur*params.FPS
                     quitNow = true;
+                    params.complete = true; % Run completed
                 end
             end
             if toc >= params.runDur
                 quitNow = true;
+                params.complete = true; % Run completed
             end
             if frameIdx >= params.runDur*params.FPS
                 quitNow = true;
+                params.complete = true; % Run completed
             end
             if quitNow == true
                 Screen('FinalizeMovie', movie);
@@ -654,27 +661,7 @@ function [params] = SC(params)
         dist = hypot(xDiff,yDiff);
         inCircle = radius>dist;
     end
-    
-    function rects = createTiledRects(arearect,numRects,rows)
-        totwidth = arearect(3)-arearect(1);
-        totheight = arearect(4)-arearect(2);
-        stimPerRow = ceil(numRects/rows);
-        widths = totwidth/stimPerRow;
-        heights = totheight/rows;
-        rect_base = [0 0 widths heights];
-        centers_x = (arearect(1)+widths/2):widths:arearect(3);
-        centers_y = (arearect(2)+heights/2):heights:arearect(4);
-        rects = NaN(4,numRects);
-        for i = 1:rows
-            for j = 1:stimPerRow
-                k = (i-1)*stimPerRow+j;
-                rects(:,k) = CenterRectOnPointd(rect_base,centers_x(j),centers_y(i));
-            end
-        end
-    end
-
-
-
+   
 end
 
 
