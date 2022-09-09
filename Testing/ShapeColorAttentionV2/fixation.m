@@ -10,7 +10,6 @@ function [params] = fixation(params);
     % How long will this last
     exactDur = 3600;
     
-    linecolorIdx = 1;
     linecolors = [0 0 0; 255 0 0; 0 255 0; 0 0 255; 255 255 255];
     linecolor = linecolors(1,:);
 
@@ -20,8 +19,8 @@ function [params] = fixation(params);
     KbName('UnifyKeyNames');
     % Initialize save paths for eyetracking, other data:
 
-
-    dataSaveFile = ['Data/'  num2str(date_time) '_EyeData.mat']; % File to save eye data
+    params.date_time = strrep(strrep(datestr(datetime),' ','_'),':','_'); % Get the numstring of the time 
+    dataSaveFile = ['Data/'  num2str(params.date_time) '_EyeData.mat']; % File to save eye data
 
    
     
@@ -59,7 +58,7 @@ function [params] = fixation(params);
     viewStimRect = CenterRectOnPointd(stimRect, xCenter,yCenter);
     expStimRect = CenterRectOnPointd(stimRect, xCenterExp,yCenterExp);
     % Load Fixation Grid and Create Texture:
-    load([stimDir '/' 'fixGrid.mat'], 'fixGrid'); % Loads the .mat file with the fixation grid texture
+    load([params.stimDir '/' 'fixGrid.mat'], 'fixGrid'); % Loads the .mat file with the fixation grid texture
     fixGridTex = Screen('MakeTexture', viewWindow, fixGrid); % Creates the fixation grid as a texture
     
         
@@ -80,10 +79,10 @@ function [params] = fixation(params);
         Screen('Flip', viewWindow);
         
         % Wait for TTL
-        baselineVoltage = DAQ('GetAnalog',ttlChannel);
+        baselineVoltage = DAQ('GetAnalog',params.ttlChannel);
         while true
             [keyIsDown,secs, keyCode] = KbCheck;
-            ttlVolt = DAQ('GetAnalog',ttlChannel);
+            ttlVolt = DAQ('GetAnalog',params.ttlChannel);
             if keyCode(KbName('space'))
                 break;
             elseif abs(ttlVolt - baselineVoltage) > 0.4
@@ -104,7 +103,7 @@ function [params] = fixation(params);
             fixation(frameIdx,1) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2),fixRect);
             % Process Keys
             if keyCode(KbName('r')) % Recenter
-                xOffset = xOffset + eyePosition(frameIdx,1)-xCenterExp;
+                params.xOffset = params.xOffset + eyePosition(frameIdx,1)-xCenterExp;
                 params.yOffset = params.yOffset + eyePosition(frameIdx,2)-yCenterExp;
             elseif keyCode(KbName('j')) % Juice
                 juiceOn = true;
@@ -180,12 +179,6 @@ function [params] = fixation(params);
                     viewStimRect = CenterRectOnPointd(stimRect, xCenter,yCenter);
                     expStimRect = CenterRectOnPointd(stimRect, xCenterExp,yCenterExp);
                 end
-            elseif keyCode(KbName('z')) && start_movie == true
-                if play_movie == false
-                    play_movie = true
-                elseif play_movie == true
-                    play_movie = false
-                end
             elseif keyCode(KbName('1!')) % Juice
                 params.rewardDur = params.rewardDur + params.rewardKeyChange;
             elseif keyCode(KbName('2@')) % Juice
@@ -199,24 +192,21 @@ function [params] = fixation(params);
             end
 
 
-            % Draw movie if playing on framebuffer
-            if start_movie
-                tex = Screen('GetMovieImage', viewWindow, movie);
-            end
-            if play_movie == true
-                Screen('DrawTexture', viewWindow,tex,[],viewStimRect);
-                Screen('DrawTexture', expWindow,tex,[],expStimRect);
-
-            end
-
             % Draw Text on FrameBuffer:
-            text = ['xGain: ', num2str(params.xGain), newline,...
-                'yGain: ' num2str(params.yGain), newline,...
+            text = ['xGain (y+/h-): ', num2str(params.xGain), newline,...
+                'yGain (t+/g-): ' num2str(params.yGain), newline,...
                 'xLocation: ' num2str(xCenter),  newline,...
                 'yLocation: ' num2str(yCenter), newline,...
                 'Fixation Percentage: ', num2str(sum(fixation(1:frameIdx,1))/length(fixation(1:frameIdx,1)*100)), newline...
                 'Reward Duration (+1/-2): ' num2str(params.rewardDur),newline,...
-                'Reward Wait Time (+3/-4): ' num2str(newRewardRate)];
+                'Reward Wait Time (+3/-4): ' num2str(newRewardRate),newline,...
+                '(v+/b-): Increase/Decrease Fixation Cross',newline,...
+                '(n+/m-): Increase/Decrease Fixation Window',newline,...
+                '(q): Change Cross Color',newline,...
+                '(r): Recenter',newline,...
+                '(f): Place Fixation Cross at Center',newline,...
+                '(wasd): Move Fixation Cross Around',newline,...
+                '(p): quit'];
 
             DrawFormattedText(expWindow, text);
             
@@ -255,7 +245,7 @@ function [params] = fixation(params);
     
     disp(['xGain: ' num2str(params.xGain)]);
     disp(['yGain: ' num2str(params.yGain)]);
-    disp(['xOffset: ' num2str(xOffset)]);
+    disp(['xOffset: ' num2str(params.xOffset)]);
     disp(['yOffset: ' num2str(params.yOffset)]);
     disp(['Fixation: ' num2str(sum(fixation,1,'omitnan')/length(fixation(~isnan(fixation))))]);
 
@@ -264,11 +254,11 @@ function [params] = fixation(params);
     close all;
         
         
-    function [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardwait,fixation,juiceDistTime,rewardPerf,rewardDur,timeSinceLastJuice)
+    function [juiceOn, juiceDistTime,timeSinceLastJuice] = juiceCheck(juiceOn, frameIdx,fps,rewardWait,fixation,juiceDistTime,rewardPerf,rewardDur,timeSinceLastJuice)
 
         timeSinceLastJuice = GetSecs-juiceDistTime;
         
-        if juiceOn == false && timeSinceLastJuice > params.rewardWait && sum(fixation(round(frameIdx-fps*rewardWait+1:frameIdx)),"all") > rewardPerf*fps*rewardWait
+        if juiceOn == false && timeSinceLastJuice > rewardWait && sum(fixation(round(frameIdx-fps*rewardWait+1:frameIdx)),"all") > rewardPerf*fps*rewardWait
             juiceOn = true;
         end
         if juiceOn == true 

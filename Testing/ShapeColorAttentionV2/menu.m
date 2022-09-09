@@ -53,7 +53,7 @@ params.choiceSectionDur = 1; % TRs, how many TRs the choice will be on. If not c
 params.blocklength = params.stimDur+params.grayDur+params.choiceSectionDur; % TRs, number of TRs in each block
 params.TR = 3; % Seconds, how many TRs 
 params.movieFPS = 10; % Number of frames per second the movie will have
-params.FPS = 60; % Number of frames per second the playback of the experiment will be.
+params.FPS = 30; % Number of frames per second the playback of the experiment will be.
 params.IFI = 1/params.FPS; % Inter frame interval
 params.numconds = 3; % Number of conditions
 params.blockrepeats = 3; % Number of times blocks are repeated
@@ -74,7 +74,7 @@ params.probeChance = 1/4.5; % The chance that it is a probe trial
 params.numProbes_init = params.probeChance*params.numblocks; % Number of probes per trial
 
 % Colors
-params.gray = [128 128 128];
+params.gray = [31 29 47];
 
 while true % Now we run a while loop to actually display the menu
     prompt = ['Menu',newline,...

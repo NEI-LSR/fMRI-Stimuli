@@ -27,6 +27,6 @@ for i = 1:params.endGrayDur/params.TR
 end
 
 DM = array2table(DM_array);
-DM.Properties.VariableNames = params.IMA;
+DM.Properties.VariableNames{1} = ['IMA ' num2str(params.IMA)];
 writetable(DM,params.DMSaveFile,"Delimiter","\t");
 

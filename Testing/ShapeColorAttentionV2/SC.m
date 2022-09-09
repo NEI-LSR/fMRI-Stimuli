@@ -29,7 +29,7 @@ function [params] = SC(params)
 
     %params.gray = [31 29 47]; % Gray of background
     
-    params.gray = [128 128 128];
+    params.gray = [31 29 47];
     params.red = [255 0 0]; % Red color
     params.green = [0 255 0]; % Green color
     params.blue = [0 0 255]; % Blue color
@@ -269,7 +269,7 @@ function [params] = SC(params)
                     isgray=true;
                     blockType = 'Gray';
                 end
-                if blockIndx < length(params.blockorder)
+                if blockIndx <= length(params.blockorder)
                     if params.probeArray(blockIndx) == 1 && isgray==false && params.choiceSectionDur > 0 % Add one to choice index
                         choiceIndx = choiceIndx+1;
                     end
@@ -295,7 +295,7 @@ function [params] = SC(params)
                 Screen('FinalizeMovie', movie);
                 sca
                 save(params.dataSaveFile);
-                disp(['Fixation: ' num2str(sum(fixation)/length(fixation(1:frameIdx,1)))]);
+                disp(['Fixation: ' num2str(sum(fixation,'omitnan')/length(fixation(1:frameIdx,1)))]);
                 disp(['Correct Number of Choices: ' num2str(correctChoiceCounter), '/' num2str(choiceIndx)])
                 break;
                 
@@ -414,16 +414,17 @@ function [params] = SC(params)
             end
             
             
-            if blockIndx < length(params.blockorder)
+            if blockIndx <= length(params.blockorder)
                 blockTimeTotal = params.blocklength*params.TR;
             else
                 blockTimeTotal = params.endGrayDur;
             end
-            
-            if params.probeArray(blockIndx) == 1;
-                inProbe = 'Probe Block';
-            else
-                inProbe = 'No Probe';
+            if blockIndx <= length(params.blockorder)
+                if params.probeArray(blockIndx) == 1;
+                    inProbe = 'Probe Block';
+                else
+                    inProbe = 'No Probe';
+                end
             end
 
             infotext = ['Time Elapsed: ', num2str(toc), '/', num2str(params.runDur), newline,...
