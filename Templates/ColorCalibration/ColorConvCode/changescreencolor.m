@@ -1,14 +1,14 @@
 % Changes Screen Color
 % Stuart J Duffield 2021-12-14
 global PRport
-PRport = 'COM6';
+PRport = 'COM4';
 StepSize = 1;
 ScreenSize = [];
 KbName('UnifyKeyNames');
 Screen('Preference', 'SkipSyncTests', 1); 
 Screen('Preference', 'VisualDebugLevel', 0);
 Screen('Preference', 'Verbosity', 0);
-Screen('Preference', 'SuppressAllWarnings', 1);p
+Screen('Preference', 'SuppressAllWarnings', 1);
 color = [0 0 0];
 textcolor = [255 255 255] - color;
 screen = max(Screen('Screens'));

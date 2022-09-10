@@ -6,9 +6,9 @@ saveDir = [curDir '\targetvalues'];
 if ~isfolder(saveDir)
     mkdir(saveDir)
 end
-extension = 'test';
+extension = 'DKL8ColorBiasedRegionLocalizerColors';
 targetLMSF = [saveDir '\' extension '.mat'];
-LMSgray = [0.54529 0.44988 0.26871]; % insert the LMS value of the gray you measured
+LMSgray = [0.4506 0.3763 0.2380]; % insert the LMS value of the gray you measured
 graypointRGB = [128 128 128]; % What is the value of the isoluminant RGB that you want? 
 scalingFs = [0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9]; % How far along the gamut of the direction with the least gamut range do you want to extend?
 angles = [0, 45, 90, 135, 180, 225, 270,315]; % What angles in DKL space do you want to compute your colors around
@@ -19,8 +19,8 @@ graypoint = graypointRGB/256; % Convert RGB graypoint into decimal
 bgLMS = LMSgray'; % Transpose for the background LMS value
 
 
-calibName = '26-Jan-2022_PROPIXSmallNoFilter'; % What is the name of the files that stores the calibration information?
-calibpath = pwd; % Where is this path?
+calibName = '10-Sep-2022_NIFWideScreen20220910'; % What is the name of the files that stores the calibration information?
+calibpath = 'C:\Users\Admin\Documents\fMRI-Stimuli\Templates\ColorCalibration\measurements\10-Sep-2022_NIFWideScreen20220910\'; % Where is this path?
 measuresFilename = [calibName '.mat']; % Load the values of the spectra recorded
 lutFilename = [calibName '_LUT.mat']; % Load the lookup table
 varname = who('-file', [calibpath filesep measuresFilename]); %

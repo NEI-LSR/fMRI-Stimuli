@@ -1,8 +1,8 @@
 %% Luminance Contrast
 % Computes the luminance contrast colors and the estimated RGB colors
 graypointRGB = [128 128 128]; % What is the point you want luminance contrast from?
-LMSGray = [0.54529 0.44988 0.26871]; % What is the cone excitation coordinates of that point?
-extension = ['test']; % What extension do you want everything saved as?
+LMSGray = [0.4506 0.3763 0.2380]; % What is the cone excitation coordinates of that point?
+extension = ['DKL8ColorBiasedRegionLocalizerColors']; % What extension do you want everything saved as?
 lumChanges = [0.05,-0.05,0.1,-0.1,0.15,-0.15,0.2,-0.2,0.25,-0.25];
 
 curDir = pwd; % What is the working directory?
@@ -12,8 +12,8 @@ if ~isfolder(saveDir) % If the output directory doesn't exits
 end
 
 % Create the RGB to LMS matrix using your calibration file
-calibName = '26-Jan-2022_PROPIXSmallNoFilter'; % What is the name of the files that stores the calibration information?
-calibpath = pwd; % Where is this path?
+calibName = '10-Sep-2022_NIFWideScreen20220910'; % What is the name of the files that stores the calibration information?
+calibpath = 'C:\Users\Admin\Documents\fMRI-Stimuli\Templates\ColorCalibration\measurements\10-Sep-2022_NIFWideScreen20220910\'; % Where is this path?
 measuresFilename = [calibName '.mat']; % Load the values of the spectra recorded
 lutFilename = [calibName '_LUT.mat']; % Load the lookup table
 varname = who('-file', [calibpath filesep measuresFilename]); %

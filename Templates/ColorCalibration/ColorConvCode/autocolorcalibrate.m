@@ -1,17 +1,18 @@
 % Changes Screen Color
 % Stuart J Duffield 2021-12-14
+clear;
 curdir = pwd;
 saveDir = [curdir '\automaticMeasurements\'];
 if ~isfolder(saveDir)
     mkdir(saveDir)
 end
-targColorF = 'C:\Users\Admin\Documents\GitHub\fMRI-Stimuli\Templates\ColorCalibration\target_xyz.csv';
-startRGBF = 'C:\Users\Admin\Documents\GitHub\fMRI-Stimuli\Templates\ColorCalibration\target_rgb.csv';
-thresh = 1; % Import to set this specifically for each
-targType = 'XYZ';
+targColorF = 'C:\Users\Admin\Documents\fMRI-Stimuli\Templates\ColorCalibration\ColorConvCode\targetvalues\DKL8ColorBiasedRegionLocalizerColors_LMS.csv';
+startRGBF = 'C:\Users\Admin\Documents\fMRI-Stimuli\Templates\ColorCalibration\ColorConvCode\targetvalues\DKL8ColorBiasedRegionLocalizerColors_RGB.csv';
+thresh = 0.001; % Import to set this specifically for each
+targType = 'LMS';
 
 global PRport
-PRport = 'COM3';
+PRport = 'COM4';
 StepSize = 1;
 ScreenSize = [];
 KbName('UnifyKeyNames');
@@ -27,7 +28,7 @@ Screen('DrawText', Window, num2str(color),[],[],textcolor);
 Screen('Flip',Window);
 mNum = 1; % Measure Numberp
 measurements = struct('targColor',{},'targType',{},'colorNumber',{},'gunVals',{},'xyY',{},'XYZ',{},'xyYJudd',{},'XYZJudd',{},'LMS',{},'spectra',{},'magnitudeDiff',{});
-date_time=strrep(strrep(datestr(datetime),' ','_'),':','_')
+date_time=strrep(strrep(datestr(datetime),' ','_'),':','_');
 
 saveFile = [saveDir date_time];
 targColors = csvread(targColorF);

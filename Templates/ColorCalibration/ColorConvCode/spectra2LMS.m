@@ -4,7 +4,7 @@ function LMS = spectra2LMS(S, color_matching_function)
 %this calls up the appropriate color matching functions
 switch color_matching_function
  case {'LMS' 'lms'}
-    conefundsSP = csvread('conefund_smithpokorny.csv')
+    conefundsSP = csvread('conefund_smithpokorny.csv');
     %conesensitivities = [conefundsSP(:, 1), temp];
     temp = 10.^conefundsSP(:, 2:4);
     con_sens_ax1 = conefundsSP(:, 1);
