@@ -1,4 +1,4 @@
-IMA 17
+IMA 18
 Diamond
 Diamond
 Diamond
@@ -19,14 +19,14 @@ Acorn
 Acorn
 Background
 Background
-LightBlue
-LightBlue
-LightBlue
-LightBlue
-LightBlue
-LightBlue
-LightBlue
-LightBlue
+LightBlue_Probe
+LightBlue_Probe
+LightBlue_Probe
+LightBlue_Probe
+LightBlue_Probe
+LightBlue_Probe
+LightBlue_Probe
+LightBlue_Probe
 Background
 LightBlue_Choice
 Bar
@@ -49,14 +49,14 @@ Chevron
 Chevron
 Background
 Background
-DarkBlue
-DarkBlue
-DarkBlue
-DarkBlue
-DarkBlue
-DarkBlue
-DarkBlue
-DarkBlue
+DarkBlue_Probe
+DarkBlue_Probe
+DarkBlue_Probe
+DarkBlue_Probe
+DarkBlue_Probe
+DarkBlue_Probe
+DarkBlue_Probe
+DarkBlue_Probe
 Background
 DarkBlue_Choice
 Hat

@@ -6,28 +6,34 @@
 % Initialize general parameters here
 params = struct(); % Initialize paramter structure
 % Who is the subject
-params.subject = 'Wooster'
-params.experiment = 'Shape Color 4.0'
+params.subject = ;
+params.experiment = 'Shape Color 4.0';
 params.runNum = 0; % What number run are we at? Starts at 0 because the while loop below increments this
 
 % Reward parameters
 params.rewardDur = 0.01; % Seconds of reward
 params.rewardWait = 1; % Seconds, time to wait between rewards
+params.rewardWaitActual = params.rewardWait; % This will be changed by the jitter
 params.rewardWaitChange = 0.01; % Seconds, increment to change reward wait by during experiment
+params.rewardWaitJitter = 0.1; % Seconds, jitter in how much reward is given by at any moment
 params.rewardPerf = 0.75; % % Fixation, how much to get reward
 params.rewardKeyChange = 0.01; % Seconds, increment to change reward durations by during experiment
 
+params.gainStep = 5; % Pixels/Volt, how much to change the gain by
 % Calibration Parameters and DAQ Startup settings
-DAQ('Debug',true); % Set DAQ to not debug
+DAQ('Debug',false); % Set DAQ to not debug
 DAQ('Init'); % Initialize DAQ
-params.xGain = -500; % Pixels/Volt
+params.xGain = -590; % Pixels/Volt
 params.yGain = 700; % Pixels/Volt
-params.xOffset = -265; % Pixels
-params.yOffset = -184; % Pixels
+params.xOffset = -1145; % Pixels
+params.yOffset = -622; % Pixels
 params.xChannel = 2; % DAQ indexes starts at 1
 params.yChannel = 3; % Where y channel inputs to the DAQ
 params.ttlChannel = 8; % Where the TTL channel inputs to the DAQ
-params.manualMovementPix = 10
+params.manualMovementPix = 10; % How much manually moving moves the fixation point
+params.numVoltSamples = 10; % for datapixx, how many samples you want to average over for fixation coordinates
+
+
 % Set up folder structure
 params.curdir = pwd; % Get the current working directory
 params.stimDir = fullfile(params.curdir,'Stimuli'); % Get the stimuli directory
@@ -47,8 +53,8 @@ params.choiceDur = 0.7; % Seconds, how long to fixate at choice to get a reward
 params.choiceRewardDur = 0.3; % Seconds, how long the reward is for correct choice
 params.endGrayDur = 30; % Seconds, how long gray is on at end of experiment
 params.choiceDistAngle = 10; % Degrees Visual Angle, how distant the choices will be 
-params.stimDur = 2; % TRs, how many TRs the stimulus will be on
-params.grayDur = 2; % TRs, how many TRs the gray will be after the stimulus
+params.stimDur = 8; % TRs, how many TRs the stimulus will be on
+params.grayDur = 1; % TRs, how many TRs the gray will be after the stimulus
 params.choiceSectionDur = 1; % TRs, how many TRs the choice will be on. If not choice stimulus, will be gray
 params.blocklength = params.stimDur+params.grayDur+params.choiceSectionDur; % TRs, number of TRs in each block
 params.TR = 3; % Seconds, how many TRs 

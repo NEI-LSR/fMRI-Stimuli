@@ -323,23 +323,7 @@ function [params] = SC(params)
                 circleColor = params.white;
             end
 
-            if timeSinceLastJuice > params.rewardWait
-                startIdx = round(frameIdx-((params.FPS*params.rewardWait)+1));
-                if startIdx < 1
-                    startIdx = 1;
-                elseif startIdx >=frameIdx
-                    startIdx = frameIdx - 1;
-                end
-                if sum(fixation(startIdx:frameIdx),"all",'omitnan') > params.rewardPerf*params.FPS*params.rewardWait
-                    [juiceEndTime,juiceOn]= juice(params.rewardDur,juiceEndTime,toc,juiceOn);
-                    timeSinceLastJuice = 0;
-                    timeAtLastJuice = toc;
-                else
-                    timeSinceLastJuice = toc - timeAtLastJuice;                    
-                end
-            else
-                timeSinceLastJuice = toc - timeAtLastJuice;
-            end
+            params = CheckReward(params);
 
             if juiceOn == true
                 juiceSetting = 'On';
@@ -392,15 +376,21 @@ function [params] = SC(params)
                 elseif keyCode(KbName('n')) && params.rewardWait > params.rewardWaitChange
                     params.rewardWait = params.rewardWait-params.rewardWaitChange;
                     keyIsDown = 0;
-                elseif keyCode(KbName('w')) && fixPix > pixPerAngle/2 % Increase fixation circle
-                    fixPix = fixPix - pixPerAngle/2; % Shrink fixPix by half a degree of visual angle
+                elseif keyCode(KbName('1!'))
+                    params.rewardWaitJitter = params.rewardWaitChange + params.rewardWaitJitter;
+                    keyIsDown = 0;
+                elseif keyCode(KbName('2@')) && params.rewardWaitJitter > params.rewardWaitChange
+                    params.rewardWait = params.rewardWaitJitter-params.rewardWaitChange;
+                    keyIsDown = 0;
+                elseif keyCode(KbName('w')) && fixPix > params.pixPerAngle/2 % Increase fixation circle
+                    fixPix = fixPix - params.pixPerAngle/2; % Shrink fixPix by half a degree of visual angle
                     baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
                     fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
                     rightFixRect = CenterRectOnPointd(baseFixRect*2, xCenterExp+0.5*distPix, yCenterExp); % Area of fixation that can be looked at for choice on the right
                     leftFixRect = CenterRectOnPointd(baseFixRect*2, xCenterExp-0.5*distPix, yCenterExp); % Area of fixation that can be looked at for choiceo n the left
                     keyIsDown=0;
-                elseif keyCode(KbName('s')) && fixPix < pixPerAngle*10
-                    fixPix = fixPix + pixPerAngle/2; % Increase fixPix by half a degree of visual angle
+                elseif keyCode(KbName('s')) && fixPix < params.pixPerAngle*10
+                    fixPix = fixPix + params.pixPerAngle/2; % Increase fixPix by half a degree of visual angle
                     baseFixRect = [0 0 fixPix fixPix]; % Size of the fixation circle
                     fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
                     rightFixRect = CenterRectOnPointd(baseFixRect*2, xCenterExp+0.5*distPix, yCenterExp); % Area of fixation that can be looked at for choice on the right
@@ -440,7 +430,9 @@ function [params] = SC(params)
                 'Correct Number of Choices: ', num2str(correctChoiceCounter), '/' num2str(choiceIndx), newline,...
                 'Choice Reward Duruation (+z/-x): ', num2str(params.choiceRewardDur),newline,...
                 'Reward Duration (+c/-v): ', num2str(params.rewardDur),newline,...
-                'Reward Wait Time (+b/-n): ', num2str(params.rewardWait)];
+                'Reward Wait Time (+b/-n): ', num2str(params.rewardWait),newline,...
+                'Actual Reward Wait Time: ', num2str(params.rewardWaitActual),newline,...
+                'Reward Jitter (+1/-2): ' num2str(params.rewardWaitJitter)];
                
 
             DrawFormattedText(expWindow,infotext);
@@ -620,49 +612,6 @@ function [params] = SC(params)
     disp(['Correct Number of Choices: ' num2str(correctChoiceCounter), '/' num2str(choiceIndx)])
     close all;
 
-    function [juiceEndTime,juiceOn] = juice(howLong,juiceEndTime, curTime,juiceOn)
-        if howLong > 0
-            if juiceEndTime > curTime
-                juiceEndTime = juiceEndTime + howLong;
-            else
-                juiceEndTime = curTime + howLong;
-            end
-        end
-        if juiceOn == true
-            if juiceEndTime<=curTime
-                DAQ('SetBit',[0 0 0 0]); % Turn it off if juice was on but juice no longer needs to be on
-                juiceOn = false;
-            else
-                juiceOn = true;
-            end
-        elseif juiceOn == false
-            if juiceEndTime > curTime
-                DAQ('SetBit',[1 1 1 1])
-                juiceOn = true;
-            else
-                juiceOn = false;
-            end
-        end
-    end
-        
-
-    function [xPos,yPos] = eyeTrack(xChannel,yChannel,xGain,yGain,xOffset,yOffset)
-        coords = DAQ('GetAnalog',[xChannel yChannel]);
-        xPos = (coords(1)*xGain)-xOffset;
-        yPos = (coords(2)*yGain)-yOffset;
-    end
-
-
-
-    function inCircle = isInCircle(xPos, yPos, circle) % circle is a PTB rectangle
-        radius = (circle(3) - circle(1)) / 2;
-        [xCircleCenter, yCircleCenter] = RectCenter(circle);
-        xDiff = xPos-xCircleCenter;
-        yDiff = yPos-yCircleCenter;
-        dist = hypot(xDiff,yDiff);
-        inCircle = radius>dist;
-    end
-   
 end
 
 

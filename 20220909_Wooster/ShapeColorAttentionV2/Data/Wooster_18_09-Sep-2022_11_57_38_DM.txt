@@ -1,4 +1,4 @@
-IMA 18
+IMA 19
 Hourglass
 Hourglass
 Hourglass
@@ -19,14 +19,14 @@ Star
 Star
 Background
 Background
-DarkPurple
-DarkPurple
-DarkPurple
-DarkPurple
-DarkPurple
-DarkPurple
-DarkPurple
-DarkPurple
+DarkPurple_Probe
+DarkPurple_Probe
+DarkPurple_Probe
+DarkPurple_Probe
+DarkPurple_Probe
+DarkPurple_Probe
+DarkPurple_Probe
+DarkPurple_Probe
 Background
 DarkPurple_Choice
 Spike
@@ -59,14 +59,14 @@ DarkGreen
 DarkGreen
 Background
 Background
-UpArrow
-UpArrow
-UpArrow
-UpArrow
-UpArrow
-UpArrow
-UpArrow
-UpArrow
+UpArrow_Probe
+UpArrow_Probe
+UpArrow_Probe
+UpArrow_Probe
+UpArrow_Probe
+UpArrow_Probe
+UpArrow_Probe
+UpArrow_Probe
 Background
 UpArrow_Choice
 House

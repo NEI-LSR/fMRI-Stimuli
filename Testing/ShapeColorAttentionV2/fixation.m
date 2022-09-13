@@ -144,13 +144,13 @@ function [params] = fixation(params);
                 fixRect = CenterRectOnPointd(baseFixRect, xCenterExp, yCenterExp); % We center the fixation rectangle on the center of the screen
                 [xCenterExp, yCenterExp] = RectCenter(expRect); % Get center of the experimentor's screen
             elseif keyCode(KbName('y'))
-                params.xGain = params.xGain + gainStep;
+                params.xGain = params.xGain + params.gainStep;
             elseif keyCode(KbName('h'))
-                params.xGain = params.xGain - gainStep;
+                params.xGain = params.xGain - params.gainStep;
              elseif keyCode(KbName('t'))
-                params.yGain = params.yGain + gainStep;
+                params.yGain = params.yGain + params.gainStep;
             elseif keyCode(KbName('g'))
-                params.yGain = params.yGain - gainStep;
+                params.yGain = params.yGain - params.gainStep;
             elseif keyCode(KbName('q'))
                 %linecolorIdx = randi([1 5], 1);
                 %linecolor = linecolors(linecolorIdx,:);

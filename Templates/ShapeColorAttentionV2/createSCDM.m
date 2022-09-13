@@ -4,7 +4,11 @@ DM_array = strings(params.runDur/params.TR,1);
 TRind = 1;
 for i = 1:length(params.orderNames)
     for j = 1:params.stimDur
-        DM_array(TRind) = params.orderNames(i);
+        if params.probeArray(i) == 1
+            DM_array(TRind) = strcat(params.orderNames(i),"_Probe");
+        else
+            DM_array(TRind) = params.orderNames(i);
+        end
         TRind = TRind + 1;
     end
     for f = 1:params.grayDur
