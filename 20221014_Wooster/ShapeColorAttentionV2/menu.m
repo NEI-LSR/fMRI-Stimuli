@@ -1,4 +1,4 @@
-%% Menu for Experiments
+ %% Menu for Experiments
 % Menu for Shape Color
 % Initialize parameters here
 % Stuart J Duffield 09/2022
