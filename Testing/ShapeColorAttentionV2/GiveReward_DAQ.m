@@ -11,7 +11,7 @@ function [params] = GiveReward_DAQ(params,juiceTime,curTime)
         end
     end
 
-    if params.juiceOn == true % Is the juice currently on?
+    if params.juiceOn == true % Is the juice currently on? This segment of code no longer works in GiveReward_DAQ, it now functionally works in StopReward
         if params.juiceEndTime <= curTime % If the current time has exceeded or equals the end juiceTime
             DAQ('SetBit',[0 0 0 0]); % Turn off the juice
             params.juiceOn = false;

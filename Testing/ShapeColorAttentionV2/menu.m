@@ -6,12 +6,12 @@
 % Initialize general parameters here
 params = struct(); % Initialize paramter structure
 % Who is the subject
-params.subject = ;
+params.subject = 'test';
 params.experiment = 'Shape Color 4.0';
 params.runNum = 0; % What number run are we at? Starts at 0 because the while loop below increments this
 
 % Reward parameters
-params.rewardDur = 0.01; % Seconds of reward
+params.rewardDur = 0.5; % Seconds of reward
 params.rewardWait = 1; % Seconds, time to wait between rewards
 params.rewardWaitActual = params.rewardWait; % This will be changed by the jitter
 params.rewardWaitChange = 0.01; % Seconds, increment to change reward wait by during experiment
@@ -20,16 +20,21 @@ params.rewardPerf = 0.75; % % Fixation, how much to get reward
 params.rewardKeyChange = 0.01; % Seconds, increment to change reward durations by during experiment
 
 params.gainStep = 5; % Pixels/Volt, how much to change the gain by
+
 % Calibration Parameters and DAQ Startup settings
-DAQ('Debug',false); % Set DAQ to not debug
-DAQ('Init'); % Initialize DAQ
+params.interface = 'debug'
 params.xGain = -590; % Pixels/Volt
 params.yGain = 700; % Pixels/Volt
 params.xOffset = -1145; % Pixels
 params.yOffset = -622; % Pixels
-params.xChannel = 2; % DAQ indexes starts at 1
-params.yChannel = 3; % Where y channel inputs to the DAQ
-params.ttlChannel = 8; % Where the TTL channel inputs to the DAQ
+params.datapixx.analogInRate         = 1000; % In Hz
+params.datapixx.analogOutRate        = 1000; % In Hz
+params.datapixx.adcChannels          = [0 1 2 3 4 5 6 7]; % ADC channels assigned to inputs (7 = scannerTTL)
+params.datapixx.dacChannels          = 1; % DAC channels assigned to outputs
+params.datapixx.adcBufferAddress     = 4e6; % Set DataPixx internal ADC buffer address
+params.datapixx.dacBufferAddress     = 8e6;    
+params.daq.analogChannels = [2 3]; % DAQ indexes starts at 1, X is channel 2 and Y is channel 3
+params.daq.ttlChannel = 8; % Where the TTL channel inputs to the DAQ
 params.manualMovementPix = 10; % How much manually moving moves the fixation point
 params.numVoltSamples = 10; % for datapixx, how many samples you want to average over for fixation coordinates
 

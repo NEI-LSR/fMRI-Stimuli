@@ -63,8 +63,8 @@ function [params] = SC(params)
     fixPix = 3*params.pixPerAngle; % How large the fixation will be
     distPix = params.choiceDistAngle*params.pixPerAngle; % How far apart the choices will be
 
-    fixCrossDimPix = 10; % Fixation cross arm length
-    lineWidthPix = 2; % Fixation cross arm thickness
+    fixCrossDimPix = 10; % fixation cross arm length
+    lineWidthPix = 2; % fixation cross arm thickness
     xCoords = [-fixCrossDimPix fixCrossDimPix 0 0]; 
     yCoords = [0 0 -fixCrossDimPix fixCrossDimPix];
     allCoords = [xCoords; yCoords]; % Creates the fixation cross
@@ -141,8 +141,9 @@ function [params] = SC(params)
 
 
 
-    eyePosition = NaN(params.FPS*params.runDur,2); % Set up eyePosition array
-    fixation = NaN(params.FPS*params.runDur,1); % Set up fixation array
+    params.eyePosition = NaN(params.FPS*params.runDur,2); % Set up eyePosition array
+    params.eyeVolts = NaN(params.FPS*params.runDur,2); % Set up voltage data parray
+    params.fixation = NaN(params.FPS*params.runDur,1); % Set up fixation array
     leftFixation = NaN(params.FPS*params.runDur,1); % Set up left fixation array
     rightFixation = NaN(params.FPS*params.runDur,1); % Set up right fixation array
     blockTracker = NaN(params.FPS*params.runDur,1); % Set up block tracking array
@@ -160,10 +161,10 @@ function [params] = SC(params)
     jitterY = sin(jitterAngle).*jitterDist; % Y
     Priority(2) % topPriorityLevel?
     %Priority(9) % Might need to change for windows
-    juiceOn = false; % Logical for juice giving
-    juiceEndTime = 0; % Initialize the variable that stores when the juice ends
-    timeSinceLastJuice = 0; % Initialze the variable that stores how long it has been since the juice turned off
-    timeAtLastJuice = 0; % Initialize the variable storing when the juice was last given
+    params.juiceOn = false; % Logical for juice giving
+    params.juiceEndTime = 0; % Initialize the variable that stores when the juice ends
+    params.timeSinceLastJuice = 0; % Initialze the variable that stores how long it has been since the juice turned off
+    params.timeAtLastJuice = 0; % Initialize the variable storing when the juice was last given
     quitNow = false; % Initialize the variable that flags if it is time to quit
     % initialRects = createTiledRects(expRect,length(allTex),4);
     % Begind acutal stimulus presentation 
@@ -178,16 +179,8 @@ function [params] = SC(params)
         Screen('Flip',viewWindow); % First flip
 
         % Wait for TTL
-        baselineVoltage = DAQ('GetAnalog',params.ttlChannel); % Get the baseline voltage
-        while true
-            [keyIsDown,secs,keyCode] = KbCheck; % Get keyboard inputs
-            ttlVolt = DAQ('GetAnalog',params.ttlChannel); % Get current voltage
-            if keyCode(KbName('space')) % If space is pressed
-                break; % Begin
-            elseif abs(ttlVolt - baselineVoltage) > 0.4 % If TTL voltage has changed by more than said values
-                break; % Begin
-            end
-        end
+        
+        interface('WaitForTTL',params);
         
         flips = params.IFI:params.IFI:params.runDur+10; % Adding a bit of leeway
         flips = flips + GetSecs; % Initialize the timepoints at which the program should flip
@@ -196,7 +189,7 @@ function [params] = SC(params)
         startBlockTime = toc; % Start block timer
         blockTime = 0; % Initialize the variable that stores how much block time has passed
         blockIndx = 0; % What block are we in
-        frameIdx = 1; % What frame are we in
+        params.frameIdx = 1; % What frame are we in
         achromIndx = 1;
         circleIndx = 1;
         bwIndx = 1;
@@ -211,7 +204,7 @@ function [params] = SC(params)
         % Begin Stimulus
            while true
             % Get the time that the block starts
-            if blockTime >=params.blocklength*params.TR || frameIdx == 1
+            if blockTime >=params.blocklength*params.TR || params.frameIdx == 1
                 isgray = false; % is it going to be gray? Determined by switch below
                 startBlockTime = toc;
                 blockIndx = blockIndx+1;
@@ -278,7 +271,7 @@ function [params] = SC(params)
                     quitNow = true;
                     params.complete = true; % Run completed
                 end
-                if frameIdx >= params.runDur*params.FPS
+                if params.frameIdx >= params.runDur*params.FPS
                     quitNow = true;
                     params.complete = true; % Run completed
                 end
@@ -287,7 +280,7 @@ function [params] = SC(params)
                 quitNow = true;
                 params.complete = true; % Run completed
             end
-            if frameIdx >= params.runDur*params.FPS
+            if params.frameIdx >= params.runDur*params.FPS
                 quitNow = true;
                 params.complete = true; % Run completed
             end
@@ -295,14 +288,14 @@ function [params] = SC(params)
                 Screen('FinalizeMovie', movie);
                 sca
                 save(params.dataSaveFile);
-                disp(['Fixation: ' num2str(sum(fixation,'omitnan')/length(fixation(1:frameIdx,1)))]);
+                disp(['params.fixation: ' num2str(sum(params.fixation,'omitnan')/length(params.fixation(1:params.frameIdx,1)))]);
                 disp(['Correct Number of Choices: ' num2str(correctChoiceCounter), '/' num2str(choiceIndx)])
                 break;
                 
             end
 
             blockTime = toc-startBlockTime;
-            blockTracker(frameIdx) = blockIndx; % Store what block we're in
+            blockTracker(params.frameIdx) = blockIndx; % Store what block we're in
             choices = {'Left','Right'};
             if isgray == true
                 choice = 'None';
@@ -314,10 +307,10 @@ function [params] = SC(params)
             
             
             % Collect eye position
-            [eyePosition(frameIdx,1),eyePosition(frameIdx,2)] = eyeTrack(params.xChannel,params.yChannel,params.xGain,params.yGain,params.xOffset,params.yOffset);
-            fixation(frameIdx,1) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2),fixRect);
+            [params.eyePosition(params.frameIdx,:),params.eyeVolts(params.frameIdx,:)] = interface('GetFixation',params);
+            params.fixation(params.frameIdx,1) = isInCircle(params.eyePosition(params.frameIdx,:),fixRect);
             
-            if fixation(frameIdx,1) == 1
+            if params.fixation(params.frameIdx,1) == 1
                 circleColor = params.green;
             else
                 circleColor = params.white;
@@ -325,11 +318,6 @@ function [params] = SC(params)
 
             params = CheckReward(params);
 
-            if juiceOn == true
-                juiceSetting = 'On';
-            else
-                juiceSetting = 'Off';
-            end
 
 
             
@@ -340,8 +328,8 @@ function [params] = SC(params)
             % Process keys
             if keyIsDown == 1
                 if keyCode(KbName('r')) % Recenter
-                    params.xOffset = params.xOffset + eyePosition(frameIdx,1)-xCenterExp;
-                    params.yOffset = params.yOffset + eyePosition(frameIdx,2)-yCenterExp;
+                    params.xOffset = params.xOffset + params.eyePosition(params.frameIdx,1)-xCenterExp;
+                    params.yOffset = params.yOffset + params.eyePosition(params.frameIdx,2)-yCenterExp;
                     keyIsDown=0;
                 elseif keyCode(KbName('UpArrow')) % Move fixation point up
                     params.yOffset = params.yOffset+params.manualMovementPix;
@@ -356,7 +344,7 @@ function [params] = SC(params)
                     params.xOffset = params.xOffset-params.manualMovementPix;
                     keyIsDown=0;
                 elseif keyCode(KbName('j')) % Juice
-                    [juiceEndTime,juiceOn]=juice(params.rewardDur,juiceEndTime,toc,juiceOn);
+                    params = interface('GiveReward',params,params.rewardDur,toc);
                     keyIsDown=0;
                 elseif keyCode(KbName('z')) % Increase Choice Reward Dur
                     params.choiceRewardDur = params.choiceRewardDur + params.rewardKeyChange;
@@ -416,17 +404,24 @@ function [params] = SC(params)
                     inProbe = 'No Probe';
                 end
             end
+            
+            if params.juiceOn == true
+                juiceSetting = 'On';
+            else
+                juiceSetting = 'Off';
+            end
+
 
             infotext = ['Time Elapsed: ', num2str(toc), '/', num2str(params.runDur), newline,...
                 'Block Time Elapsed: ', num2str(blockTime), '/',num2str(blockTimeTotal), newline,...
                 'Block Number: ', num2str(blockIndx), newline,...
-                'Fixation Percentage: ', num2str(sum(fixation(1:frameIdx,1))/length(fixation(1:frameIdx,1)*100)), newline,...
+                'Fixation Percentage: ', num2str(sum(params.fixation(1:params.frameIdx,1))/length(params.fixation(1:params.frameIdx,1)*100)), newline,...
                 'Correct Choice Side: ', choice, newline,...
                 'Block Type: ', blockType,newline,...
                 'Object Name: ', char(objectName),newline,...
                 inProbe,newline,...
                 'Juice: ', juiceSetting,newline,...
-                'Juice End Time: ', num2str(juiceEndTime),newline,...
+                'Juice End Time: ', num2str(params.juiceEndTime),newline,...
                 'Correct Number of Choices: ', num2str(correctChoiceCounter), '/' num2str(choiceIndx), newline,...
                 'Choice Reward Duruation (+z/-x): ', num2str(params.choiceRewardDur),newline,...
                 'Reward Duration (+c/-v): ', num2str(params.rewardDur),newline,...
@@ -446,9 +441,9 @@ function [params] = SC(params)
             
                 if blockTime < params.stimDur*params.TR % In stimulus presentation mode
     
-                    if rem(frameIdx,params.jitterFrames) == 1 % Create rectangles for stim draw
-                        viewStimRect = CenterRectOnPointd(baseRect, round(xCenter+jitterX(frameIdx)), round(yCenter+jitterY(frameIdx)));
-                        expStimRect = CenterRectOnPointd(baseRect, round(xCenterExp+jitterX(frameIdx)), round(yCenterExp+jitterY(frameIdx)));
+                    if rem(params.frameIdx,params.jitterFrames) == 1 % Create rectangles for stim draw
+                        viewStimRect = CenterRectOnPointd(baseRect, round(xCenter+jitterX(params.frameIdx)), round(yCenter+jitterY(params.frameIdx)));
+                        expStimRect = CenterRectOnPointd(baseRect, round(xCenterExp+jitterX(params.frameIdx)), round(yCenterExp+jitterY(params.frameIdx)));
                     end
     
                     % Draw Stimulus on Framebuffer
@@ -457,23 +452,23 @@ function [params] = SC(params)
                         Screen('DrawTexture', expWindow, stimTex,[],expStimRect);  
                     end
     
-                    % Draw Fixation Cross on Framebuffer
+                    % Draw fixation Cross on Framebuffer
                     Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
                 
                     % Draw fixation window on framebuffer
                     Screen('FrameOval', expWindow, circleColor, fixRect);
     
                     % Draw eyetrace on framebuffer
-                    Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
+                    Screen('DrawDots',expWindow, params.eyePosition(params.frameIdx,:)',5);
                 elseif blockTime >= params.stimDur*params.TR && blockTime < (params.stimDur+params.grayDur)*params.TR % Inter event interval
-                    % Draw Fixation Cross on Framebuffer
+                    % Draw fixation Cross on Framebuffer
                     Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
                 
                     % Draw fixation window on framebuffer
                     Screen('FrameOval', expWindow, circleColor, fixRect);
     
                     % Draw eyetrace on framebuffer
-                    Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
+                    Screen('DrawDots',expWindow, params.eyePosition(params.frameIdx,:)',5);
                 
                 elseif blockTime >= (params.stimDur+params.grayDur)*params.TR && params.choiceSectionDur > 0 && params.probeArray(blockIndx) == 1 % Choice interval
     
@@ -488,11 +483,11 @@ function [params] = SC(params)
                         Screen('FrameOval',expWindow,circleColor,fixRect);
     
                         % Draw Eyetrace
-                        Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
+                        Screen('DrawDots',expWindow, params.eyePosition(params.frameIdx,:)',5);
                     elseif isgray == false
                         % check to see where fixation is
-                        leftFixation(frameIdx) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2),leftFixRect);
-                        rightFixation(frameIdx) = isInCircle(eyePosition(frameIdx,1),eyePosition(frameIdx,2),rightFixRect);
+                        leftFixation(params.frameIdx) = isInCircle(params.eyePosition(params.frameIdx,1),params.eyePosition(params.frameIdx,2),leftFixRect);
+                        rightFixation(params.frameIdx) = isInCircle(params.eyePosition(params.frameIdx,1),params.eyePosition(params.frameIdx,2),rightFixRect);
     
                         % Draw choices
                         if sideChoices(choiceIndx) == 0
@@ -501,7 +496,7 @@ function [params] = SC(params)
                                 Screen('DrawTexture',viewWindow,choiceIncorrectTex,[],choiceRightRect);
                                 Screen('DrawTexture',expWindow,choiceCorrectTex,[],choiceLeftRectExp); 
                                 Screen('DrawTexture',expWindow,choiceIncorrectTex,[],choiceRightRectExp);
-                                if  leftFixation(frameIdx) == 1 % Turn it green
+                                if  leftFixation(params.frameIdx) == 1 % Turn it green
                                     choiceColorLeft = params.green;
                                 else
                                     choiceColorLeft = params.white;
@@ -512,11 +507,11 @@ function [params] = SC(params)
                                     choiceColorRight = params.white;
                                 end
                                 % for actual reward processing
-                                if sideChoices(choiceIndx) == 0 && sum(leftFixation(frameIdx-(params.choiceDur*params.FPS+1):frameIdx),'all','omitnan') == params.choiceDur*params.FPS
-                                    [juiceEndTime, juiceOn] = juice(params.choiceRewardDur,juiceEndTime,toc,juiceOn);
+                                if sideChoices(choiceIndx) == 0 && sum(leftFixation(params.frameIdx-(params.choiceDur*params.FPS+1):params.frameIdx),'all','omitnan') == params.choiceDur*params.FPS
+                                    params = interface('GiveReward',params,params.choiceRewardDur,toc);
                                     sideChoices(choiceIndx) = 1;
                                     correctChoiceCounter = correctChoiceCounter+1;
-                                elseif sideChoices(choiceIndx) == 0 && sum(rightFixation(frameIdx-(params.choiceDur*params.FPS+1):frameIdx),'all','omitnan') == params.choiceDur*params.FPS
+                                elseif sideChoices(choiceIndx) == 0 && sum(rightFixation(params.frameIdx-(params.choiceDur*params.FPS+1):params.frameIdx),'all','omitnan') == params.choiceDur*params.FPS
                                     sideChoices(choiceIndx) = 2;
                                 end
         
@@ -525,20 +520,20 @@ function [params] = SC(params)
                                 Screen('DrawTexture',viewWindow,choiceIncorrectTex,[],choiceLeftRect);
                                 Screen('DrawTexture',expWindow,choiceCorrectTex,[],choiceRightRectExp); 
                                 Screen('DrawTexture',expWindow,choiceIncorrectTex,[],choiceLeftRectExp); 
-                                if leftFixation(frameIdx) == 1 
+                                if leftFixation(params.frameIdx) == 1 
                                     choiceColorLeft = params.red;
                                 else
                                     choiceColorLeft = params.white;
                                 end
-                                if rightFixation(frameIdx) == 1 
+                                if rightFixation(params.frameIdx) == 1 
                                     choiceColorRight = params.green;
                                 else
                                     choiceColorRight = params.white;
                                 end
-                                if sideChoices(choiceIndx) == 0 && sum(leftFixation(frameIdx-(params.choiceDur*params.FPS+1):frameIdx),'all','omitnan') == params.choiceDur*params.FPS
+                                if sideChoices(choiceIndx) == 0 && sum(leftFixation(params.frameIdx-(params.choiceDur*params.FPS+1):params.frameIdx),'all','omitnan') == params.choiceDur*params.FPS
                                     sideChoices(choiceIndx) = 1;
-                                elseif sideChoices(choiceIndx) == 0 && sum(rightFixation(frameIdx-(params.choiceDur*params.FPS+1):frameIdx),'all','omitnan') == params.choiceDur*params.FPS
-                                    [juiceEndTime, juiceOn] = juice(params.choiceRewardDur,juiceEndTime,toc,juiceOn);
+                                elseif sideChoices(choiceIndx) == 0 && sum(rightFixation(params.frameIdx-(params.choiceDur*params.FPS+1):params.frameIdx),'all','omitnan') == params.choiceDur*params.FPS
+                                    params = interface('GiveReward',params,params.choiceRewardDur,toc);
                                     sideChoices(choiceIndx) = 2;
                                     correctChoiceCounter = correctChoiceCounter+1;
                                     params.choiceRewardDur = params.choiceRewardDur;
@@ -553,7 +548,7 @@ function [params] = SC(params)
                         Screen('FrameOval',expWindow,choiceColorLeft, leftFixRect);
     
                         % Draw eyetrace on framebuffer
-                        Screen('DrawDots', expWindow, eyePosition(frameIdx,:)',5);
+                        Screen('DrawDots', expWindow, params.eyePosition(params.frameIdx,:)',5);
                     
                     end
                 else
@@ -563,7 +558,7 @@ function [params] = SC(params)
                     Screen('FrameOval',expWindow,circleColor,fixRect);
     
                     % Draw Eyetrace
-                    Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
+                    Screen('DrawDots',expWindow, params.eyePosition(params.frameIdx,:)',5);
                 end
            else
                 Screen('DrawLines', viewWindow, allCoords, lineWidthPix, [0 0 0], [xCenter yCenter], 2);
@@ -572,28 +567,28 @@ function [params] = SC(params)
                 Screen('FrameOval',expWindow,circleColor,fixRect);
 
                 % Draw Eyetrace
-                Screen('DrawDots',expWindow, eyePosition(frameIdx,:)',5);
+                Screen('DrawDots',expWindow, params.eyePosition(params.frameIdx,:)',5);
             end
             % add this frame to the movie
-            if rem(frameIdx,params.FPS/params.movieFPS)==1
+            if rem(params.frameIdx,params.FPS/params.movieFPS)==1
                 Screen('AddFrameToMovie',expWindow,[],[],movie)
             end
 
             % Flip
-            [timestamp] = Screen('Flip', viewWindow, flips(frameIdx));
-            [timestamp2] = Screen('Flip', expWindow, flips(frameIdx));
+            [timestamp] = Screen('Flip', viewWindow, flips(params.frameIdx));
+            [timestamp2] = Screen('Flip', expWindow, flips(params.frameIdx));
+            
+            % Juice
+            params = CheckReward(params);
             
             
-            [juiceEndTime,juiceOn] = juice(0,juiceEndTime, toc,juiceOn);
-            
-            
-            frameIdx = frameIdx+1;
-            if frameIdx >= params.runDur*params.FPS
+            params.frameIdx = params.frameIdx+1;
+            if params.frameIdx >= params.runDur*params.FPS
                 quitNow = true
             end
             % Store any other variables:
-            juiceOnTracker(frameIdx) = juiceOn; % Is the juice on at this frame?
-            timeTracker(frameIdx) = toc; % What is the time at this frame?
+            juiceOnTracker(params.frameIdx) = params.juiceOn; % Is the juice on at this frame?
+            timeTracker(params.frameIdx) = toc; % What is the time at this frame?
             if quitNow == true
                 Screen('FinalizeMovie', movie);
                 sca
@@ -603,12 +598,12 @@ function [params] = SC(params)
     catch error
         rethrow(error)
         save(params.dataSaveFile);
-        disp(['Fixation: ' num2str(sum(fixation,'omitnan')/length(fixation(1:frameIdx,1)))]);
+        disp(['Fixation: ' num2str(sum(params.fixation,'omitnan')/length(params.fixation(1:params.frameIdx,1)))]);
         disp(['Correct Number of Choices: ' num2str(correctChoiceCounter), '/' num2str(choiceIndx)])
 
     end % End of stim presentation
     save(params.dataSaveFile);
-    disp(['Fixation: ' num2str(sum(fixation,'omitnan')/length(fixation(1:frameIdx,1)))]);
+    disp(['Fixation: ' num2str(sum(params.fixation,'omitnan')/length(params.fixation(1:params.frameIdx,1)))]);
     disp(['Correct Number of Choices: ' num2str(correctChoiceCounter), '/' num2str(choiceIndx)])
     close all;
 

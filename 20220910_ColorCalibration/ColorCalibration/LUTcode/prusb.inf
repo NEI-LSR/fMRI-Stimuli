@@ -1,0 +1,69 @@
+; PRUSB.INF ( Windows XPSP2 & Vista ) 32 & 64 bit
+;
+; Copyright (C) 2009, Photo Research Inc.
+;		   www.photoresearch.com
+;
+
+[Version] 
+Signature="$Windows NT$" 
+Class=Ports 
+ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318} 
+Provider=%Mfg% 
+catalogfile=prusb.cat
+DriverVer=09/11/2009,2.1.0.0
+
+[Manufacturer] 
+%Mfg%=PRI, NTamd64
+
+[PRI]
+%DeviceDesc%=ComPort.NTx86, USB\VID_180B&PID_0524 
+
+[PRI.NTamd64]
+%DeviceDesc%=ComPort.NTamd64, USB\VID_180B&PID_0524 
+
+[Comport_Install.NTx86] ;Windows2000
+[Comport_Install.amd64]; Windows XP 64-bit
+
+[DestinationDirs] 
+DefaultDestDir=12 
+Comport.NT.Copy=12 
+
+[Comport.NTx86] 
+include=mdmcpq.inf 
+CopyFiles=Comport.NT.Copy 
+AddReg=Comport.NT.AddReg 
+
+[ComPort.NTamd64]
+include=mdmcpq.inf 
+CopyFiles=ComPort.NT.Copy
+AddReg=ComPort.NT.AddReg
+
+[Comport.NT.Copy] 
+usbser.sys,,,0x20 
+
+[Comport.NT.AddReg] 
+HKR,,DevLoader,,*ntkern 
+HKR,,NTMPDriver,,usbser.sys 
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider" 
+
+[Comport.NTx86.Services] 
+include=mdmcpq.inf 
+AddService = usbser, 0x00000002, Service_Inst 
+
+[Comport.NTamd64.Services] 
+include=mdmcpq.inf 
+AddService = usbser, 0x00000002, Service_Inst 
+
+[Service_Inst] 
+DisplayName = %Serial.SvcDesc% 
+ServiceType = 1 ; SERVICE_KERNEL_DRIVER 
+StartType = 3 ; SERVICE_DEMAND_START 
+ErrorControl = 1 ; SERVICE_ERROR_NORMAL 
+ServiceBinary = %12%\usbser.sys 
+LoadOrderGroup = Base 
+
+; User readable strings
+[Strings] 
+Mfg = "Photo Research, Inc."
+DeviceDesc = "PR Instrument"
+Serial.SvcDesc = "USB Serial emulation driver" 
