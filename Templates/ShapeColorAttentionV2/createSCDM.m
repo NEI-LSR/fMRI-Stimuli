@@ -33,4 +33,3 @@ end
 DM = array2table(DM_array);
 DM.Properties.VariableNames{1} = ['IMA ' num2str(params.IMA)];
 writetable(DM,params.DMSaveFile,"Delimiter","\t");
-
