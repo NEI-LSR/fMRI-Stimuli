@@ -15,7 +15,7 @@ if vidDir(end) == '\'
 end
 [parentDir, vidDirName,~] = fileparts(vidDir);
 
-dirName = [vidDirName '_bw'];
+dirName = [vidDirName '_BW'];
 if ~isdir([parentDir '\' dirName])
     mkdir([parentDir '\' dirName]);
 end
