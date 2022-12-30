@@ -1,9 +1,11 @@
 function [params] = SC(params)
-    % Shape Color Paradigm 4.0
+    % Shape Color Paradigm 5.0
     % Stuart J. Duffield September 2022
     % Displays the stimuli from the Monkey Turk experiments
     % Occasiasonally will display a probe to make sure the subject it
-    % paying attention
+    % paying attention. During this probe the animal will be presented with
+    % a 4-AFC task, will be rewarded for making the correct choice. In
+    % previous versions of the attention task this was a 2-AFC task.
     
     % Set random seed generator. 
     params.seed = rng('shuffle'); % This essentially just makes sure that the seed
