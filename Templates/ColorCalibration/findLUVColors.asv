@@ -19,22 +19,21 @@ function findLUVColors(filename,calibrationfolder)
     XYZ2RGBM = XYZToRGBMatrix(redpoint(1),redpoint(2),greenpoint(1),greenpoint(2),bluepoint(1),bluepoint(2),whitepoint(1),whitepoint(2));
 
     for i = 1:size(LumValues.white,1)
-        disp(['Testing white gunvals of ' num2str(LumValues.white(i).gunValue)])
+        disp(['Testing white gunvals of ' LumValues.white(i).gunValue])
         test_whitepoint = LumValues.white(i).xyYJudd;
         twXYZ = xyYToXYZ(test_whitepoint');
         xyzvals = LuvToXYZ(LUV',twXYZ);
-        estRGB = round((XYZ2RGBM * xyzvals));
-        disp(['Maximum gunval:' num2str(max(estRGB,[],'all'))])
-        disp(['Minimum gunval:' num2str(min(estRGB,[],'all'))])
-        estRGB(estRGB>256) = 256;
-        estRGB(estRGB<1) = 1;
-        estRGB_lookup = LUT(estRGB');
+        estRGB = round(256 * (XYZ2RGBM * xyzvals));
+        disp(['Maximum gunval:' max(estRGB)])
+        disp(['Minimum gunval:' min(estRGB)])
+        if (max(estRGB) < 256) && min(estRGB) > 0
+            estRGB_lookup = LUT(estRGB');
+        end
 
+        outrgb = fullfile(targvaldir,['targRGB_whitepoint_'  LumValues.white(i).gunValue]);
+        outxyz = fullfile(targvaldir,['targXYZ_whitepoint_'  LumValues.white(i).gunValue]);
 
-        outrgb = fullfile(targvaldir,['targRGB_whitepoint_'  num2str(LumValues.white(i).gunValue) '.csv']);
-        outxyz = fullfile(targvaldir,['targXYZ_whitepoint_'  num2str(LumValues.white(i).gunValue) '.csv']);
-
-        csvwrite(outrgb,estRGB_lookup);
-        csvwrite(outxyz,xyzvals');
+        writecsv(estRGB_lookup,outrgb);
+        writecsv(estRGB_lookup,outxyz);
     end
 
