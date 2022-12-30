@@ -137,6 +137,10 @@ function [params] = SC(params)
     params.probeIndices = randsample(params.numblocks,params.numProbes); % Get the indices of the probe trials
     params.probeArray = false(1,params.numblocks); % Turn these indices into array form, initialize
     params.probeArray(params.probeIndices) = true; % Turn these indices into array form, finalize
+    params.correctNames = string(1,params.numblocks); % Store the incorrect and correct probe options, one for each block, however, need to index by params.probeArray
+    params.incorrectNames = string(1,params.numblocks); % Store the incorrect and correct probe options, one for each block, however, need to index by params.probeArray
+    params.correctInds = string(1,params.numblocks); % Store the incorrect and correct probe options, one for each block, however, need to index by params.probeArray
+    params.incorrectInds = string(1,params.numblocks); % Store the incorrect and correct probe options, one for each block, however, need to index by params.probeArray
 
     % Now produce the Design Matrix
     params = createSCDM(params);
@@ -229,7 +233,13 @@ function [params] = SC(params)
                                     break
                                 end
                             end
+
                             choiceIncorrectTex = achromTex(choiceIncorrectInd);
+                            params.incorrectInds(blockIndx) = choiceIncorrectInd;
+                            params.incorrectNames(blockIndx) = params.achrom(choiceIncorrectInd);
+                            params.correctInds(blockIndx) = achromOrder(achromIndx);
+                            params.correctNames(blockIndx) = params.achrom(achromOrder(achromIndx));
+
                             objectName = params.achrom(achromOrder(achromIndx));
                             achromIndx = achromIndx+1; % Move achrom selection up 1
                             blockType = 'Achromatic Shapes';
@@ -245,6 +255,12 @@ function [params] = SC(params)
                                 end
                             end
                             choiceIncorrectTex = BWTex(choiceIncorrectInd);
+
+                            params.incorrectInds(blockIndx) = choiceIncorrectInd;
+                            params.incorrectNames(blockIndx) = params.chrom(choiceIncorrectInd);
+                            params.correctInds(blockIndx) = bwOrder(circleIndx);
+                            params.correctNames(blockIndx) = params.achrom(bwOrder(circleIndx)); % Need to fix bw block
+
                             objectName = params.colors(circleOrder(circleIndx));
                             circleIndx = circleIndx+1;
                             blockType = 'Colored Circles';
