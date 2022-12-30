@@ -12,16 +12,16 @@ params.runNum = 0; % What number run are we at? Starts at 0 because the while lo
 
 % Reward parameters
 params.rewardDur = 0.015; % Seconds of reward
-params.rewardWait = 1; % Seconds, time to wait between rewards
+params.rewardWait = 1.5; % Seconds, time to wait between rewards
 params.rewardWaitActual = params.rewardWait; % This will be changed by the jitter
-params.rewardWaitChange = 0.01; % Seconds, increment to change reward wait by during experiment
+params.rewardWaitChange = 0.001; % Seconds, increment to change reward wait by during experiment
 params.rewardWaitJitter = 0.25; % Seconds, jitter in how much reward is given by at any moment
 params.rewardPerf = 0.75; % % Fixation, how much to get reward
 params.rewardKeyChange = 0.01; % Seconds, increment to change reward durations by during experiment
 
 % Calibration Parameters and DAQ Startup settings
 params.gainStep = 5; % Pixels/Volt, how much to change the gain by
-DAQ('Debug',true); % Set DAQ to not debug
+DAQ('Debug',false); % Set DAQ to not debug
 DAQ('Init'); % Initialize DAQ
 params.xGain = -625; % Pixels/Volt
 params.yGain = 700; % Pixels/Volt
@@ -47,7 +47,7 @@ end
 % Screen information
 params.expscreen = 1; % Experimenter's Screen
 params.viewscreen = 2; % Subject's Screen
-params.pixPerAngle = 40; % Number of pixels per degree of visual stimuli.
+params.pixPerAngle = 40; % Number of pixels per degree of visual stimuli. 
 % Note: after the projector standardization between Marianne and Stuart's
 % setups, the actual pixels per degree of visual angle is 50. This has been
 % kept consistent throughout experiments, however, so I will not update the
@@ -56,8 +56,8 @@ params.pixPerAngle = 40; % Number of pixels per degree of visual stimuli.
 % Now set up parametesr for the particular experiment you're running
 % In this case Shape Color Attention
 params.choiceDur = 0.7; % Seconds, how long to fixate at choice to get a reward
-params.choiceRewardDur = 0.4; % Seconds, how long the reward is for correct choice
-params.endGrayDur = 30; % Seconds, how long gray is on at end of experiment
+params.choiceRewardDur = 0.1; % Seconds, how long the reward is for correct choice
+params.endGrayDur = 12; % Seconds, how long gray is on at end of experiment
 params.choiceDistAngle = 7; % Degrees Visual Angle, how distant the choices will be 
 params.stimDur = 2; % TRs, how many TRs the stimulus will be on
 params.grayDur = 1/6; % TRs, how many TRs the gray will be after the stimulus
@@ -68,8 +68,8 @@ params.movieFPS = 10; % Number of frames per second the movie will have
 params.FPS = 30; % Number of frames per second the playback of the experiment will be.
 params.IFI = 1/params.FPS; % Inter frame interval
 params.numconds = 3; % Number of conditions
-params.blockrepeats = 3; % Number of times blocks are repeated
-params.blockorders = repmat(williams(params.numconds),1,params.blockrepeats); % Generated using Williams counterbalancing (see williams.m) and repeated the matrix by 3 in its length
+params.blockrepeats = 6; % Number of times blocks are repeated
+params.blockorders = repmat(williams(params.numconds),1,params.blockrepeats); % Generated using Williams counterbalancing (see williams.m) and repeated the matrix by number of block repeats
 params.numblocks = size(params.blockorders,2); % How many blocks per run
 params.numorders = size(params.blockorders,1); % How many orders there are
 params.totconds = params.numorders*params.numblocks; % How many total conditions are there
