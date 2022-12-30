@@ -12,7 +12,7 @@ params.runNum = 0; % What number run are we at? Starts at 0 because the while lo
 
 % Reward parameters
 params.rewardDur = 0.015; % Seconds of reward
-params.rewardWait = 1.5; % Seconds, time to wait between rewards
+params.rewardWait = 1; % Seconds, time to wait between rewards
 params.rewardWaitActual = params.rewardWait; % This will be changed by the jitter
 params.rewardWaitChange = 0.01; % Seconds, increment to change reward wait by during experiment
 params.rewardWaitJitter = 0.25; % Seconds, jitter in how much reward is given by at any moment
@@ -116,7 +116,7 @@ while true % Now we run a while loop to actually display the menu
         disp([num2str(params.IMA) ' -IMA'  ,newline,...
         num2str(params.runNum) ' -Run number' ,newline,...
         num2str(params.blockorderindex) '- Block order' ]);
-        reply = input('Confirm? Enter (Yes)/Backspace (No)','s');
+        reply = input('Confirm? y (Yes)/Backspace (No)','s');
         if reply == 'y'
             params = SC(params);
         else

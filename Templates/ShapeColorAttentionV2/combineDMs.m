@@ -1,6 +1,6 @@
 function combineDMs(params)
 % Combines all the DMs in the Data Directory
-
+warning('off','all');
 DMs = dir(fullfile(params.dataDir,[params.subject '*_DM.txt']));
 DM_files = extractfield(DMs,'name');
 DM = readtable(fullfile(params.dataDir,DM_files{1}));
