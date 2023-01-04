@@ -66,6 +66,22 @@ end
 sca;
 save(saveFile, 'measurements');
 
+magnitudeDiffs = extractfield(measurements,'magnitudeDiff');
+colornumbers = extractfield(measurements,'colorNumber');
+measurementnumbers = 1:length(colornumbers);
+indices = NaN(1,max(colornumbers));
+for i = 1:max(colornumbers)
+    [a,b] = min(magnitudeDiffs(colornumbers == i));
+    c = measurementnumbers(colornumbers == i);
+    indices(i) = c(b);
+end
+
+finalmeasurements = measurements(indices)
+
+save(saveFile, 'measurements','finalmeasurements');
+
+
+
 
 
 
