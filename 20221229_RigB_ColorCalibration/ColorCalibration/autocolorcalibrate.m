@@ -6,8 +6,8 @@ saveDir = [curdir '\automaticMeasurements\'];
 if ~isfolder(saveDir)
     mkdir(saveDir)
 end
-targColorF = fullfile(curdir,'targetvalues','targXYZ_whitepoint_187.csv');
-startRGBF = fullfile(curdir,'targetvalues','targRGB_whitepoint_187.csv');
+targColorF = fullfile(curdir,'targetvalues','targXYZ_whitepoint_131__130__124.csv');
+startRGBF = fullfile(curdir,'targetvalues','targRGB_whitepoint_131__130__124.csv');
 thresh = 0.001; % Import to set this specifically for each
 targType = 'XYZJudd';
 

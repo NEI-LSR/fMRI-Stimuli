@@ -1,17 +1,16 @@
 curdir = pwd;
 load(fullfile(curdir,'measurements','29-Dec-2022_RigBMacMonitor/','29-Dec-2022_RigBMacMonitor.mat'));
-load(fullfile(curdir,'automaticMeasurements',"29-Dec-2022_17_00_54.mat"));
+load(fullfile(curdir,'automaticMeasurements',"04-Jan-2023_10_11_58.mat"));
 
 finalxyY = reshape(extractfield(finalmeasurements,'xyYJudd'),3,[])';
 gamutxyY = [LumValues.red(end).xyYJudd; LumValues.blue(end).xyYJudd; LumValues.green(end).xyYJudd];
 gamutXYZ = xyYToXYZ(gamutxyY');
 LUVvals = load(fullfile(curdir,'targetvalues','LUV_Colors_MTurk1.csv'))';
 
-% we used white 12, gunval 187
-whitepoint = xyYToXYZ(LumValues.white(12).xyYJudd')
+% we use 131 130 124 as the whitepoint
+whitepoint = [131; 130; 124];
 
 targXYZ = LuvToXYZ(LUVvals,whitepoint);
-%targXYZ = LuvToXYZ(LUVvals,[80;80;80]);
 targxyY = XYZToxyY(targXYZ);
 
 DrawChromaticity
