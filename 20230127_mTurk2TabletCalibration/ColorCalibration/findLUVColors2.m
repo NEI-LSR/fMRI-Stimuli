@@ -31,8 +31,8 @@ function findLUVColors2(filename,calibrationfolder,varargin)
 
 
     Zsamples = round(floor(bluepointXYZ(3)/4):sampledist:floor(bluepointXYZ(3)));
-    Ysamples = round(floor(greenpointXYZ(2)/4):sampledist:floor(greenpointXYZ(2)));
-    Xsamples = round(floor(redpointXYZ(1)/4):sampledist:floor(redpointXYZ(1)));
+    Ysamples = round(floor(greenpointXYZ(2)-60):sampledist:floor(greenpointXYZ(2)));
+    Xsamples = round(floor(redpointXYZ(1)-60):sampledist:floor(redpointXYZ(1)));
 
     XYZ2RGBM = XYZToRGBMatrix(redpoint(1),redpoint(2),greenpoint(1),greenpoint(2),bluepoint(1),bluepoint(2),whitepoint(1),whitepoint(2));
     
@@ -40,11 +40,11 @@ function findLUVColors2(filename,calibrationfolder,varargin)
         for y = 1:length(Ysamples)
             for j = 1:length(Zsamples)
                 test_whitepoint = [Xsamples(i) Ysamples(y) Zsamples(j)];
-                xyzstring = strrep(numstr(test_whitepoint),' ','_');
-                disp(['Testing XYZ values of ' num2str(test_whitepoint)])
+                xyzstring = strrep(num2str(test_whitepoint),' ','_');
+                disp(['Testing XYZ values of ' xyzstring])
                 whitepointRGB = round(XYZ2RGBM * test_whitepoint');
-                rgb
-                disp(['RGB ' num2str(whitepointRGB')])
+                rgbstring = strrep(num2str(whitepointRGB'),' ','_');
+                disp(['RGB ' rgbstring])
 
                 xyzvals = LuvToXYZ(LUV',test_whitepoint');
                 estRGB = round((XYZ2RGBM * xyzvals));
@@ -64,10 +64,10 @@ function findLUVColors2(filename,calibrationfolder,varargin)
                 whitepointinfo = [test_whitepoint; whitepointRGB'];
 
                 if evalbool
-                    outrgb = fullfile(targvaldir,['targRGB_whitepoint_'  num2str(test_whitepoint) '_' eval '.csv']);
-                    outxyz = fullfile(targvaldir,['targXYZ_whitepoint_'  num2str(test_whitepoint) '_' eval '.csv']);
-                    outinfo = fullfile(targvaldir,['info_whitepoint_'  num2str(test_whitepoint) '_' eval '.csv']);
-                    outplot = fullfile(targvaldir,['chromaticityplot_' num2str(test_whitepoint) '_' eval '.png']);
+                    outrgb = fullfile(targvaldir,['targRGB_whitepoint_'  xyzstring '.csv']);
+                    outxyz = fullfile(targvaldir,['targXYZ_whitepoint_'  xyzstring '.csv']);
+                    outinfo = fullfile(targvaldir,['info_whitepoint_' xyzstring '.csv']);
+                    outplot = fullfile(targvaldir,['chromaticityplot_' xyzstring '.png']);
 
                     csvwrite(outrgb,estRGB_lookup);
                     csvwrite(outxyz,xyzvals');   
@@ -77,11 +77,13 @@ function findLUVColors2(filename,calibrationfolder,varargin)
                 
                 xyYvals = XYZToxyY(xyzvals);
                 if evalbool
-                    DrawChromaticity
+                    figure('visible','off');
                     hold on
-                    plot(allpoints(1),allpoints(2));
+                    DrawChromaticity
+                    plot(allpoints(:,1),allpoints(:,2));
                     scatter(xyYvals(1,:),xyYvals(2,:),'x');
                     saveas(gcf,outplot);
+                    title(['Whitepoint' xyzstring]);
                     close;
                 end
             end
