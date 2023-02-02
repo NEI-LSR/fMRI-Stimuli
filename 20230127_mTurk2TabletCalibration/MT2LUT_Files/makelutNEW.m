@@ -39,9 +39,9 @@ else
 end
 
 if bitdepth == 8
-	fprintf('Working on 8 bit \n');
+	%fprintf('Working on 8 bit \n');
 elseif bitdepth == 16
-	fprintf('Working on 16 bit \n');
+	%fprintf('Working on 16 bit \n');
 else
 	error('Check bit depth value: should be 8 or 16...')
 end 
@@ -60,8 +60,10 @@ xdata = xdataold./max(xdataold);
 % 2 - define start params and fit
 p0 = [min(ydata) 1 2.2]; % starting values for [a/p(1), b/p(2), gamma/p(3)]
 fun = @(p, x) p(1)+p(2)*x.^p(3); % better evaluation of gamma than just x.^gamma
+opts = optimset('Display','off'); % Silence lsqcurvefit
+
 if license('test','optimization_toolbox')
-    pfit = lsqcurvefit(fun, p0, xdata, ydata);
+    pfit = lsqcurvefit(fun, p0, xdata, ydata,[],[],opts);
 else %when you have no toolboxes
     fun2 = @(p) sum((ydata - (p(1)+p(2)*xdata.^p(3))).^2); 
     opts = optimset('MaxFunEvals',50000, 'MaxIter',10000);
@@ -72,13 +74,14 @@ residuals = yfit - ydata;
 RMS = sqrt(mean(residuals.^2)); %evaluate fit
 gammaTable = feval(fun, pfit, 0:1/nbGammaTableValues:1);
 
-% 3 - compute inverse function and makelut
-inv_fun = @(g, x) real(x.^(1/g)); %can't use the exact inverse of the fitted function
+% 3 - compute inverse function and makelut. Used to be inv_fun = @(g, x)
+% real(x.^(1/g)), changed for black point correction
+inv_fun = @(s, o, g, x) real((1/s)*x.^(1/g)-o); % inverse of scalar, offset, gamma funciton
 % because not bounded and artefacts when offset > x
 ylut = linspace(0, 1, nbLUTvalues);
-xlut = inv_fun(pfit(3), ylut);
+xlut = inv_fun(pfit(2), pfit(1),pfit(3), ylut);
 xlut = round(xlut*(nbLUTvalues-1));
-gammaTableCorrected = inv_fun(pfit(3), 0:1/nbGammaTableValues:1);
+gammaTableCorrected = inv_fun(pfit(2), pfit(1),pfit(3), 0:1/nbGammaTableValues:1);
 % 4 - plot
 % fig = figure;
 % plot(xdata, ydata, '.', 'color', col, 'MarkerSize', 15)

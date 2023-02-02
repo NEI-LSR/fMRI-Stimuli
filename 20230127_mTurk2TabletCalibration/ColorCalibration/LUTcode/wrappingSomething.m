@@ -11,7 +11,7 @@ mkdir(thisCalibFolder)
 fileroot = fullfile(thisCalibFolder, filesep, thisCalibName);
 
 % Change this line depending on device
-PRport = 'COM5'; %/dev/cu.usbmodem301';
+PRport = 'COM4'; %/dev/cu.usbmodem301';
  
 whichDevice = questdlg('Monitor or Tablet?', 'Device',...
     'Monitor', 'Tablet', 'None');

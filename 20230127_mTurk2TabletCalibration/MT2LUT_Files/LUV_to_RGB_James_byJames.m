@@ -1,4 +1,4 @@
-function [rgb, luv, gry] = LUV_to_RGB_James_byJames(numColor, chromaVal, grayVal, calibName)
+function [rgb, luv, gry] = LUV_to_RGB_James_byJames(numColor, chromaVal, grayVal, calibName, dmp)
 	
 	
 	persistent calibFileName LumValues LUT
@@ -133,6 +133,8 @@ function [rgb, luv, gry] = LUV_to_RGB_James_byJames(numColor, chromaVal, grayVal
 				targetGammaCorrected(iCoords,1) = LUT(round(targetRGB(iCoords,1)*255), 1);
 				targetGammaCorrected(iCoords,2) = LUT(round(targetRGB(iCoords,2)*255), 2);
 				targetGammaCorrected(iCoords,3) = LUT(round(targetRGB(iCoords,3)*255), 3);
+                if sum(targetRGB(iCoords,:) < 0)+sum(targetRGB(iCoords,:) > 1.) ~= 0
+                end
 			end
 			
 			iCoords = iCoords + 1;
@@ -189,22 +191,29 @@ function [rgb, luv, gry] = LUV_to_RGB_James_byJames(numColor, chromaVal, grayVal
 	end;
 	
 	%% write values to file (tab separated)
-	filename = fullfile([calibName, '_corrRGB.txt']);
-	fid = fopen(filename, 'wt');
-	fprintf(fid, '%s\t%s\t%s\t%s\t%s\t%s\t%s\n', 'LUV_angle','correctR','correctG','correctB', 'linearR', 'linearG', 'linearB');  % header
-	fclose(fid);
-	dlmwrite(filename, [rad2deg(azimuthRad{1})', targetGammaCorrected, targetRGB],'delimiter','\t','-append');
-	
-	
- 	dumpRGB(targetGammaCorrected, correctedGrey, [calibFileRoot, '_CorrectedRGB']);
+    if dmp
+	    filename = fullfile([calibName, '_corrRGB.txt']);
+	    fid = fopen(filename, 'wt');
+	    fprintf(fid, '%s\t%s\t%s\t%s\t%s\t%s\t%s\n', 'LUV_angle','correctR','correctG','correctB', 'linearR', 'linearG', 'linearB');  % header
+	    fclose(fid);
+	    dlmwrite(filename, [rad2deg(azimuthRad{1})', targetGammaCorrected, targetRGB],'delimiter','\t','-append');
+	    
+	    
+ 	    dumpRGB(targetGammaCorrected, correctedGrey, [calibFileRoot, '_CorrectedRGB']);
+    end
 	gry = correctedGrey;
 
     %% Write XYZ, LUV, uv, and Target RGB to file (comma separated) Stuart Duffield January 2023
     % The first target will be the gray.
-    csvwrite(fullfile([calibName, '_tRGB.csv']),[correctedGrey;targetGammaCorrected]);
-    csvwrite(fullfile([calibName, '_tXYZ.csv']),[greyXYZ';targetXYZCoords]);
-    csvwrite(fullfile([calibName, '_tLUV.csv']),[graypointLUV';targetLUVCoords]);
-    csvwrite(fullfile([calibName, '_tuv.csv']),[greyuv';targetuvCoords]);
+    targetcentereduvCoords = [greyuv'-greyuv';greyuv'-targetuvCoords];
+    if dmp
+        csvwrite(fullfile([calibName, '_tRGB.csv']),[correctedGrey;targetGammaCorrected]);
+        csvwrite(fullfile([calibName, '_tXYZ.csv']),[greyXYZ';targetXYZCoords]);
+        csvwrite(fullfile([calibName, '_tLUV.csv']),[graypointLUV';targetLUVCoords]);
+        csvwrite(fullfile([calibName, '_tuv.csv']),[greyuv';targetuvCoords]);
+        csvwrite(fullfile([calibName, '_tcentereduv.csv']),targetcentereduvCoords);
+
+    end
 
 
 	

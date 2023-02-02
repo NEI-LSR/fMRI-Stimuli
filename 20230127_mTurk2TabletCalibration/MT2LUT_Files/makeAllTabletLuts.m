@@ -7,12 +7,19 @@ clear FUNCTIONS
 
 nColors = 36;
 
-fnm1 = '26-Mar-2021_R52KC0W2M5J';
-fnm2 = '25-Mar-2021_ R52KC0W1T9B';
-fnm3 = '24-Mar-2021_R52KC0W29CH';
-fnm4 = '22-Mar-2021_R52KC0W29HR';
-fnms = {fnm1, fnm2, fnm3, fnm4};
+fnm1 = '30-Jan-2023_discovery';
+fnm2 = '30-Jan-2023_apollo';
+fnm3 = '30-Jan-2023_sputnik';
+fnm4 = '30-Jan-2023_voyager';
+fnm5 = '30-Jan-2023_curiosity';
 
+% fnm1 = '26-Mar-2021_R52KC0W2M5J';
+% fnm2 = '25-Mar-2021_ R52KC0W1T9B';
+% fnm3 = '24-Mar-2021_R52KC0W29CH';
+% fnm4 = '22-Mar-2021_R52KC0W29HR'; 
+fnms = {fnm1, fnm2, fnm3, fnm4, fnm5};
+
+dmp = true; % Do you want to dump out files
 
 % chroma
 cstart = 0.3;
@@ -56,7 +63,7 @@ for n = 1:length(fnms)
             try
 
                 
-                [rgb, luv, gry] = LUV_to_RGB_James_byJames(nColors, chroma, greyVal, fnm);
+                [rgb, luv, gry] = LUV_to_RGB_James_byJames(nColors, chroma, greyVal, fnm, dmp);
 
                 good = [good; chroma, greyVal];
 
@@ -66,7 +73,6 @@ for n = 1:length(fnms)
             end;
 
             allRGB = [allRGB; rgb];
-            %allluv = [allluv; luv];
         end;
     end;
     
@@ -84,25 +90,16 @@ for n = 1:length(fnms)
     disp(255.*min(allRGB));
 
 
-    %if ~isempty(nogood)
-    %    disp(['Err at ' num2str(nogood)]);
-    %    disp(' ');
-    %end;
+    if ~isempty(nogood)
+        disp(['Err at ']);
+        disp(num2str(nogood));
+        disp(' ');
+    end;
     
-    %tabletmeas = load([fnm '.mat'],'LumValues');
-    %whitepoint = tabletmeas.LumValues.white(end).xyYJudd;
-    %bluepoint = tabletmeas.LumValues.blue(end).xyYJudd;
-    %redpoint = tabletmeas.LumValues.red(end).xyYJudd;
-    %greenpoint = tabletmeas.LumValues.green(end).xyYJudd;
-
-
-    %[xyz,estRGB] = calcxyzvals(luvvals(1).luv,whitepoint,bluepoint,greenpoint,redpoint); % Ignore the RGB estimation on this, redundant
-    
-    
-    %disp(xyz);
-    %disp(estRGB);
     % uncomment to rewrite luts
-    dumpLuts(nlum, allRGB, gry, fnm);
+    if dmp
+        dumpLuts(nlum, allRGB, gry, fnm);
+    end
 
 end;
 
@@ -110,12 +107,6 @@ end;
 %***********************************************************%
 %***********************************************************%
 %***********************************************************%
-function [xyzvals,estRGB] = calcxyzvals(luv,whitepoint,bluepoint,greenpoint,redpoint)
-
-whitepointXYZ = xyYToXYZ(whitepoint');
-xyzvals = LuvToXYZ(luv',whitepointXYZ);
-XYZ2RGBM = XYZToRGBMatrix(redpoint(1),redpoint(2),greenpoint(1),greenpoint(2),bluepoint(1),bluepoint(2),whitepoint(1),whitepoint(2));
-estRGB = XYZ2RGBM * xyzvals;
 
 
 %***********************************************************%

@@ -6,8 +6,8 @@ saveDir = [curdir '\automaticMeasurements\'];
 if ~isfolder(saveDir)
     mkdir(saveDir)
 end
-targColorF = fullfile(curdir,'targetvalues','targXYZ_whitepoint_131__130__124.csv');
-startRGBF = fullfile(curdir,'targetvalues','targRGB_whitepoint_131__130__124.csv');
+targColorF = fullfile(curdir,'targetvalues','30-Jan-2023_curiosity_tXYZ.csv');
+startRGBF = fullfile(curdir,'targetvalues','30-Jan-2023_curiosity_tRGB.csv');
 thresh = 0.001; % Import to set this specifically for each
 targType = 'XYZJudd';
 
@@ -22,7 +22,7 @@ Screen('Preference', 'Verbosity', 0);
 Screen('Preference', 'SuppressAllWarnings', 1);
 color = [0 0 0];
 textcolor = [255 255 255] - color;
-screen = max(Screen('Screens'));
+screen = 1;
 [Window, Rect] = Screen('OpenWindow', screen, color, ScreenSize);
 Screen('DrawText', Window, num2str(color),[],[],textcolor);
 Screen('Flip',Window);
