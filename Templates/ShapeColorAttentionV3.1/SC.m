@@ -80,6 +80,10 @@ function [params] = SC(params)
     params.baseRect = [0 0 params.stimPix params.stimPix]; % Size of the texture rect
     params.sideViewRect = CenterRectOnPointd(params.baseRect,0.5*params.stimPix,yCenterExp); % Create side view rectangle to show the full colored stimulus/achromatic stimulus
     
+    % Premake these variables to prevent error
+    viewStimRect = CenterRectOnPointd(params.baseRect, xCenter, yCenter);
+    expStimRect = CenterRectOnPointd(params.baseRect, xCenterExp, yCenterExp);
+    
     % Make choice rects
     params.horzDist = cos(deg2rad(45))*params.distPix; % Calculate the horizontal distance
     params.vertDist = sin(deg2rad(45))*params.distPix; % Calculate the vertical distance
@@ -241,8 +245,8 @@ function [params] = SC(params)
             if frameIdx == 1 && params.startGrayDur > 0
                 startBlockTime = toc;
                 isgray = true;
-                blockType = 'Start Gray'
-                objectName = 'None'
+                blockType = 'Start Gray';
+                objectName = 'None';
             elseif toc > params.startGrayDur
                 if blockIndx == 0 || blockTime >=params.blocklength*params.TR
                     startBlockTime = toc;
@@ -489,7 +493,7 @@ function [params] = SC(params)
                     inProbe = 'No Probe';
                 end
             else
-                inProbe = 'Start Gray Duration'
+                inProbe = 'Start Gray Duration';
             end
 
             infotext = ['Time Elapsed: ', num2str(toc), '/', num2str(params.runDur), newline,...
@@ -513,7 +517,7 @@ function [params] = SC(params)
             DrawFormattedText(expWindow,infotext);
 
             % Draw associated chromatic shape if BW block or circle block
-            if toc > params.startGrayDur && blockIndx <= length(params.blockorder)
+            if toc > params.startGrayDur && blockIndx <= length(params.blockorder) && blockIndx > 0
                 if params.blockorder(blockIndx) == params.bwCase || params.blockorder(blockIndx) == params.colorCase
                     Screen('DrawTexture',expWindow,chromDispTex,[],params.sideViewRect);
                 end

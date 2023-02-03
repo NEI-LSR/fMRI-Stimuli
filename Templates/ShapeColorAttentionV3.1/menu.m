@@ -21,7 +21,7 @@ params.rewardKeyChange = 0.001; % Seconds, increment to change reward durations 
 
 % Calibration Parameters and DAQ Startup settings
 params.gainStep = 5; % Pixels/Volt, how much to change the gain by
-DAQ('Debug',true); % Set DAQ to not debug
+DAQ('Debug',false); % Set DAQ to not debug
 DAQ('Init'); % Initialize DAQ
 params.xGain = -120; % Pixels/Volt
 params.yGain = 90; % Pixels/Volt
@@ -74,18 +74,35 @@ params.colors = ["LightRed","DarkRed","LightYellow","DarkYellow","LightGreen","D
 params.chrom = ["Hourglass","UpArrow","Diamond","Spike","Lock","Bar","Spade","Dodecagon","Sawblade","Nail","Rabbit","Puzzle","Venn","Hat"];
 params.achrom = ["Chevron","Tie","Acorn","House","Pacman","Stickyhand","Bell","LeftArrow","Heart","Ditto","Crowbar","Gem","Jellyfish","Star"];
 
-params.loadSession = true; % Are we going to load the stimuli
-params.sessionFile = '30-Jan-2023_09_45_36';
+
 params.numStim = 4; % Number of unique stimuli across category
 params.numBDOrder = 2; % Order of the debruijn sequencing
 params.numSplits = 4; % How many orders to subdivide the DB sequencing into
 params.numOverlap = 1; % How much overlap between sequences
-if params.loadSession
-    disp(['Loading session ', params.sessionFile]);
-    params.stimIndex = csvread(fullfile(params.dataDir,[params.sessionFile,'_stimindices.csv']));
-    params.stimOrders = csvread(fullfile(params.dataDir,[params.sessionFile,'_stimorders.csv']));
-else
-    params = gen_seq_stim(params,params.numStim,length(params.colors),params.numBDOrder,params.numSplits,params.numOverlap); 
+while true
+    prompt = 'Load Session? (y/n): ';
+    reply = input(prompt,'s');
+    if reply == 'y'
+        params.loadSession = true; % Are we going to load the stimuli
+        prompt = 'What session do you want to load?';
+        params.sessionFile = input(prompt,'s');
+        disp(['Loading session ', params.sessionFile]);
+        try
+            params.stimIndex = csvread(fullfile(params.dataDir,[params.sessionFile,'_stimindices.csv']));
+            params.stimOrders = csvread(fullfile(params.dataDir,[params.sessionFile,'_stimorders.csv']));
+            break
+        catch
+            disp('Failed to load session');
+            continue
+        end
+            
+        
+    elseif reply == 'n'
+        params = gen_seq_stim(params,params.numStim,length(params.colors),params.numBDOrder,params.numSplits,params.numOverlap);
+        break
+    else 
+        continue
+    end
 end
 disp('Stimuli indices: ')
 disp(params.stimIndex)
