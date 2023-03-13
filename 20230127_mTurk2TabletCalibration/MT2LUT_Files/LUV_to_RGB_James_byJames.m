@@ -110,7 +110,6 @@ function [rgb, luv, gry] = LUV_to_RGB_James_byJames(numColor, chromaVal, grayVal
 	
 	graypointXYZ = RGB2XYZ_Matrix*[grayVal grayVal grayVal]';
 	graypointLUV = XYZToLuv(graypointXYZ, RGB2XYZ_Matrix*[1,1,1]');
-	
 	iCoords = 1;
 	for iChroma = 1:numel(aiChromaLevels)
 		LUVRadiusMultiplier = aiChromaLevels(iChroma);
@@ -133,7 +132,8 @@ function [rgb, luv, gry] = LUV_to_RGB_James_byJames(numColor, chromaVal, grayVal
 				targetGammaCorrected(iCoords,1) = LUT(round(targetRGB(iCoords,1)*255), 1);
 				targetGammaCorrected(iCoords,2) = LUT(round(targetRGB(iCoords,2)*255), 2);
 				targetGammaCorrected(iCoords,3) = LUT(round(targetRGB(iCoords,3)*255), 3);
-                if sum(targetRGB(iCoords,:) < 0)+sum(targetRGB(iCoords,:) > 1.) ~= 0
+                if sum(targetGammaCorrected(iCoords,:) < 0)+sum(targetGammaCorrected(iCoords,:) > 255.) ~= 0
+                    error('outside range after gamma correction')
                 end
 			end
 			
@@ -207,11 +207,11 @@ function [rgb, luv, gry] = LUV_to_RGB_James_byJames(numColor, chromaVal, grayVal
     % The first target will be the gray.
     targetcentereduvCoords = [greyuv'-greyuv';greyuv'-targetuvCoords];
     if dmp
-        csvwrite(fullfile([calibName, '_tRGB.csv']),[correctedGrey;targetGammaCorrected]);
-        csvwrite(fullfile([calibName, '_tXYZ.csv']),[greyXYZ';targetXYZCoords]);
-        csvwrite(fullfile([calibName, '_tLUV.csv']),[graypointLUV';targetLUVCoords]);
-        csvwrite(fullfile([calibName, '_tuv.csv']),[greyuv';targetuvCoords]);
-        csvwrite(fullfile([calibName, '_tcentereduv.csv']),targetcentereduvCoords);
+        csvwrite(fullfile([calibName,'_',num2str(grayVal), '_tRGB.csv']),[correctedGrey;targetGammaCorrected]);
+        csvwrite(fullfile([calibName,'_',num2str(grayVal),  '_tXYZ.csv']),[greyXYZ';targetXYZCoords]);
+        csvwrite(fullfile([calibName,'_',num2str(grayVal),  '_tLUV.csv']),[graypointLUV';targetLUVCoords]);
+        csvwrite(fullfile([calibName,'_',num2str(grayVal),  '_tuv.csv']),[greyuv';targetuvCoords]);
+        csvwrite(fullfile([calibName,'_',num2str(grayVal),  '_tcentereduv.csv']),targetcentereduvCoords);
 
     end
 
