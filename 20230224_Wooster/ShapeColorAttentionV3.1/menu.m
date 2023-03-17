@@ -21,7 +21,7 @@ params.rewardKeyChange = 0.001; % Seconds, increment to change reward durations 
 
 % Calibration Parameters and DAQ Startup settings
 params.gainStep = 5; % Pixels/Volt, how much to change the gain by
-DAQ('Debug',false); % Set DAQ to not debug
+DAQ('Debug',true); % Set DAQ to not debug
 DAQ('Init'); % Initialize DAQ
 params.xGain = -2080; % Pixels/Volt
 params.yGain = 2215; % Pixels/Volt

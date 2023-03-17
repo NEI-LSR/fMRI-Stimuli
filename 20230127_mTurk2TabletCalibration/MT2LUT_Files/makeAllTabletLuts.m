@@ -6,18 +6,18 @@ clear GLOBAL
 clear FUNCTIONS
 
 nColors = 36;
+% 
+% fnm1 = '30-Jan-2023_discovery';
+% fnm2 = '30-Jan-2023_apollo';
+% fnm3 = '30-Jan-2023_sputnik';
+% fnm4 = '30-Jan-2023_voyager';
+% fnm5 = '30-Jan-2023_curiosity';
 
-fnm1 = '30-Jan-2023_discovery';
-fnm2 = '30-Jan-2023_apollo';
-fnm3 = '30-Jan-2023_sputnik';
-fnm4 = '30-Jan-2023_voyager';
-fnm5 = '30-Jan-2023_curiosity';
-
-% fnm1 = '26-Mar-2021_R52KC0W2M5J';
-% fnm2 = '25-Mar-2021_ R52KC0W1T9B';
-% fnm3 = '24-Mar-2021_R52KC0W29CH';
-% fnm4 = '22-Mar-2021_R52KC0W29HR'; 
-fnms = {fnm1, fnm2, fnm3, fnm4, fnm5};
+fnm1 = '26-Mar-2021_R52KC0W2M5J';
+fnm2 = '25-Mar-2021_ R52KC0W1T9B';
+fnm3 = '24-Mar-2021_R52KC0W29CH';
+fnm4 = '22-Mar-2021_R52KC0W29HR'; 
+fnms = {fnm1, fnm2, fnm3, fnm4};
 
 dmp = true; % Do you want to dump out files
 
@@ -66,9 +66,9 @@ for n = 1:length(fnms)
                 [rgb, luv, gry] = LUV_to_RGB_James_byJames(nColors, chroma, greyVal, fnm, dmp);
 
                 good = [good; chroma, greyVal];
-
+                disp(['Gray for greyval ' num2str(greyVal) num2str(gry)]);
             catch
-                % 				disp(['******* C:',num2str(chroma), ' G:',num2str(greyVal),' broke']);
+                %disp(['******* C:',num2str(chroma), ' G:',num2str(greyVal),' broke']);
                 nogood = [nogood; chroma, greyVal];
             end;
 
