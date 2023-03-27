@@ -31,29 +31,16 @@ end
 if bsuccess == 1
     switch PR
         case '655'
-            clear spd;
-            spd = PR670measspd([380 4 101]);
-            wav = linspace(380,780,101);
-            spec = NaN(101,2);
-            for k = 1:101
-                spec(k,1) = wav(k);
-                spec(k,2) = spd(k);
-            end
 	        %spec = PR655measspd([],[380 5 81]);
-% 	        PR655write('M5')
-%             clear spd;
-%             [spec] = getPRValues();
-%             spec = PR655parsespdstrJ(spec);
+	        PR655write('M5')
+            clear spd;
+            [spec] = getPRValues();
+            spec = PR655parsespdstrJ(spec);
         case '670'
             clear spd;
             spd = PR670measspd([380 4 101]);
-            wav = linspace(380,780,101);
             spec = NaN(101,2);
-            for k = 1:101
-                spec(k,1) = wav(k);
-                spec(k,2) = spd(k);
-            end
-    end
+            for 
 else
 	disp('something broke. oops')
 end
@@ -68,7 +55,8 @@ clear xyYcie
 %close all; 
 clear spd;
 
-
+%function [spec] = getSpecFromPR
+%spec = PR655read;
 return;
 
 function [spec] = getPRValues(spec)

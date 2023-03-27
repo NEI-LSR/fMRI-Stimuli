@@ -1,4 +1,4 @@
-global fileroot bitDepth gray PRport values
+global fileroot bitDepth gray PRport values PR
 dbstop if error
 
 %% Init
@@ -11,7 +11,8 @@ mkdir(thisCalibFolder)
 fileroot = fullfile(thisCalibFolder, filesep, thisCalibName);
 
 PRport = 'COM4';%/dev/cu.usbmodem301';
- 
+PR = '670'; % Currently set up to handle 655 or 670. Could be easily modified in JoshCalibforBL to handle PR 650/705.
+
 whichDevice = questdlg('Monitor or Tablet?', 'Device',...
     'Monitor', 'Tablet', 'None');
 if strcmp(whichDevice, 'Tablet')
