@@ -11,8 +11,9 @@ startRGBF = fullfile(curdir,'targetvalues','targRGB_whitepoint_131__130__124.csv
 thresh = 0.001; % Import to set this specifically for each
 targType = 'XYZJudd';
 
-global PRport
+global PRport PR
 PRport = 'COM4';
+PR = '655';
 StepSize = 1;
 ScreenSize = [];
 KbName('UnifyKeyNames');
@@ -102,7 +103,7 @@ function changeColor(color, Window)
 end
 
 function [measurements,mNum] = getMeasure(measurements,mNum,color,colornumber,targType,targColor)
-    [xyYcie, XYZcie, xyYJudd, XYZJudd, LMS, spec] = getPR655;
+    [xyYcie, XYZcie, xyYJudd, XYZJudd, LMS, spec] = getPR;
     disp(['Measuring color :' num2str(color)])
     disp(['xyY1931 Values are: ' num2str(xyYcie)])
     disp(['XYZ1931 Values are: ' num2str(XYZcie)])

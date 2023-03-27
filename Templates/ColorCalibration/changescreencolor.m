@@ -1,6 +1,7 @@
 % Changes Screen Color
 % Stuart J Duffield 2021-12-14
-global PRport
+global PRport PR
+PR = '655';
 PRport = 'COM4';
 StepSize = 1;
 ScreenSize = [];
@@ -78,7 +79,7 @@ while true
         StepSize = StepSize/2;
         pause(0.5)
     elseif keyCode(KbName('return'))
-        [xyYcie, XYZcie, xyYJudd, XYZJudd, LMS, spec] = getPR655;
+        [xyYcie, XYZcie, xyYJudd, XYZJudd, LMS, spec] = getPR;
         disp(['xyY1931 Values are: ' num2str(xyYcie)])
         disp(['XYZ1931 Values are: ' num2str(XYZcie)])
         disp(['xyY Judd Values are: ' num2str(xyYJudd)])
