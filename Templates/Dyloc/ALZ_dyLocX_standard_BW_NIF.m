@@ -71,7 +71,7 @@ warning('off','MATLAB:dispatcher:InexactMatch');
 onExit='execution halted by experimenter';
 
 
-designs = [0 1 7 3 9 5 0 10 4 8 2 6 0 6 2 8 4 10 0 5 9 3 7 1 0; 
+designs = [0 1 7 3 9 5 0 10 4 8 2 6 0 6 2 8 4 10 0 5 9 3 7 1 80; 
            0 7 3 9 5 6 0 1 10 4 8 2 0 2 8 4 10 1 0 6 5 9 3 7 0; 
            0 3 9 5 6 2 0 7 1 10 4 8 0 8 4 10 1 7 0 2 6 5 9 3 0;
            0 9 5 6 2 8 0 3 7 1 10 4 0 4 10 1 7 3 0 8 2 6 5 9 0;   

@@ -2,7 +2,7 @@
 % Stuart J Duffield 2021-12-14
 global PRport PR
 PR = '670';
-PRport = 'COM6';
+PRport = 'COM4';
 StepSize = 1;
 ScreenSize = [];
 KbName('UnifyKeyNames');

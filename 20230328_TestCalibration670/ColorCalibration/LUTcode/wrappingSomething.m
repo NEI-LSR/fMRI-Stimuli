@@ -11,7 +11,7 @@ mkdir(thisCalibFolder)
 fileroot = fullfile(thisCalibFolder, filesep, thisCalibName);
 
 PRport = 'COM4';%/dev/cu.usbmodem301';
-PR = '655'; % Currently set up to handle 655 or 670. Could be easily modified in JoshCalibforBL to handle PR 650/705.
+PR = '670'; % Currently set up to handle 655 or 670. Could be easily modified in JoshCalibforBL to handle PR 650/705.
 
 whichDevice = questdlg('Monitor or Tablet?', 'Device',...
     'Monitor', 'Tablet', 'None');

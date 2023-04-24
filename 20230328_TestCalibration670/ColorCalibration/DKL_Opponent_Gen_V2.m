@@ -9,17 +9,18 @@ if ~isfolder(saveDir)
 end
 extension = 'DKL8670Test';
 targetLMSF = [saveDir '\' extension '.mat'];
-LMSgray = [0.32702     0.25994     0.10869]; % insert the LMS value of the gray you measured
+LMSgray = [0.28461     0.24309     0.16347]; % insert the LMS value of the gray you measured
 graypointRGB = [128 128 128]; % What is the value of the isoluminant RGB that you want? 
 scalingFs = [0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95]; % How far along the gamut of the direction with the least gamut range do you want to extend?
 angles = [0, 45, 90, 135, 180, 225, 270,315]; % What angles in DKL space do you want to compute your colors around
 lumAngles = [0, 0, 0, 0, 0, 0, 0, 0]; % What angle along the LMS axis do you want to calculate around?
 angles = deg2rad(angles); % Convert to radians
 lumAngles = deg2rad(lumAngles); % Convert to radians
+graypoint = graypointRGB/256; % Convert RGB graypoint into decimal
 bgLMS = LMSgray'; % Transpose for the background LMS value
 
 
-calibName = '28-Mar-2023_StuartMonitor670Test2'; % What is the name of the files that stores the calibration information?
+calibName = '05-Apr-2023_670Laptop'; % What is the name of the files that stores the calibration information?
 calibpath = fullfile(measuredir,calibName); % Where is this path?
 measuresFilename = [calibName '.mat']; % Load the values of the spectra recorded
 lutFilename = [calibName '_LUT.mat']; % Load the lookup table
@@ -28,7 +29,6 @@ load([calibpath filesep measuresFilename]); % LumValues
 load([calibpath filesep lutFilename]); % LUT
 
 
-graypoint = LUT(graypointRGB)/256; % Convert RGB graypoint into decimal
 %whiteGuns = extractfield(LumValues.white,'gunValue');
 whitexyY = reshape(extractfield(LumValues.white,'xyYJudd'),3,[])';
 redxyY = reshape(extractfield(LumValues.red,'xyYJudd'),3,[])';
@@ -74,7 +74,7 @@ RGB2LMS_Matrix = conesensitivitiesI'*spectrumI;
 LMS2RGB_Matrix = inv(RGB2LMS_Matrix);
 
 % then to DKL
-%bgLMS = RGB2LMS_Matrix*graypoint';
+bgLMS = RGB2LMS_Matrix*graypoint';
 
 M_ConeIncToDKL = ComputeDKL_M(bgLMS',conesensitivitiesI',lumeffJuddVosi);
 M_DKLToConeInc = inv(M_ConeIncToDKL);
@@ -177,7 +177,7 @@ csvwrite([saveDir '\' extension '_RGB.csv'],est_RGB_Lookup');
 M_XYZ2RGB = XYZToRGBMatrix(redxyY(end,1),redxyY(end,2),greenxyY(end,1),greenxyY(end,2),bluexyY(end,1),bluexyY(end,2),whitexyY(end,1),whitexyY(end,2));
 M_RGB2XYZ = inv(M_XYZ2RGB);
 
-XYZ = M_RGB2XYZ*est_RGB_Lookup;
+XYZ = M_RGB2XYZ*est_RGB;
 xyY = thXYZToxyY(XYZ)';
 XYZgray = M_RGB2XYZ*graypoint';
 xyYGray = thXYZToxyY(XYZgray)';

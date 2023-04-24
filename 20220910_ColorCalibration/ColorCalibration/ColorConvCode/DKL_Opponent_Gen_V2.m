@@ -20,7 +20,7 @@ bgLMS = LMSgray'; % Transpose for the background LMS value
 
 
 calibName = '10-Sep-2022_NIFWideScreen20220910'; % What is the name of the files that stores the calibration information?
-calibpath = 'C:\Users\Admin\Documents\fMRI-Stimuli\Templates\ColorCalibration\measurements\10-Sep-2022_NIFWideScreen20220910\'; % Where is this path?
+calibpath = 'C:\Users\duffieldsj\Documents\GitHub\fMRI-Stimuli\20220910_ColorCalibration\ColorCalibration\measurements\10-Sep-2022_NIFWideScreen20220910\'; % Where is this path?
 measuresFilename = [calibName '.mat']; % Load the values of the spectra recorded
 lutFilename = [calibName '_LUT.mat']; % Load the lookup table
 varname = who('-file', [calibpath filesep measuresFilename]); %
@@ -177,12 +177,16 @@ M_RGB2XYZ = inv(M_XYZ2RGB);
 
 XYZ = M_RGB2XYZ*est_RGB_Lookup;
 xyY = thXYZToxyY(XYZ)';
-XYZgray = M_RGB2XYZ*graypointRGB
+XYZgray = M_RGB2XYZ*graypoint';
+xyYGray = thXYZToxyY(XYZgray)';
+
+monitorgamut = [redxyY(end,:); bluexyY(end,:); greenxyY(end,:); redxyY(end,:)];
+
 figure
 DrawChromaticity
 hold on
 scatter(xyY(:,1),xyY(:,2),'x','r');
-scatter(xyYFinal(1,:),xyYFinal(2,:),'+','b');
 scatter(xyYGray(1),xyYGray(2),'o','filled','k');
-legend('Target Values','Measured Values','Equiluminant Gray');
+plot(monitorgamut(:,1),monitorgamut(:,2));
+legend('Target Values','Equiluminant Gray','Monitor Gamut');
 title('Chroamticity Coordinates of Calculated and Measured Values (Judd)');
