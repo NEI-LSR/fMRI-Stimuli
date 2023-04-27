@@ -1,7 +1,7 @@
 % Changes Screen Color
 % Stuart J Duffield 2021-12-14
 global PRport PR
-PR = '655';
+PR = '670';
 PRport = 'COM4';
 StepSize = 1;
 ScreenSize = [];
@@ -21,6 +21,10 @@ measurements = struct('gunVals',{},'xyY',{},'XYZ',{},'xyYJudd',{},'XYZJudd',{},'
 date_time=strrep(strrep(datestr(datetime),' ','_'),':','_')
 
 saveFile = ['manualMeasurements\' date_time];
+
+if ~isfile('manualMeasurements')
+    mkdir('manualMeasurements');
+end
 
 while true
     [keyIsDown,secs, keyCode] = KbCheck;
@@ -59,6 +63,15 @@ while true
     elseif keyCode(KbName('e')) && color(3) < 255
         color(3) = min(color(3)+StepSize,255);
         textcolor = [255 255 255] - color;
+        while true
+            if sum(abs(textcolor-color)) < 100
+                textcolor = textcolor - [10 10 10];
+            else
+                break
+            end
+        end
+
+
         Screen('FillRect',Window,color);
         Screen('DrawText', Window, num2str(color),0,0,textcolor);
         Screen('Flip',Window);  

@@ -32,7 +32,7 @@ if bsuccess == 1
     switch PR
         case '655'
             clear spd;
-            spd = PR670measspd([380 4 101]);
+            spd = PR655measspd([380 4 101]);
             wav = linspace(380,780,101);
             spec = NaN(101,2);
             for k = 1:101

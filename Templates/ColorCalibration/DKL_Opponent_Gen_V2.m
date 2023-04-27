@@ -2,15 +2,16 @@
 clear 
 close all
 curDir = pwd;
+measuredir = fullfile(curDir,'measurements');
 saveDir = [curDir '\targetvalues'];
 if ~isfolder(saveDir)
     mkdir(saveDir)
 end
-extension = 'DKL8ColorBiasedRegionLocalizerColors';
+extension = 'DKL8670Test';
 targetLMSF = [saveDir '\' extension '.mat'];
-LMSgray = [0.4506 0.3763 0.2380]; % insert the LMS value of the gray you measured
+LMSgray = [0.28461     0.24309     0.16347]; % insert the LMS value of the gray you measured
 graypointRGB = [128 128 128]; % What is the value of the isoluminant RGB that you want? 
-scalingFs = [0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9]; % How far along the gamut of the direction with the least gamut range do you want to extend?
+scalingFs = [0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95]; % How far along the gamut of the direction with the least gamut range do you want to extend?
 angles = [0, 45, 90, 135, 180, 225, 270,315]; % What angles in DKL space do you want to compute your colors around
 lumAngles = [0, 0, 0, 0, 0, 0, 0, 0]; % What angle along the LMS axis do you want to calculate around?
 angles = deg2rad(angles); % Convert to radians
@@ -19,13 +20,14 @@ graypoint = graypointRGB/256; % Convert RGB graypoint into decimal
 bgLMS = LMSgray'; % Transpose for the background LMS value
 
 
-calibName = '10-Sep-2022_NIFWideScreen20220910'; % What is the name of the files that stores the calibration information?
-calibpath = 'C:\Users\Admin\Documents\fMRI-Stimuli\Templates\ColorCalibration\measurements\10-Sep-2022_NIFWideScreen20220910\'; % Where is this path?
+calibName = '05-Apr-2023_670Laptop'; % What is the name of the files that stores the calibration information?
+calibpath = fullfile(measuredir,calibName); % Where is this path?
 measuresFilename = [calibName '.mat']; % Load the values of the spectra recorded
 lutFilename = [calibName '_LUT.mat']; % Load the lookup table
 varname = who('-file', [calibpath filesep measuresFilename]); %
 load([calibpath filesep measuresFilename]); % LumValues
 load([calibpath filesep lutFilename]); % LUT
+
 
 %whiteGuns = extractfield(LumValues.white,'gunValue');
 whitexyY = reshape(extractfield(LumValues.white,'xyYJudd'),3,[])';
@@ -175,9 +177,18 @@ csvwrite([saveDir '\' extension '_RGB.csv'],est_RGB_Lookup');
 M_XYZ2RGB = XYZToRGBMatrix(redxyY(end,1),redxyY(end,2),greenxyY(end,1),greenxyY(end,2),bluexyY(end,1),bluexyY(end,2),whitexyY(end,1),whitexyY(end,2));
 M_RGB2XYZ = inv(M_XYZ2RGB);
 
-XYZ = M_RGB2XYZ*est_RGB_Lookup;
+XYZ = M_RGB2XYZ*est_RGB;
 xyY = thXYZToxyY(XYZ)';
+XYZgray = M_RGB2XYZ*graypoint';
+xyYGray = thXYZToxyY(XYZgray)';
+
+monitorgamut = [redxyY(end,:); bluexyY(end,:); greenxyY(end,:); redxyY(end,:)];
+
 figure
 DrawChromaticity
 hold on
-scatter(xyY(:,1),xyY(:,2))
+scatter(xyY(:,1),xyY(:,2),'x','r');
+scatter(xyYGray(1),xyYGray(2),'o','filled','k');
+plot(monitorgamut(:,1),monitorgamut(:,2));
+legend('Target Values','Equiluminant Gray','Monitor Gamut');
+title('Chroamticity Coordinates of Calculated and Measured Values (Judd)');

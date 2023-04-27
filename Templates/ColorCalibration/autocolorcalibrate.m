@@ -6,14 +6,14 @@ saveDir = [curdir '\automaticMeasurements\'];
 if ~isfolder(saveDir)
     mkdir(saveDir)
 end
-targColorF = fullfile(curdir,'targetvalues','targXYZ_whitepoint_131__130__124.csv');
-startRGBF = fullfile(curdir,'targetvalues','targRGB_whitepoint_131__130__124.csv');
+targColorF = fullfile(curdir,'targetvalues','DKL8670Test_LMS.csv');
+startRGBF = fullfile(curdir,'targetvalues','DKL8670Test_RGB.csv');
 thresh = 0.001; % Import to set this specifically for each
-targType = 'XYZJudd';
+targType = 'LMS';
 
 global PRport PR
-PRport = 'COM4';
-PR = '655';
+PRport = 'COM6';
+PR = '670';
 StepSize = 1;
 ScreenSize = [];
 KbName('UnifyKeyNames');
