@@ -6,13 +6,13 @@
 % Initialize general parameters here
 params = struct(); % Initialize paramter structure
 % Who is the subject
-params.subject = 'Wooster';
+params.subject = '';
 params.experiment = 'Shape Color 5.1';
 params.runNum = 0; % What number run are we at? Starts at 0 because the while loop below increments this
 
 % Reward parameters
 params.rewardDur = 0.01; % Seconds of reward
-params.rewardWait = 2; % Seconds, time to wait between rewards
+params.rewardWait = 1.5; % Seconds, time to wait between rewards
 params.rewardWaitActual = params.rewardWait; % This will be changed by the jitter
 params.rewardWaitChange = 0.001; % Seconds, increment to change reward wait by during experiment
 params.rewardWaitJitter = 0.25; % Seconds, jitter in how much reward is given by at any moment
@@ -23,10 +23,10 @@ params.rewardKeyChange = 0.001; % Seconds, increment to change reward durations 
 params.gainStep = 5; % Pixels/Volt, how much to change the gain by
 DAQ('Debug',false); % Set DAQ to not debug
 DAQ('Init'); % Initialize DAQ
-params.xGain = -120; % Pixels/Volt
-params.yGain = 90; % Pixels/Volt
-params.xOffset = -992; % Pixels
-params.yOffset = -407; % Pixels
+params.xGain = -2080; % Pixels/Volt
+params.yGain = 2215; % Pixels/Volt
+params.xOffset = -946; % Pixels
+params.yOffset = -1286; % Pixels
 params.xChannel = 2; % DAQ indexes starts at 1
 params.yChannel = 3; % Where y channel inputs to the DAQ
 params.ttlChannel = 8; % Where the TTL channel inputs to the DAQ
@@ -34,7 +34,7 @@ params.manualMovementPix = 10;
 
 % Set up folder structure
 params.curdir = pwd; % Get the current working directory
-params.stimDir = fullfile(params.curdir,'RigBStimuli'); % Get the stimuli directory
+params.stimDir = fullfile(params.curdir,'Stimuli'); % Get the stimuli directory
 params.dataDir = fullfile(params.curdir,'Data'); % Get the data directory
 params.resultsDir = fullfile(params.curdir,'Results'); % Get the results directory
 if ~isfolder(params.dataDir) % Does the data folder exist?
@@ -123,7 +123,7 @@ params.probeChance = 1; % The chance that it is a probe trial
 params.numProbes_init = params.probeChance*params.numblocks; % Number of probes per trial
 
 % Colors
-params.gray = [103    87   125]; % This gray is redefined in SC.m, so changing this here will not affect the main script
+params.gray = [31 29 47]; %[103    87   125]; % This gray is redefined in SC.m, so changing this here will not affect the main script
 prompt_begin = ['What run number do you want to begin with?'];
 reply = input (prompt_begin,'s');
 params.runNum = str2double(reply) - 1;
@@ -202,6 +202,7 @@ while true % Now we run a while loop to actually display the menu
             params = SC(params);
             params = generateRunInfo(params);
         else
+            params.runNum = params.runNum - 1
             continue
         end    
     elseif reply == 'p'
