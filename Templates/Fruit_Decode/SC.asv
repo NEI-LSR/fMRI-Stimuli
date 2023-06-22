@@ -1,0 +1,76 @@
+function [params] = Fruit_Decode(params)
+    % Fruit Decode
+    % Stuart J. Duffield, Noah K. Lasky-Nielson, and Helen E. Feibes June 2023
+    % Experiment to see if we can decode color information from grayscale
+    % images of fruits. Presents images of fruits in a blocked design.
+    
+
+
+    
+    %% Initialize Parameters
+
+
+    function [juiceEndTime,juiceOn] = juice(howLong,juiceEndTime, curTime,juiceOn)
+        if howLong > 0
+            if juiceEndTime > curTime
+                juiceEndTime = juiceEndTime + howLong;
+            else
+                juiceEndTime = curTime + howLong;
+            end
+        end
+        if juiceOn == true
+            if juiceEndTime<=curTime
+                DAQ('SetBit',[0 0 0 0]); % Turn it off if juice was on but juice no longer needs to be on
+                juiceOn = false;
+            else
+                juiceOn = true;
+            end
+        elseif juiceOn == false
+            if juiceEndTime > curTime
+                DAQ('SetBit',[1 1 1 1])
+                juiceOn = true;
+            else
+                juiceOn = false;
+            end
+        end
+    end
+        
+
+    function [xPos,yPos] = eyeTrack(xChannel,yChannel,xGain,yGain,xOffset,yOffset)
+        coords = DAQ('GetAnalog',[xChannel yChannel]);
+        xPos = (coords(1)*xGain)-xOffset;
+        yPos = (coords(2)*yGain)-yOffset;
+    end
+
+
+
+    function inCircle = isInCircle(xPos, yPos, circle) % circle is a PTB rectangle
+        radius = (circle(3) - circle(1)) / 2;
+        [xCircleCenter, yCircleCenter] = RectCenter(circle);
+        xDiff = xPos-xCircleCenter;
+        yDiff = yPos-yCircleCenter;
+        dist = hypot(xDiff,yDiff);
+        inCircle = radius>dist;
+    end
+   
+end
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
