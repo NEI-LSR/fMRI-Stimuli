@@ -257,7 +257,7 @@ function [params] = Fruit_Decode(params)
             % Prepare to draw stimuli
             stimuliTime = toc-startStimuliTime;
             if stimuliTime > params.stimDur
-                if stimuliIndx <= params.numblockimages
+                if stimuliIndx < params.numblockimages
                     stimuliIndx = stimuliIndx + 1;
                 end
                 startStimuliTime = toc;
