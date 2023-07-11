@@ -9,7 +9,6 @@ function [params] = SC(params)
     % animals were trained on.
     
     % Set random seed generator. 
-    rng('default');
     params.seed = rng('shuffle'); % This essentially just makes sure that the seed
     % is different each time. Sets the seed of the rng based on the current
     % time, so every time this is ran it should have a different seed.
@@ -37,7 +36,7 @@ function [params] = SC(params)
     % Set up other screen parameters
     params.jitterFrames = params.FPS/2; % How often do we want the stimuli to jitter? 
     
-    % params.gray = [31 29 47];% [103    87   125]; % The gray of the background. Very important!
+    params.gray = [31 29 47];% [103    87   125]; % The gray of the background. Very important!
     params.red = [255 0 0]; % Red color
     params.green = [0 255 0]; % Green color
     params.blue = [0 0 255]; % Blue color
