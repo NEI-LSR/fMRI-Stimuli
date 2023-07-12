@@ -45,8 +45,8 @@ if ~isfolder(params.resultsDir) % Does the results folder exist?
 end
 
 % Screen information
-params.expscreen = 1; % Experimenter's Screen
-params.viewscreen = 2; % Subject's Screen
+params.expscreen = 2; % Experimenter's Screen
+params.viewscreen = 1; % Subject's Screen
 params.pixPerAngle = 40; % Number of pixels per degree of visual stimuli. 
 % Note: after the projector standardization between Marianne and Stuart's
 % setups, the actual pixels per degree of visual angle is 50. This has been
