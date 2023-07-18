@@ -78,9 +78,9 @@ params.achrom = ["Chevron","Tie","Acorn","House","Pacman","Stickyhand","Bell","L
 params.use_index = [2,3,6,7,10,11,14];
 
 
-params.numStim = 4; % Number of unique stimuli across category
+params.numStim = 7; % Number of unique stimuli across category
 params.numBDOrder = 2; % Order of the debruijn sequencing
-params.numSplits = 4; % How many orders to subdivide the DB sequencing into
+params.numSplits = 7; % How many orders to subdivide the DB sequencing into
 params.numOverlap = 1; % How much overlap between sequences
 while true
     prompt = 'Load Session? (y/n): ';
