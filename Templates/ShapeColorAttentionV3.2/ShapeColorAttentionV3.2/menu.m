@@ -80,7 +80,7 @@ params.use_index = [2,3,6,7,10,11,14];
 
 params.numStim = 7; % Number of unique stimuli across category
 params.numBDOrder = 2; % Order of the debruijn sequencing
-params.numSplits = 7; % How many orders to subdivide the DB sequencing into
+params.numSplits = 14; % How many orders to subdivide the DB sequencing into
 params.numOverlap = 1; % How much overlap between sequences
 while true
     prompt = 'Load Session? (y/n): ';
@@ -110,8 +110,8 @@ end
 disp('Stimuli indices: ')
 disp(params.stimIndex)
 
-params.blockorders = (params.stimOrders > 4) + 2; % Creates array of 2s and 3s, which matches to colorcase and bwcase.
-% If the stimorder is 1-4, it is a color, if 5-8, a shape
+params.blockorders = (params.stimOrders > 7) + 2; % Creates array of 2s and 3s, which matches to colorcase and bwcase.
+% If the stimorder is 1-7, it is a color, if 8-14, a shape
 params.numblocks = size(params.blockorders,2); % How many blocks per run
 params.numorders = size(params.blockorders,1); % How many orders there are
 params.totconds = params.numorders*params.numblocks; % How many total conditions are there
