@@ -1,0 +1,16 @@
+Run,IMA,Subject,Session,Blocknumber,Blocktype,Stimulus,ProbeTrial,Correct,StimulusDuration,GrayDuration,ChoiceDuration,ITIDuration,CorrectLocation,UpperRightChoice,LowerRightChoice,LowerLeftChoice,UpperLeftChoice,CorrectChoiceStim,ChoiceLocation,ChoiceStimuli,PercentFixationStim,MedianDistanceStim,Complete
+5,18,Jeeves,2023-07-24,1,Chromatic,Spade,1,0,3,0,1,3,LowerRight,DarkBlue,LightTurquiose,DarkGreen,DarkGray,LightTurquiose,None,None,0.555555555555556,0.903157132667318,0
+5,18,Jeeves,2023-07-24,2,Chromatic,Hat,1,0,3,0,1,3,LowerRight,DarkRed,DarkGray,LightTurquiose,LightPurple,DarkGray,LowerLeft,LightTurquiose,0.777777777777778,0.694581561707655,0
+5,18,Jeeves,2023-07-24,3,Chromatic,Bar,1,0,3,0,1,3,LowerRight,LightTurquiose,DarkGreen,LightPurple,DarkRed,DarkGreen,UpperRight,LightTurquiose,0.540740740740741,0.956182636390877,0
+5,18,Jeeves,2023-07-24,4,Chromatic,Hat,1,0,3,0,1,3,LowerLeft,LightYellow,DarkGreen,DarkGray,LightTurquiose,DarkGray,UpperLeft,LightTurquiose,0.814126394052045,0.697009253385532,0
+5,18,Jeeves,2023-07-24,5,Chromatic,Spade,1,1,3,0,1,3,LowerRight,DarkGray,LightTurquiose,LightYellow,LightPurple,LightTurquiose,LowerRight,LightTurquiose,0.438661710037175,1.13672631331058,0
+5,18,Jeeves,2023-07-24,6,Colors,LightPurple,1,0,3,0,1,3,UpperLeft,Hat,Nail,Bar,Rabbit,Rabbit,None,None,0.684014869888476,0.802735435225038,0
+5,18,Jeeves,2023-07-24,7,Colors,DarkRed,1,0,3,0,1,3,LowerLeft,,,,,,None,None,NaN,NaN,0
+5,18,Jeeves,2023-07-24,8,Chromatic,Diamond,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+5,18,Jeeves,2023-07-24,9,Colors,DarkBlue,1,0,3,0,1,3,LowerLeft,,,,,,None,None,NaN,NaN,0
+5,18,Jeeves,2023-07-24,10,Colors,DarkGray,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+5,18,Jeeves,2023-07-24,11,Colors,LightTurquiose,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+5,18,Jeeves,2023-07-24,12,Chromatic,Rabbit,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+5,18,Jeeves,2023-07-24,13,Chromatic,Rabbit,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+5,18,Jeeves,2023-07-24,14,Chromatic,Spade,1,0,3,0,1,3,LowerLeft,,,,,,None,None,NaN,NaN,0
+5,18,Jeeves,2023-07-24,15,Chromatic,UpArrow,1,0,3,0,1,3,LowerLeft,,,,,,None,None,NaN,NaN,0
