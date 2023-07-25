@@ -186,8 +186,9 @@ while true % Now we run a while loop to actually display the menu
             params.blockorderindex = params.blockorderindex + 1;
         else 
             disp('Generating new stimuli indices and sequences...')
-            params = gen_seq_stim(params,params.numStim,length(params.colors),params.numBDOrder,params.numSplits,params.numOverlap); 
-            params.blockorders = (params.stimOrders > 4) + 2; % Creates array of 2s and 3s, which matches to colorcase and bwcase.
+             params = gen_seq_stim(params,params.numStim,length(params.use_index),params.numBDOrder,params.numSplits,params.numOverlap,params.use_index);
+            %params = gen_seq_stim(params,params.numStim,length(params.colors),params.numBDOrder,params.numSplits,params.numOverlap); 
+            params.blockorders = (params.stimOrders > 7) + 2; % Creates array of 2s and 3s, which matches to colorcase and bwcase.
             % If the stimorder is 1-4, it is a color, if 5-8, a shape
             disp('Stimuli indices: ')
             disp(params.stimIndex)
