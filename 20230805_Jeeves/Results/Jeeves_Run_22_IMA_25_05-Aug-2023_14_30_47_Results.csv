@@ -1,0 +1,16 @@
+Run,IMA,Subject,Session,Blocknumber,Blocktype,Stimulus,ProbeTrial,Correct,StimulusDuration,GrayDuration,ChoiceDuration,ITIDuration,CorrectLocation,UpperRightChoice,LowerRightChoice,LowerLeftChoice,UpperLeftChoice,CorrectChoiceStim,ChoiceLocation,ChoiceStimuli,PercentFixationStim,MedianDistanceStim,Complete
+22,25,Jeeves,2023-08-05,1,Chromatic,Spade,1,0,3,0,1,3,UpperLeft,DarkBlue,DarkGreen,DarkRed,LightTurquiose,LightTurquiose,None,None,0,24.2206179672101,0
+22,25,Jeeves,2023-08-05,2,Chromatic,Hat,1,0,3,0,1,3,UpperLeft,LightYellow,DarkBlue,DarkGreen,DarkGray,DarkGray,None,None,0,24.6852647100561,0
+22,25,Jeeves,2023-08-05,3,Chromatic,Bar,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+22,25,Jeeves,2023-08-05,4,Chromatic,Hat,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+22,25,Jeeves,2023-08-05,5,Chromatic,Spade,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+22,25,Jeeves,2023-08-05,6,Colors,LightPurple,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+22,25,Jeeves,2023-08-05,7,Colors,DarkRed,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+22,25,Jeeves,2023-08-05,8,Chromatic,Diamond,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+22,25,Jeeves,2023-08-05,9,Colors,DarkBlue,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+22,25,Jeeves,2023-08-05,10,Colors,DarkGray,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+22,25,Jeeves,2023-08-05,11,Colors,LightTurquiose,1,0,3,0,1,3,LowerLeft,,,,,,None,None,NaN,NaN,0
+22,25,Jeeves,2023-08-05,12,Chromatic,Rabbit,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+22,25,Jeeves,2023-08-05,13,Chromatic,Rabbit,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+22,25,Jeeves,2023-08-05,14,Chromatic,Spade,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+22,25,Jeeves,2023-08-05,15,Chromatic,UpArrow,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
