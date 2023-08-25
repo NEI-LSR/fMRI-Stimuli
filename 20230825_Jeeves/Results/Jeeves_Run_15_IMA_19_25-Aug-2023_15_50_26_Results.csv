@@ -1,0 +1,16 @@
+Run,IMA,Subject,Session,Blocknumber,Blocktype,Stimulus,ProbeTrial,Correct,StimulusDuration,GrayDuration,ChoiceDuration,ITIDuration,CorrectLocation,UpperRightChoice,LowerRightChoice,LowerLeftChoice,UpperLeftChoice,CorrectChoiceStim,ChoiceLocation,ChoiceStimuli,PercentFixationStim,MedianDistanceStim,Complete
+15,19,Jeeves,2023-08-25,1,Colors,DarkGray,1,0,3,0,1,3,UpperLeft,Rabbit,UpArrow,Bar,Hat,Hat,LowerLeft,Bar,0.00740740740740741,21.6107197476558,1
+15,19,Jeeves,2023-08-25,2,Colors,DarkRed,1,1,3,0,1,3,LowerRight,Spade,UpArrow,Hat,Rabbit,UpArrow,LowerRight,UpArrow,0.607407407407407,0.872761476724285,1
+15,19,Jeeves,2023-08-25,3,Chromatic,UpArrow,1,0,3,0,1,3,LowerLeft,DarkBlue,DarkGreen,DarkRed,DarkGray,DarkRed,LowerRight,DarkGreen,0.566666666666667,0.822344239426863,1
+15,19,Jeeves,2023-08-25,4,Chromatic,Nail,1,1,3,0,1,3,UpperRight,DarkBlue,DarkRed,DarkGray,LightPurple,DarkBlue,UpperRight,DarkBlue,0.759259259259259,0.730362195426645,1
+15,19,Jeeves,2023-08-25,5,Colors,DarkRed,1,0,3,0,1,3,UpperLeft,Diamond,Rabbit,Nail,UpArrow,UpArrow,LowerRight,Rabbit,0.418518518518519,1.24094054034062,1
+15,19,Jeeves,2023-08-25,6,Colors,LightTurquiose,1,1,3,0,1,3,UpperLeft,Rabbit,Hat,UpArrow,Spade,Spade,UpperLeft,Spade,0.577777777777778,0.95461532239206,1
+15,19,Jeeves,2023-08-25,7,Colors,DarkGreen,1,1,3,0,1,3,LowerLeft,Spade,Diamond,Bar,Rabbit,Bar,LowerLeft,Bar,0.362962962962963,1.1718385726238,1
+15,19,Jeeves,2023-08-25,8,Chromatic,Nail,1,1,3,0,1,3,LowerLeft,LightPurple,DarkRed,DarkBlue,DarkGreen,DarkBlue,LowerLeft,DarkBlue,0.781481481481481,0.646013099235233,1
+15,19,Jeeves,2023-08-25,9,Colors,DarkGreen,1,0,3,0,1,3,LowerRight,Rabbit,Bar,UpArrow,Diamond,Bar,UpperRight,Rabbit,0.551851851851852,0.956182636390877,1
+15,19,Jeeves,2023-08-25,10,Colors,LightYellow,1,1,3,0,1,3,UpperLeft,Nail,Hat,Rabbit,Diamond,Diamond,UpperLeft,Diamond,0.271375464684015,1.33340489375048,1
+15,19,Jeeves,2023-08-25,11,Chromatic,Nail,1,1,3,0,1,3,LowerRight,DarkGreen,DarkBlue,LightPurple,DarkRed,DarkBlue,LowerRight,DarkBlue,0.525925925925926,0.956182636390877,1
+15,19,Jeeves,2023-08-25,12,Colors,LightTurquiose,1,1,3,0,1,3,LowerLeft,Rabbit,Hat,Spade,Bar,Spade,LowerLeft,Spade,0.5,1.0077264064916,1
+15,19,Jeeves,2023-08-25,13,Chromatic,UpArrow,1,1,3,0,1,3,UpperLeft,DarkGreen,LightYellow,LightTurquiose,DarkRed,DarkRed,UpperLeft,DarkRed,0.531598513011152,0.95461532239206,1
+15,19,Jeeves,2023-08-25,14,Chromatic,Bar,1,1,3,0,1,3,LowerLeft,DarkGray,LightYellow,DarkGreen,DarkRed,DarkGreen,LowerLeft,DarkGreen,0.640740740740741,0.822344239426863,1
+15,19,Jeeves,2023-08-25,15,Colors,LightTurquiose,1,1,3,0,1,3,LowerLeft,Rabbit,Bar,Spade,Diamond,Spade,LowerLeft,Spade,0.837037037037037,0.674576334625435,1
