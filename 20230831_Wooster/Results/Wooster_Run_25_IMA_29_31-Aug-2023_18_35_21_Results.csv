@@ -1,0 +1,16 @@
+Run,IMA,Subject,Session,Blocknumber,Blocktype,Stimulus,ProbeTrial,Correct,StimulusDuration,GrayDuration,ChoiceDuration,ITIDuration,CorrectLocation,UpperRightChoice,LowerRightChoice,LowerLeftChoice,UpperLeftChoice,CorrectChoiceStim,ChoiceLocation,ChoiceStimuli,PercentFixationStim,MedianDistanceStim,Complete
+25,29,Wooster,2023-08-31,1,Colors,LightTurquiose,1,1,3,0,1,3,LowerLeft,Nail,Bar,Spade,Hat,Spade,LowerLeft,Spade,0.0185185185185185,18.6329601501278,0
+25,29,Wooster,2023-08-31,2,Chromatic,Spade,1,1,3,0,1,3,LowerLeft,DarkGray,DarkRed,LightTurquiose,DarkBlue,LightTurquiose,LowerLeft,LightTurquiose,0.0703703703703704,34.8009367189023,0
+25,29,Wooster,2023-08-31,3,Colors,DarkGreen,1,0,3,0,1,3,LowerLeft,Diamond,Rabbit,Bar,Nail,Bar,None,None,0,12.8082727552464,0
+25,29,Wooster,2023-08-31,4,Chromatic,Hat,1,0,3,0,1,3,LowerLeft,,,,,,None,None,NaN,NaN,0
+25,29,Wooster,2023-08-31,5,Colors,LightPurple,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+25,29,Wooster,2023-08-31,6,Chromatic,Diamond,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+25,29,Wooster,2023-08-31,7,Colors,DarkBlue,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+25,29,Wooster,2023-08-31,8,Colors,DarkBlue,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+25,29,Wooster,2023-08-31,9,Chromatic,Rabbit,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+25,29,Wooster,2023-08-31,10,Chromatic,Rabbit,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+25,29,Wooster,2023-08-31,11,Colors,LightYellow,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+25,29,Wooster,2023-08-31,12,Colors,DarkGreen,1,0,3,0,1,3,LowerLeft,,,,,,None,None,NaN,NaN,0
+25,29,Wooster,2023-08-31,13,Chromatic,UpArrow,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+25,29,Wooster,2023-08-31,14,Chromatic,Hat,1,0,3,0,1,3,LowerLeft,,,,,,None,None,NaN,NaN,0
+25,29,Wooster,2023-08-31,15,Colors,LightYellow,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0

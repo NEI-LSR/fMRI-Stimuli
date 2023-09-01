@@ -1,0 +1,16 @@
+Run,IMA,Subject,Session,Blocknumber,Blocktype,Stimulus,ProbeTrial,Correct,StimulusDuration,GrayDuration,ChoiceDuration,ITIDuration,CorrectLocation,UpperRightChoice,LowerRightChoice,LowerLeftChoice,UpperLeftChoice,CorrectChoiceStim,ChoiceLocation,ChoiceStimuli,PercentFixationStim,MedianDistanceStim,Complete
+18,22,Wooster,2023-08-31,1,Chromatic,Spade,1,1,3,0,1,3,LowerLeft,LightPurple,LightYellow,LightTurquiose,DarkGreen,LightTurquiose,LowerLeft,LightTurquiose,0.0037593984962406,20.4210497076878,1
+18,22,Wooster,2023-08-31,2,Chromatic,Diamond,1,1,3,0,1,3,LowerRight,DarkGreen,LightYellow,LightTurquiose,DarkGray,LightYellow,LowerRight,LightYellow,0.0339622641509434,6.76104045174296,1
+18,22,Wooster,2023-08-31,3,Chromatic,Rabbit,1,1,3,0,1,3,LowerLeft,DarkGray,LightTurquiose,LightPurple,LightYellow,LightPurple,LowerLeft,LightPurple,0.573122529644269,0.802735435225038,1
+18,22,Wooster,2023-08-31,4,Chromatic,Hat,1,1,3,0,1,3,LowerLeft,LightPurple,DarkBlue,DarkGray,DarkRed,DarkGray,LowerLeft,DarkGray,0.916334661354582,0.494376738780643,1
+18,22,Wooster,2023-08-31,5,Chromatic,Hat,1,0,3,0,1,3,LowerLeft,LightYellow,DarkGreen,DarkGray,DarkRed,DarkGray,UpperRight,LightYellow,0.579766536964981,0.730362195426645,1
+18,22,Wooster,2023-08-31,6,Chromatic,Spade,1,1,3,0,1,3,UpperRight,LightTurquiose,DarkRed,LightPurple,LightYellow,LightTurquiose,UpperRight,LightTurquiose,0.914814814814815,0.479524787185499,1
+18,22,Wooster,2023-08-31,7,Chromatic,Nail,1,0,3,0,1,3,UpperLeft,DarkGray,LightYellow,DarkRed,DarkBlue,DarkBlue,LowerLeft,DarkRed,0.640740740740741,0.694581561707655,1
+18,22,Wooster,2023-08-31,8,Chromatic,Diamond,1,1,3,0,1,3,LowerRight,DarkGreen,LightYellow,DarkBlue,LightTurquiose,LightYellow,LowerRight,LightYellow,0.833333333333333,0.697009253385532,1
+18,22,Wooster,2023-08-31,9,Chromatic,UpArrow,1,1,3,0,1,3,LowerRight,DarkGray,DarkRed,DarkBlue,LightYellow,DarkRed,LowerRight,DarkRed,0.792592592592593,0.730362195426645,1
+18,22,Wooster,2023-08-31,10,Chromatic,UpArrow,1,1,3,0,1,3,UpperLeft,DarkBlue,LightPurple,DarkGreen,DarkRed,DarkRed,UpperLeft,DarkRed,0.61003861003861,0.730362195426645,1
+18,22,Wooster,2023-08-31,11,Colors,LightTurquiose,1,1,3,0,1,3,LowerLeft,Diamond,Nail,Spade,UpArrow,Spade,LowerLeft,Spade,0.350597609561753,1.46072439085329,1
+18,22,Wooster,2023-08-31,12,Colors,LightPurple,1,1,3,0,1,3,LowerRight,Bar,Rabbit,Spade,Nail,Rabbit,LowerRight,Rabbit,0.239043824701195,2.72134783903089,1
+18,22,Wooster,2023-08-31,13,Colors,DarkBlue,1,1,3,0,1,3,UpperRight,Nail,UpArrow,Rabbit,Hat,Nail,UpperRight,Nail,0.699619771863118,0.730362195426645,1
+18,22,Wooster,2023-08-31,14,Chromatic,Bar,1,1,3,0,1,3,LowerLeft,LightTurquiose,DarkRed,DarkGreen,LightPurple,DarkGreen,LowerLeft,DarkGreen,0.614814814814815,0.941980496786385,1
+18,22,Wooster,2023-08-31,15,Colors,DarkGray,1,1,3,0,1,3,UpperRight,Hat,Bar,Nail,UpArrow,Hat,UpperRight,Hat,0.685185185185185,0.903157132667318,1
