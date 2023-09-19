@@ -1,0 +1,16 @@
+Run,IMA,Subject,Session,Blocknumber,Blocktype,Stimulus,ProbeTrial,Correct,StimulusDuration,GrayDuration,ChoiceDuration,ITIDuration,CorrectLocation,UpperRightChoice,LowerRightChoice,LowerLeftChoice,UpperLeftChoice,CorrectChoiceStim,ChoiceLocation,ChoiceStimuli,PercentFixationStim,MedianDistanceStim,Complete
+26,28,Jeeves,2023-09-19,1,Chromatic,Hat,1,0,3,0,1,3,UpperLeft,LightYellow,DarkGreen,LightPurple,DarkGray,DarkGray,None,None,0,13.8345046424749,0
+26,28,Jeeves,2023-09-19,2,Chromatic,UpArrow,1,1,3,0,1,3,LowerRight,LightYellow,DarkRed,DarkGreen,LightPurple,DarkRed,LowerRight,DarkRed,0,15.8506016008597,0
+26,28,Jeeves,2023-09-19,3,Colors,LightYellow,1,0,3,0,1,3,LowerRight,Rabbit,Diamond,UpArrow,Bar,Diamond,UpperRight,Rabbit,0.0444444444444444,13.2461777404191,0
+26,28,Jeeves,2023-09-19,4,Chromatic,Nail,1,0,3,0,1,3,UpperLeft,DarkGreen,DarkGray,LightYellow,DarkBlue,DarkBlue,LowerRight,DarkGray,0.159259259259259,17.2397335752039,0
+26,28,Jeeves,2023-09-19,5,Chromatic,Rabbit,1,0,3,0,1,3,LowerLeft,DarkGray,DarkGreen,LightPurple,LightYellow,LightPurple,UpperRight,DarkGray,0.437037037037037,1.41875777293502,0
+26,28,Jeeves,2023-09-19,6,Colors,DarkGreen,1,0,3,0,1,3,UpperLeft,Spade,UpArrow,Diamond,Bar,Bar,None,None,0.0148148148148148,2.72834949093757,0
+26,28,Jeeves,2023-09-19,7,Chromatic,UpArrow,1,0,3,0,1,3,UpperLeft,LightPurple,DarkGreen,DarkGray,DarkRed,DarkRed,None,None,0.875,0.470417008257498,0
+26,28,Jeeves,2023-09-19,8,Chromatic,Nail,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+26,28,Jeeves,2023-09-19,9,Colors,LightTurquiose,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+26,28,Jeeves,2023-09-19,10,Chromatic,Spade,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+26,28,Jeeves,2023-09-19,11,Chromatic,Nail,1,0,3,0,1,3,LowerLeft,,,,,,None,None,NaN,NaN,0
+26,28,Jeeves,2023-09-19,12,Colors,LightPurple,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+26,28,Jeeves,2023-09-19,13,Colors,LightPurple,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+26,28,Jeeves,2023-09-19,14,Chromatic,UpArrow,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+26,28,Jeeves,2023-09-19,15,Colors,LightTurquiose,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
