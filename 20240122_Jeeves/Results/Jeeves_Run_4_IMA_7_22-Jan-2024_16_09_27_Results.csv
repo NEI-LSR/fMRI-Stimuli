@@ -1,0 +1,16 @@
+Run,IMA,Subject,Session,Blocknumber,Blocktype,Stimulus,ProbeTrial,Correct,StimulusDuration,GrayDuration,ChoiceDuration,ITIDuration,CorrectLocation,UpperRightChoice,LowerRightChoice,LowerLeftChoice,UpperLeftChoice,CorrectChoiceStim,ChoiceLocation,ChoiceStimuli,PercentFixationStim,MedianDistanceStim,Complete
+4,7,Jeeves,2024-01-22,1,Colors,LightYellow,1,0,3,0,1,3,LowerRight,Hat,Diamond,UpArrow,Rabbit,Diamond,UpperRight,Hat,0,12.5117053674074,0
+4,7,Jeeves,2024-01-22,2,Colors,DarkRed,1,1,3,0,1,3,LowerRight,Bar,UpArrow,Diamond,Nail,UpArrow,LowerRight,UpArrow,0.062962962962963,13.7998784682235,0
+4,7,Jeeves,2024-01-22,3,Chromatic,Spade,1,0,3,0,1,3,UpperRight,LightTurquiose,LightPurple,DarkGreen,DarkBlue,LightTurquiose,None,None,0.340740740740741,1.56497412627513,0
+4,7,Jeeves,2024-01-22,4,Colors,DarkRed,1,1,3,0,1,3,LowerRight,Diamond,UpArrow,Nail,Spade,UpArrow,LowerRight,UpArrow,0.185873605947955,6.23318876205593,0
+4,7,Jeeves,2024-01-22,5,Chromatic,Hat,1,0,3,0,1,3,LowerLeft,DarkGreen,LightYellow,DarkGray,DarkBlue,DarkGray,None,None,0.0407407407407407,3.0064314717443,0
+4,7,Jeeves,2024-01-22,6,Chromatic,Rabbit,1,0,3,0,1,3,UpperRight,LightPurple,LightTurquiose,DarkGreen,LightYellow,LightPurple,None,None,0.211111111111111,11.4003133160633,0
+4,7,Jeeves,2024-01-22,7,Colors,DarkGreen,1,0,3,0,1,3,UpperLeft,Spade,Diamond,Nail,Bar,Bar,None,None,0.411428571428571,1.07081933965835,0
+4,7,Jeeves,2024-01-22,8,Colors,DarkGray,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+4,7,Jeeves,2024-01-22,9,Colors,DarkGray,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+4,7,Jeeves,2024-01-22,10,Colors,DarkGreen,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+4,7,Jeeves,2024-01-22,11,Chromatic,UpArrow,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+4,7,Jeeves,2024-01-22,12,Chromatic,Diamond,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+4,7,Jeeves,2024-01-22,13,Chromatic,UpArrow,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+4,7,Jeeves,2024-01-22,14,Colors,LightYellow,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+4,7,Jeeves,2024-01-22,15,Colors,LightPurple,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
