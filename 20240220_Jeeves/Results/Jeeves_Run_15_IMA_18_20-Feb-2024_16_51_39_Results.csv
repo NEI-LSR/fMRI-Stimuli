@@ -1,0 +1,16 @@
+Run,IMA,Subject,Session,Blocknumber,Blocktype,Stimulus,ProbeTrial,Correct,StimulusDuration,GrayDuration,ChoiceDuration,ITIDuration,CorrectLocation,UpperRightChoice,LowerRightChoice,LowerLeftChoice,UpperLeftChoice,CorrectChoiceStim,ChoiceLocation,ChoiceStimuli,PercentFixationStim,MedianDistanceStim,Complete
+15,18,Jeeves,2024-02-20,1,Colors,DarkTurquiose,1,1,3,0,1,3,LowerLeft,Hourglass,Puzzle,Dodecagon,Sawblade,Dodecagon,LowerLeft,Dodecagon,0.0037037037037037,11.1910459184663,1
+15,18,Jeeves,2024-02-20,2,Chromatic,Spike,1,1,3,0,1,3,UpperLeft,DarkTurquiose,LightRed,DarkPurple,DarkYellow,DarkYellow,UpperLeft,DarkYellow,0,5.28040085786698,1
+15,18,Jeeves,2024-02-20,3,Chromatic,Spike,1,0,3,0,1,3,LowerLeft,LightGray,LightRed,DarkYellow,DarkTurquiose,DarkYellow,UpperLeft,DarkTurquiose,0.0148148148148148,4.09941859545382,1
+15,18,Jeeves,2024-02-20,4,Colors,LightRed,1,0,3,0,1,3,UpperRight,Hourglass,Lock,Spike,Puzzle,Hourglass,UpperLeft,Puzzle,0.296296296296296,3.47157391810151,1
+15,18,Jeeves,2024-02-20,5,Colors,LightRed,1,0,3,0,1,3,UpperRight,Hourglass,Sawblade,Dodecagon,Puzzle,Hourglass,LowerRight,Sawblade,0.57037037037037,0.794646973038576,1
+15,18,Jeeves,2024-02-20,6,Chromatic,Lock,1,1,3,0,1,3,LowerLeft,DarkYellow,DarkPurple,LightGreen,LightBlue,LightGreen,LowerLeft,LightGreen,0.748148148148148,0.746843559932262,1
+15,18,Jeeves,2024-02-20,7,Chromatic,Puzzle,1,0,3,0,1,3,LowerLeft,LightBlue,DarkYellow,DarkPurple,LightGray,DarkPurple,LowerRight,DarkYellow,0.607407407407407,0.651024631099674,1
+15,18,Jeeves,2024-02-20,8,Colors,LightGray,1,1,3,0,1,3,UpperRight,Venn,Hourglass,Puzzle,Spike,Venn,UpperRight,Venn,0.718518518518519,0.559081365048946,1
+15,18,Jeeves,2024-02-20,9,Chromatic,Puzzle,1,1,3,0,1,3,LowerRight,LightGray,DarkPurple,LightRed,LightBlue,DarkPurple,LowerRight,DarkPurple,0.925925925925926,0.370888137742799,1
+15,18,Jeeves,2024-02-20,10,Colors,DarkTurquiose,1,0,3,0,1,3,LowerRight,Sawblade,Dodecagon,Lock,Spike,Dodecagon,UpperLeft,Spike,0.6,0.678367352719186,1
+15,18,Jeeves,2024-02-20,11,Colors,DarkYellow,1,1,3,0,1,3,LowerRight,Dodecagon,Spike,Venn,Lock,Spike,LowerRight,Spike,0.933333333333333,0.408992354621394,1
+15,18,Jeeves,2024-02-20,12,Colors,LightGreen,1,1,3,0,1,3,LowerRight,Dodecagon,Lock,Sawblade,Spike,Lock,LowerRight,Lock,0.505576208178439,0.986052629952919,1
+15,18,Jeeves,2024-02-20,13,Chromatic,Venn,1,1,3,0,1,3,UpperRight,LightGray,DarkTurquiose,DarkYellow,DarkPurple,LightGray,UpperRight,LightGray,0.739776951672863,0.787860252569244,1
+15,18,Jeeves,2024-02-20,14,Colors,DarkPurple,1,0,3,0,1,3,UpperLeft,Venn,Spike,Sawblade,Puzzle,Puzzle,LowerRight,Spike,0.574074074074074,0.834312298380436,1
+15,18,Jeeves,2024-02-20,15,Chromatic,Dodecagon,1,1,3,0,1,3,UpperRight,DarkTurquiose,LightRed,LightGray,DarkPurple,DarkTurquiose,UpperRight,DarkTurquiose,0.2,1.61394526182597,1
