@@ -14,7 +14,7 @@ DAQ('Debug',false)
 DAQ('Init'); 
 %eye tracking info
 global channels port
-channels = [2,3];
+channels = [3,2];
 ttlChannel = 8;
 port = 1;
 global gain Vcent; %set this after 5 dot task
@@ -23,8 +23,8 @@ global gain Vcent; %set this after 5 dot task
 %yGain: 2215
 %xOffset: -1153.8311
 %yOffset: -1611.812
-gain(1) = -2080;
-gain(2) = 2215;
+gain(1) = -1300;
+gain(2) = 370;
 Vcent(1) = -1153.8311;
 Vcent(2) = -1611.812;
 
@@ -32,7 +32,7 @@ global manualJuiceStart
 manualJuiceStart = 0;
 
 juiceInterval = 1.6; %seconds before juice reward
-juiceTime = 0.040;
+juiceTime = 0.070;
 
 disp(['Juice Interval is: ' num2str(juiceInterval)])
 
