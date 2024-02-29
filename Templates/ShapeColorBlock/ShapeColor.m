@@ -1,4 +1,4 @@
-function ShapeColor(subject, counterbalance_indx, run)
+function ShapeColor(subject, counterbalance_indx, run, IMA)
     % Shape Color Paradigm 2.2
     % Stuart J. Duffield November 2021
     % Displays the stimuli from the Monkey Turk experiments in blocks.
@@ -13,8 +13,8 @@ function ShapeColor(subject, counterbalance_indx, run)
     yGain = 600;
     xOffset = 0;
     yOffset = 0;
-    xChannel = 2;
-    yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
+    xChannel = 3;
+    yChannel = 2; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
     rewardDur = 0.1; % seconds
     rewardWait = 3; % seconds
@@ -35,8 +35,8 @@ function ShapeColor(subject, counterbalance_indx, run)
 
     runExpTime = datestr(now); % Get the time the run occured at.
 
-    dataSaveFile = ['Data/' subject '_' num2str(run) '_Data.mat']; % File to save both run data and eye data
-    movSaveFile = ['Data/' subject '_' num2str(run) '_Movie.mov']; % Create Movie Filename
+    dataSaveFile = ['Data/' subject '_' num2str(run) '_IMA_' num2str(IMA)  '_Data.mat']; % File to save both run data and eye data
+    movSaveFile = ['Data/' subject '_' num2str(run) '_IMA_' num2str(IMA)  '_Movie.mov']; % Create Movie Filename
 
     % Manually set screennumbers for experimenter and viewer displays:
     expscreen = 1; 
@@ -61,7 +61,13 @@ function ShapeColor(subject, counterbalance_indx, run)
     
     % Exact Duration
     runDur = TR*blocklength*length(blockorder); % You better pray this is correct
-    exactDur = 840; % Specify this to check
+    exactDur = 420; % Specify this to check. For experiments prior to 20231215, this was 840s,
+                    % and there were 20 blocks (4 repetitions of the same 5-block pattern). 
+                    % The old block_design csv is preserved in the
+                    % templates folder as
+                    % 'block_design_if_exactDuris840_20blocks.csv'. Current
+                    % experiments have 10 blocks (2 reps of same 5-block
+                    % pattern).
     
     if runDur ~= exactDur % Ya gotta check or else you waste your scan time
         error('Run duration calculated from run parameters does not match hardcoded run duration length.')

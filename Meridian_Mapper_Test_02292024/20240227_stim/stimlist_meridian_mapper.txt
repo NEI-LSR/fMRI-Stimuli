@@ -1,0 +1,5 @@
+1 grey_1280x1024.tif
+2 dartboard_bw-alt_checker50_w30_a0_1.tif
+3 dartboard_bw-alt_checker50_w30_a0_2.tif
+4 dartboard_bw-alt_checker50_w60_a90_1.tif
+5 dartboard_bw-alt_checker50_w60_a90_2.tif
