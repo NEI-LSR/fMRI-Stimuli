@@ -1,0 +1,16 @@
+Run,IMA,Subject,Session,Blocknumber,Blocktype,Stimulus,ProbeTrial,Correct,StimulusDuration,GrayDuration,ChoiceDuration,ITIDuration,CorrectLocation,UpperRightChoice,LowerRightChoice,LowerLeftChoice,UpperLeftChoice,CorrectChoiceStim,ChoiceLocation,ChoiceStimuli,PercentFixationStim,MedianDistanceStim,Complete
+40,47,Wooster,2024-03-15,1,Colors,DarkPurple,1,0,3,0,1,3,UpperRight,Puzzle,Lock,Dodecagon,Hourglass,Puzzle,None,None,0.322222222222222,16.362574160523,0
+40,47,Wooster,2024-03-15,2,Chromatic,Spike,1,1,3,0,1,3,UpperRight,DarkYellow,LightBlue,DarkTurquiose,LightGreen,DarkYellow,UpperRight,DarkYellow,0.248148148148148,12.4526927799995,0
+40,47,Wooster,2024-03-15,3,Colors,LightBlue,1,1,3,0,1,3,UpperRight,Sawblade,Lock,Hourglass,Spike,Sawblade,UpperRight,Sawblade,0.037037037037037,20.4983086571772,0
+40,47,Wooster,2024-03-15,4,Chromatic,Hourglass,1,1,3,0,1,3,UpperRight,LightRed,LightGray,DarkYellow,DarkPurple,LightRed,UpperRight,LightRed,0.474074074074074,1.16003249131214,0
+40,47,Wooster,2024-03-15,5,Colors,LightBlue,1,1,3,0,1,3,UpperLeft,Hourglass,Venn,Lock,Sawblade,Sawblade,UpperLeft,Sawblade,0.062962962962963,15.6269397030621,0
+40,47,Wooster,2024-03-15,6,Colors,DarkTurquiose,1,0,3,0,1,3,UpperRight,Dodecagon,Puzzle,Hourglass,Venn,Dodecagon,None,None,0,23.2707415169977,0
+40,47,Wooster,2024-03-15,7,Chromatic,Dodecagon,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+40,47,Wooster,2024-03-15,8,Colors,LightGreen,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+40,47,Wooster,2024-03-15,9,Colors,LightGray,1,0,3,0,1,3,LowerRight,,,,,,None,None,NaN,NaN,0
+40,47,Wooster,2024-03-15,10,Chromatic,Sawblade,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+40,47,Wooster,2024-03-15,11,Chromatic,Spike,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+40,47,Wooster,2024-03-15,12,Chromatic,Spike,1,0,3,0,1,3,LowerLeft,,,,,,None,None,NaN,NaN,0
+40,47,Wooster,2024-03-15,13,Chromatic,Puzzle,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+40,47,Wooster,2024-03-15,14,Chromatic,Lock,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+40,47,Wooster,2024-03-15,15,Colors,LightGray,1,0,3,0,1,3,LowerLeft,,,,,,None,None,NaN,NaN,0
