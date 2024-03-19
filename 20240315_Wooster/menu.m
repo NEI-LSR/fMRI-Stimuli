@@ -25,7 +25,7 @@ params.rewardKeyChange = 0.001; % Seconds, increment to change reward durations 
 params.gainStep = 5; % Pixels/Volt, how much to change the gain by
 DAQ('Debug',false); % Set DAQ to not debug
 DAQ('Init'); % Initialize DAQ
-params.xGain = -1300; % Pixels/Volt
+params.xGain = 915; % Pixels/Volt
 params.yGain = 290; % Pixels/Volt
 params.xOffset = -946; % Pixels
 params.yOffset = -1286; % Pixels
