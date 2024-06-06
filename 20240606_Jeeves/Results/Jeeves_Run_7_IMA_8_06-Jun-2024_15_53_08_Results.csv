@@ -1,0 +1,16 @@
+Run,IMA,Subject,Session,Blocknumber,Blocktype,Stimulus,ProbeTrial,Correct,StimulusDuration,GrayDuration,ChoiceDuration,ITIDuration,CorrectLocation,UpperRightChoice,LowerRightChoice,LowerLeftChoice,UpperLeftChoice,CorrectChoiceStim,ChoiceLocation,ChoiceStimuli,PercentFixationStim,MedianDistanceStim,Complete
+7,8,Jeeves,2024-06-06,1,Chromatic,Lock,1,0,3,0,1,3,UpperRight,LightGreen,LightBlue,LightRed,LightGray,LightGreen,UpperLeft,LightGray,0,22.6566698035672,0
+7,8,Jeeves,2024-06-06,2,Chromatic,Sawblade,1,0,3,0,1,3,LowerLeft,LightGray,DarkPurple,LightBlue,DarkYellow,LightBlue,None,None,0.244444444444444,1.45309765605468,0
+7,8,Jeeves,2024-06-06,3,Chromatic,Dodecagon,1,0,3,0,1,3,LowerRight,DarkYellow,DarkTurquiose,LightGray,LightRed,DarkTurquiose,None,None,0.0669144981412639,3.80246978672454,0
+7,8,Jeeves,2024-06-06,4,Chromatic,Sawblade,1,0,3,0,1,3,LowerRight,DarkTurquiose,LightBlue,LightGreen,DarkPurple,LightBlue,UpperRight,DarkTurquiose,0.144981412639405,3.35469483237804,0
+7,8,Jeeves,2024-06-06,5,Chromatic,Spike,1,0,3,0,1,3,UpperLeft,LightGray,DarkPurple,LightBlue,DarkYellow,DarkYellow,None,None,0.2,2.80288633703546,0
+7,8,Jeeves,2024-06-06,6,Chromatic,Sawblade,1,0,3,0,1,3,UpperRight,LightBlue,LightRed,LightGreen,DarkTurquiose,LightBlue,None,None,0.125925925925926,1.85042216940101,0
+7,8,Jeeves,2024-06-06,7,Chromatic,Puzzle,1,0,3,0,1,3,UpperRight,DarkPurple,DarkTurquiose,LightGreen,LightBlue,DarkPurple,None,None,0.0814814814814815,2.17107102816833,0
+7,8,Jeeves,2024-06-06,8,Colors,DarkYellow,1,0,3,0,1,3,UpperRight,Spike,Venn,Dodecagon,Puzzle,Spike,None,None,0.0099009900990099,2.41621913265989,0
+7,8,Jeeves,2024-06-06,9,Chromatic,Spike,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+7,8,Jeeves,2024-06-06,10,Colors,DarkTurquiose,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+7,8,Jeeves,2024-06-06,11,Colors,LightBlue,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+7,8,Jeeves,2024-06-06,12,Colors,LightBlue,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+7,8,Jeeves,2024-06-06,13,Chromatic,Venn,1,0,3,0,1,3,UpperRight,,,,,,None,None,NaN,NaN,0
+7,8,Jeeves,2024-06-06,14,Colors,LightBlue,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
+7,8,Jeeves,2024-06-06,15,Chromatic,Dodecagon,1,0,3,0,1,3,UpperLeft,,,,,,None,None,NaN,NaN,0
