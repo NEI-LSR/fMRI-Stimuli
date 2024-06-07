@@ -1,0 +1,16 @@
+Run,IMA,Subject,Session,Blocknumber,Blocktype,Stimulus,ProbeTrial,Correct,StimulusDuration,GrayDuration,ChoiceDuration,ITIDuration,CorrectLocation,UpperRightChoice,LowerRightChoice,LowerLeftChoice,UpperLeftChoice,CorrectChoiceStim,ChoiceLocation,ChoiceStimuli,PercentFixationStim,MedianDistanceStim,Complete
+39,48,Wooster,2024-06-07,1,Chromatic,Venn,1,1,3,0,1,3,UpperLeft,LightRed,DarkPurple,DarkTurquiose,LightGray,LightGray,UpperLeft,LightGray,0.603703703703704,0.846439406780594,1
+39,48,Wooster,2024-06-07,2,Chromatic,Venn,1,1,3,0,1,3,LowerRight,DarkYellow,LightGray,LightRed,LightGreen,LightGray,LowerRight,LightGray,0.596296296296296,0.849124193494869,1
+39,48,Wooster,2024-06-07,3,Chromatic,Sawblade,1,1,3,0,1,3,LowerLeft,DarkYellow,LightGray,LightBlue,LightGreen,LightBlue,LowerLeft,LightBlue,0.466666666666667,1.09345022038058,1
+39,48,Wooster,2024-06-07,4,Chromatic,Lock,1,1,3,0,1,3,UpperRight,LightGreen,LightRed,DarkYellow,LightBlue,LightGreen,UpperRight,LightGreen,0.677777777777778,0.843594260416016,1
+39,48,Wooster,2024-06-07,5,Chromatic,Hourglass,1,1,3,0,1,3,LowerLeft,DarkTurquiose,LightBlue,LightRed,LightGreen,LightRed,LowerLeft,LightRed,0.368029739776952,1.23273466507479,1
+39,48,Wooster,2024-06-07,6,Colors,DarkYellow,1,1,3,0,1,3,LowerLeft,Puzzle,Lock,Spike,Dodecagon,Spike,LowerLeft,Spike,0.54275092936803,0.96670556038182,1
+39,48,Wooster,2024-06-07,7,Colors,LightRed,1,1,3,0,1,3,UpperLeft,Puzzle,Dodecagon,Venn,Hourglass,Hourglass,UpperLeft,Hourglass,0.488888888888889,1.04414677865427,1
+39,48,Wooster,2024-06-07,8,Colors,LightBlue,1,1,3,0,1,3,LowerRight,Dodecagon,Sawblade,Hourglass,Puzzle,Sawblade,LowerRight,Sawblade,0.766666666666667,0.690654070520903,1
+39,48,Wooster,2024-06-07,9,Chromatic,Dodecagon,1,1,3,0,1,3,LowerRight,LightRed,DarkTurquiose,LightGray,LightBlue,DarkTurquiose,LowerRight,DarkTurquiose,0.766666666666667,0.668208005617031,1
+39,48,Wooster,2024-06-07,10,Chromatic,Lock,1,1,3,0,1,3,LowerRight,DarkTurquiose,LightGreen,LightBlue,DarkPurple,LightGreen,LowerRight,LightGreen,0.492592592592593,1.05603181784995,1
+39,48,Wooster,2024-06-07,11,Colors,DarkPurple,1,1,3,0,1,3,LowerRight,Hourglass,Puzzle,Spike,Sawblade,Puzzle,LowerRight,Puzzle,0.718518518518519,0.753993610182672,1
+39,48,Wooster,2024-06-07,12,Chromatic,Sawblade,1,1,3,0,1,3,LowerRight,LightGray,LightBlue,LightGreen,DarkTurquiose,LightBlue,LowerRight,LightBlue,0.396296296296296,1.20029786950306,1
+39,48,Wooster,2024-06-07,13,Colors,LightBlue,1,1,3,0,1,3,LowerLeft,Spike,Puzzle,Sawblade,Hourglass,Sawblade,LowerLeft,Sawblade,0.803703703703704,0.621455353230748,1
+39,48,Wooster,2024-06-07,14,Colors,LightRed,1,1,3,0,1,3,LowerLeft,Puzzle,Spike,Hourglass,Venn,Hourglass,LowerLeft,Hourglass,0.603703703703704,0.849124193494869,1
+39,48,Wooster,2024-06-07,15,Chromatic,Spike,1,1,3,0,1,3,LowerRight,LightBlue,DarkYellow,DarkTurquiose,LightGreen,DarkYellow,LowerRight,DarkYellow,0.594795539033457,0.849124193494869,1
