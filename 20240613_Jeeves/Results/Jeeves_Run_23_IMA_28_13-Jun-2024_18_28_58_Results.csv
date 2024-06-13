@@ -1,0 +1,16 @@
+Run,IMA,Subject,Session,Blocknumber,Blocktype,Stimulus,ProbeTrial,Correct,StimulusDuration,GrayDuration,ChoiceDuration,ITIDuration,CorrectLocation,UpperRightChoice,LowerRightChoice,LowerLeftChoice,UpperLeftChoice,CorrectChoiceStim,ChoiceLocation,ChoiceStimuli,PercentFixationStim,MedianDistanceStim,Complete
+23,28,Jeeves,2024-06-13,1,Chromatic,Sawblade,1,0,3,0,1,3,UpperRight,LightBlue,LightRed,LightGreen,DarkYellow,LightBlue,UpperLeft,DarkYellow,0.0111111111111111,14.7352932664482,1
+23,28,Jeeves,2024-06-13,2,Chromatic,Sawblade,1,0,3,0,1,3,UpperRight,LightBlue,LightRed,LightGray,DarkYellow,LightBlue,UpperLeft,DarkYellow,0.485185185185185,1.07479595290189,1
+23,28,Jeeves,2024-06-13,3,Colors,LightGray,1,1,3,0,1,3,LowerRight,Lock,Venn,Hourglass,Sawblade,Venn,LowerRight,Venn,0.130111524163569,2.40692001405042,1
+23,28,Jeeves,2024-06-13,4,Chromatic,Venn,1,1,3,0,1,3,UpperLeft,LightRed,LightBlue,DarkYellow,LightGray,LightGray,UpperLeft,LightGray,0.514814814814815,0.957773561198038,1
+23,28,Jeeves,2024-06-13,5,Colors,LightRed,1,0,3,0,1,3,LowerRight,Sawblade,Hourglass,Venn,Lock,Hourglass,None,None,0.62962962962963,0.732855111193186,1
+23,28,Jeeves,2024-06-13,6,Colors,LightGray,1,1,3,0,1,3,UpperLeft,Sawblade,Hourglass,Lock,Venn,Venn,UpperLeft,Venn,0.807407407407407,0.676381659940821,1
+23,28,Jeeves,2024-06-13,7,Chromatic,Dodecagon,1,1,3,0,1,3,UpperLeft,DarkYellow,LightGreen,LightBlue,DarkTurquiose,DarkTurquiose,UpperLeft,DarkTurquiose,0.581481481481481,0.856322524170354,1
+23,28,Jeeves,2024-06-13,8,Colors,LightGray,1,1,3,0,1,3,UpperLeft,Dodecagon,Hourglass,Spike,Venn,Venn,UpperLeft,Venn,0.751851851851852,0.758053672492469,1
+23,28,Jeeves,2024-06-13,9,Colors,DarkYellow,1,1,3,0,1,3,UpperRight,Spike,Sawblade,Venn,Puzzle,Spike,UpperRight,Spike,0.240740740740741,1.19294330632274,1
+23,28,Jeeves,2024-06-13,10,Colors,LightBlue,1,1,3,0,1,3,UpperRight,Sawblade,Venn,Hourglass,Lock,Sawblade,UpperRight,Sawblade,0.163568773234201,1.56580684978453,1
+23,28,Jeeves,2024-06-13,11,Chromatic,Hourglass,1,0,3,0,1,3,LowerLeft,LightGreen,DarkYellow,LightRed,DarkPurple,LightRed,None,None,0.344444444444444,1.16002770767691,1
+23,28,Jeeves,2024-06-13,12,Colors,DarkTurquiose,1,1,3,0,1,3,UpperLeft,Lock,Venn,Hourglass,Dodecagon,Dodecagon,UpperLeft,Dodecagon,0.0555555555555556,2.45919515431551,1
+23,28,Jeeves,2024-06-13,13,Colors,LightGray,1,0,3,0,1,3,LowerLeft,Lock,Hourglass,Venn,Spike,Venn,None,None,0.104089219330855,1.69627313652452,1
+23,28,Jeeves,2024-06-13,14,Chromatic,Lock,1,0,3,0,1,3,LowerLeft,DarkTurquiose,DarkPurple,LightGreen,DarkYellow,LightGreen,UpperLeft,DarkYellow,0.0740740740740741,1.73631965365629,1
+23,28,Jeeves,2024-06-13,15,Chromatic,Lock,1,0,3,0,1,3,LowerRight,DarkYellow,LightGreen,DarkTurquiose,LightGray,LightGreen,UpperRight,DarkYellow,0.214814814814815,1.26293882005879,1
