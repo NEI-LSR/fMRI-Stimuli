@@ -1,3 +1,4 @@
 # Ignore these files:
 **.mov
 .DS_Store
+._*
