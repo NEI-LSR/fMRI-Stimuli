@@ -1,0 +1,1 @@
+function [blocklist] = loadblocklist(filename)NumBlocks =  0;fid = fopen(filename, 'r');blocklist = cell(1);while 1    tline = fgetl(fid);    if ~ischar(tline), break, end    a = findstr(tline, 'Block');    if (a>=1)        NumBlocks = NumBlocks + 1;        i = 0;	else        i = i+1;        blocklist{NumBlocks}(i) = str2num(tline);	end endline = fgetl(fid); 
