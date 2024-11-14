@@ -1,29 +1,30 @@
-function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
+function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run, ima)
     % Color Localizer
     % Stuart J. Duffield March 2022
+    % Update Karthik/Helen/Spencer November 2024
 
     
     % Parameters you care about:
     rewardDur = 0.04; % seconds
     rewardDurChange = 0.01; 
     incRate = false;
-    baseRewardWait = 5; % seconds
+    baseRewardWait = 3; % seconds
     rewardWait = baseRewardWait;
     maxChange = 0.3; % How much does it change
     rewardCalcDur = 10; % Number of seconds fixation is calculated over 
     rewardWaitChange = 0.01;
     rewardPerf = .75; % 75% fixation to get reward
-    exactDur = 540; % Need to manually calculate
+    exactDur = 288; % Need to manually calculate
 
     % Initialize DAQ
     DAQ('Debug',false);
     DAQ('Init');
-    xGain = -500;
-    yGain = 600;
-    xOffset = -600;
-    yOffset = -764;
-    xChannel = 2;
-    yChannel = 3; % DAQ indexes starting at 1, so different than fnDAQ
+    xGain = -1180;
+    yGain = 290;
+    xOffset = -389;
+    yOffset = -700;
+    xChannel = 3;
+    yChannel = 2; % DAQ indexes starting at 1, so different than fnDAQ
     ttlChannel = 8;
 
 
@@ -34,21 +35,75 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
     if strcmp(dirChange,'Circular')
         switchPerSecond = 1;
     end
-    cyclesPerSec = 0.75; % This does two different things for the different conditions: In linear, its the number of cycles that pass by in a second
+    cyclesPerSec = 1; % This does two different things for the different conditions: In linear, its the number of cycles that pass by in a second
     % In circular, its the time it takes for a whole 'circle' to complete
-    numblocks = 18;
-    block_orders = [0     1     2     3     4     5;
-     3     1     5     2     4     0;
-     2     3     4     5     0     1;
-     3     4     5     0     1     2;
-     4     5     0     1     2     3;
-     5     0     1     2     3     4];
-    block_orders = repmat(block_orders,1,numblocks/size(block_orders,2));
+    numblocks = 16; %18;
+    % edit this probably
+    %block_orders = [0     1     2     3     4     5;
+     %3     1     5     2     4     0;
+    % 2     3     4     5     0     1;
+    % 3     4     5     0     1     2;
+    % 4     5     0     1     2     3;
+    % 5     0     1     2     3     4]; 
+    % Define sets
+% Define sets
+grey = [1, 2, 3, 4];
+color = [5, 6, 7, 8];
+
+% Generate a random 0 or 1 to determine starting set
+start_with_color = randi([0, 1]);
+
+% Initialize the final list with zeros at each alternating position
+final_list = zeros(1, 15);
+
+% Track position in final list where non-zero values will be inserted
+index = 2; % Starting at position 2, as 1 and last positions are zero
+
+% Loop through 8 picks, alternating between grey and color sets
+for i = 1:8
+    if start_with_color == 0
+        % Starting with grey
+        if mod(i, 2) == 1
+            % Pick from grey on odd index
+            idx = randi(length(grey));
+            final_list(index) = grey(idx);
+            grey(idx) = []; % Remove chosen element
+        else
+            % Pick from color on even index
+            idx = randi(length(color));
+            final_list(index) = color(idx);
+            color(idx) = []; % Remove chosen element
+        end
+    else
+        % Starting with color
+        if mod(i, 2) == 1
+            % Pick from color on odd index
+            idx = randi(length(color));
+            final_list(index) = color(idx);
+            color(idx) = []; % Remove chosen element
+        else
+            % Pick from grey on even index
+            idx = randi(length(grey));
+            final_list(index) = grey(idx);
+            grey(idx) = []; % Remove chosen element
+        end
+    end
+    index = index + 2; % Move to the next alternating position
+end
+
+% Display the final list
+disp(final_list);
+writematrix(final_list, 'final_list.txt', 'Delimiter', ' ');
+    
+    %block_orders = repmat(block_orders,1,numblocks/size(block_orders,2));
+    block_orders = final_list;
     freq_orders = [1];
     freq_orders = repmat(freq_orders,1,numblocks/size(freq_orders,2));
+    
+
     block_order = block_orders(counterbalance_indx,:);
     freq_order = freq_orders(frequency_idx,:);
-    block_length = 10; % TRs
+    block_length = 6; % TRs
     KbName('UnifyKeyNames');
     % Initialize save paths for eyetracking and other data:
     curdir= pwd; % Current Directory
@@ -57,12 +112,13 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
         mkdir('Data');
     end
     runExpTime = datestr(now); % Get the time the run occured at.
-    dataSaveFile = ['Data/' subject '_' num2str(run) '_Data.mat']; % File to save both run data and eye data
-    movSaveFile = ['Data/' subject '_' num2str(run) '_Movie.mov']; % Create Movie Filename
-    LUTfile = '26-Jan-2022_PROPIXSmallNoFilter_LUT.mat';
-    LUTDir = curdir;
-    lookup = load([LUTDir '/26-Jan-2022_PROPIXSmallNoFilter_LUT.mat']);
-    lookup = lookup.LUT;
+    dataSaveFile = ['Data/' subject '_' num2str(run) '_IMA_' num2str(ima) '_Data.mat']; % File to save both run data and eye data
+    movSaveFile = ['Data/' subject '_' num2str(run) '_IMA_' num2str(ima) '_Movie.mov']; % Create Movie Filename
+    %LUTfile = '26-Jan-2022_PROPIXSmallNoFilter_LUT.mat';
+    %LUTDir = curdir;
+   % lookup = load([LUTDir '/26-Jan-2022_PROPIXSmallNoFilter_LUT.mat']);
+    %lookup = lookup.LUT;
+    lookup = [];
 
     manualMovementPix = 10;
 
@@ -81,15 +137,46 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
     gray = [128 128 128];
     white = [255 255 255];
     green = [0 255 0];
-    
-    stim_colors = {
-        [144 144 144; 109 109 109],...
-        [234 78	132; 17	179	124],...
-        [203 90	156; 52	165	101],...
-        [128 124 162; 129 129 94],...
-        [54	161	149; 205 94	107]};
 
-    base_frequencies = [4]; % Cycles per degree
+    % three grey
+%     stim_colors = {
+%         [128, 128, 128; 191, 191, 191],... % grey contrast +0.5
+%         [128, 128, 128; 159, 159, 159],... % grey contrast +0.25
+%         [128, 128, 128; 96, 96, 96],... % grey contrast -0.25
+%         [128, 128, 128; 64, 64, 64],... % grey contrast -0.5
+%         [128, 128, 128; 223, 78, 220],... % DL+
+%         [128, 128, 128; 31, 177, 35],... % DL-
+%         [128, 128, 128; 43, 162, 215],... %DLO+
+%         [128, 128, 128; 212, 93, 40]}; % DLO-
+
+        stim_colors = {
+        [73, 73, 73; 182, 182, 182],... % grey contrast +-0.425
+        [118, 118, 118; 137, 137, 137],... % grey contrast +-0.075
+        [108, 108, 108; 147, 147, 147],... % grey contrast +-0.15
+        [96, 96, 96; 159, 159, 159],... % grey contrast +-0.25
+        [128, 128, 128; 223, 78, 220],... % DL+
+        [128, 128, 128; 31, 177, 35],... % DL-
+        [128, 128, 128; 43, 162, 215],... %DLO+
+        [128, 128, 128; 212, 93, 40]}; % DLO-
+
+         stim_colors_names = {
+        'bg grey',... % grey 
+        'grey contrast +-0.425',... % grey contrast +-0.425
+        'grey contrast +-0.075',... % grey contrast +-0.075
+        'grey contrast +-0.15',... % grey contrast +-0.15
+        'grey contrast +-0.25',... % grey contrast +-0.25
+        'DL+',... % DL+
+        'DL-',... % DL-
+       'DLO+',... %DLO+
+       'DLO-'}; % DLO-
+
+        %[144 144 144; 109 109 109],... %
+        %[234 78	132; 17	179	124],...
+        %[203 90	156; 52	165	101],...
+        %[128 124 162; 129 129 94],...
+        %[54	161	149; 205 94	107]};
+
+    base_frequencies = [0.5]; % Cycles per degree
     frequencies = base_frequencies(freq_order);
 
 
@@ -100,8 +187,8 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
     end
 
     % Manually set screennumbers for experimenter and viewer displays:
-    expscreen = 1; 
-    viewscreen = 2;
+    expscreen = 2; 
+    viewscreen = 1;
 
 
     % Initialize Screens
@@ -118,7 +205,7 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
     [xCenter, yCenter] = RectCenter(viewRect); % Get center of the view screen
     [xCenterExp, yCenterExp] = RectCenter(expRect); % Get center of the experimentor's screen
 
-    pixPerAngle = 40; % Number of pixels per degree of visual angle (actually 41.28, but very close
+    pixPerAngle = 50; % Number of pixels per degree of visual angle (actually 41.28, but very close
     fixPix = 3*pixPerAngle; % How large the fixation will be
 
 
@@ -142,7 +229,7 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
             cyclesPerDegree = frequencies(n);
             cyclePix = pixPerAngle/cyclesPerDegree;
             stimPix = cyclePix*0.5; % How large the stimulus rectangle will be
-            blurPix = 3; % How many pixels of blur between each stimulus
+            blurPix = 6; % How many pixels of blur between each stimulus
             stimMinusBlurPix = stimPix-blurPix;
             switch dirChange
                 case 'Linear'
@@ -152,13 +239,13 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
                         else
                             offset = round(cyclePix*(((fps/cyclesPerSec)-j)/(fps/cyclesPerSec)))
                         end
-                        tex{m}{n}(j) = Screen('MakeTexture',viewWindow,trapezoid(stimMinusBlurPix,blurPix,color1,color2,offset,1080,lookup));
+                        tex{m}{n}(j) = Screen('MakeTexture',viewWindow,trapezoid(stimMinusBlurPix,blurPix,color1,color2,offset,1080));
 
                     end
                 case 'Circular'
                     for j = 1:(fps/cyclesPerSec)
                          offset = round(cyclePix*sin(2*pi*j/(fps/cyclesPerSec))); 
-                         tex{m}{n}(j) = Screen('MakeTexture',viewWindow,trapezoid(stimMinusBlurPix,blurPix,color1,color2,offset,1080,lookup));
+                         tex{m}{n}(j) = Screen('MakeTexture',viewWindow,trapezoid(stimMinusBlurPix,blurPix,color1,color2,offset,1080));
                     end     
             end
         end
@@ -300,9 +387,10 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
             infotext = ['Time Elapsed: ', num2str(toc), '/', num2str(exactDur), newline,...
                 'Fixation Percentage: ', num2str(sum(fixation(1:frameIdx,1))/length(fixation(1:frameIdx,1)*100)), newline,...
                 'Juice: ', juiceSetting,newline,...
-                'Juice End Time: ', num2str(juiceEndTime),newline...,
+                'Juice End Time: ', num2str(juiceEndTime),newline...
                 'Reward Duration (+Z/-X): ' num2str(rewardDur),newline,...
-                'Reward Wait Time (+C/-V): ' num2str(rewardWait)]
+                'Reward Wait Time (+C/-V): ' num2str(rewardWait),newline,...
+                'Currently Showing: ' char(stim_colors_names(block+1))]
                
 
             DrawFormattedText(expWindow,infotext);
@@ -349,11 +437,11 @@ function ColorLocalizer(subject, counterbalance_indx, frequency_idx, run)
             frameIdx = frameIdx+1;
         end
     catch error
-        rethrow(error)
+                   rethrow(error)
     end % End of stim presentation
 
     save(dataSaveFile);
-    disp(['Fixation: ' num2str(sum(fixation)/length(fixation(1:frameIdx,1),'all','omitnan'))]);
+    disp(['Fixation: ' num2str(sum(fixation)/length(fixation(1:frameIdx,1)))]);
 
     function [juiceEndTime,juiceOn] = juice(howLong,juiceEndTime,curTime,juiceOn)
         if howLong > 0
@@ -406,10 +494,10 @@ function vector = trapezoid(length1,length2,color1,color2,offset,size,varargin)
         if length(varargin) == 1
             LUT = varargin{1};
             LUTcheck = true;
-        elseif len(varargin{:}) > 1
-            disp('Too many argument inputs, interpreting first argument as the LUT')
-            LUT = varargin{1};
-            LUTcheck = true;
+        %elseif len(varargin{:}) > 1
+          %  disp('Too many argument inputs, interpreting first argument as the LUT')
+           % LUT = varargin{1};
+           % LUTcheck = true;
         end
         % If we have a LUT, we can precalculate where each color falls.
         % Will help with calculations later
